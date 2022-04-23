@@ -61,17 +61,25 @@ function _prompt_reset() {
 function _prompt_name() {
 	local icon=$'\ue77a'
 	local bgcolor="129"
+	local fgcolor="000"
 	if which uname >/dev/null 2>&1; then
 		case "$(uname | tr '[A-Z]' '[a-z]')" in
-		linux)   icon=$'\ue712'; bgcolor="015" ;;
-		darwin)  icon=$'\ue711'; bgcolor="009" ;;
+		linux)
+			icon=$'\ue712'; bgcolor="015" ;
+			case "$([[ -e /etc/os-release ]] && source /etc/os-release; echo $ID)" in
+			alpine)   icon=$'\uf300'; bgcolor="159";;
+			debian)   icon=$'\uf306'; bgcolor="000"; fgcolor="001";;
+			ubuntu)   icon=$'\uf31b'; bgcolor="009";;
+			raspbian) icon=$'\uf315'; bgcolor="001";;
+			esac ;;
+		darwin)  icon=$'\ue711'; bgcolor="165" ;;
 		windows) icon=$'\ue70f'; bgcolor="012" ;;
 		esac
 	fi
 	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000}\ue0b0%f%k'
-	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000}\ue0b1 %f%k'
-	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000}'"$icon"$' %n@%m%f%k'
-	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000} \ue0b1%f%k'
+	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{'$fgcolor$'}\ue0b1 %f%k'
+	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{'$fgcolor$'}'"$icon"$' %n@%m%f%k'
+	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{'$fgcolor$'} \ue0b1%f%k'
 	PROMPT=$PROMPT$'%K{000}%F{'$bgcolor$'}\ue0b0%f%k'
 }
 

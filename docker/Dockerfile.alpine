@@ -1,0 +1,12 @@
+FROM alpine:3.15
+
+ADD https://raw.githubusercontent.com/cry999/my-configs/master/.zshrc /root/.zshrc
+RUN apk update
+RUN apk add --no-cache \
+	git \
+	zsh \
+	zsh-vcs
+
+ENV TERM xterm-256color
+
+ENTRYPOINT [ "zsh" ]

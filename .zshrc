@@ -98,11 +98,11 @@ function _prompt_vcs_info_msg() {
 
 function _prompt_aws() {
 	if [[ -n "$AWS_PROFILE" ]]; then
-		PROMPT=$PROMPT$'%K{011}%F{000}\ue0b0%f%k'
-		PROMPT=$PROMPT$'%K{011}%F{000}\ue0b1 %f%k'
-		PROMPT=$PROMPT$'%K{011}%F{000}\uf0c2 '$AWS_PROFILE$'%f%k'
-		PROMPT=$PROMPT$'%K{011}%F{000} \ue0b1%f%k'
-		PROMPT=$PROMPT$'%K{000}%F{011}\ue0b0%f%k'
+		PROMPT=$PROMPT$'%K{009}%F{000}\ue0b0%f%k'
+		PROMPT=$PROMPT$'%K{009}%F{000}\ue0b1 %f%k'
+		PROMPT=$PROMPT$'%K{009}%F{000}\uf0c2 '$AWS_PROFILE$'%f%k'
+		PROMPT=$PROMPT$'%K{009}%F{000} \ue0b1%f%k'
+		PROMPT=$PROMPT$'%K{000}%F{009}\ue0b0%f%k'
 	fi
 }
 
@@ -127,6 +127,7 @@ function _update_prompt() {
 	_prompt_reset
 	_prompt_name
 	_prompt_vcs_info_msg
+	_prompt_aws
 	_prompt_dir
 	_prompt_finish
 }

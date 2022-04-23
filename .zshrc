@@ -59,19 +59,20 @@ function _prompt_reset() {
 }
 
 function _prompt_name() {
-	PROMPT=$PROMPT$'%K{012}%F{000}\ue0b0%f%k'
-	PROMPT=$PROMPT$'%K{012}%F{000}\ue0b1 %f%k'
 	local icon=$'\ue77a'
+	local bgcolor="129"
 	if which uname >/dev/null 2>&1; then
 		case "$(uname | tr '[A-Z]' '[a-z]')" in
-		linux)   icon=$'\ue712' ;;
-		darwin)  icon=$'\ue711' ;;
-		windows) icon=$'\ue70f' ;;
+		linux)   icon=$'\ue712'; bgcolor="015" ;;
+		darwin)  icon=$'\ue711'; bgcolor="009" ;;
+		windows) icon=$'\ue70f'; bgcolor="012" ;;
 		esac
 	fi
-	PROMPT=$PROMPT$'%K{012}%F{000}'"$icon"$' %n@%m%f%k'
-	PROMPT=$PROMPT$'%K{012}%F{000} \ue0b1%f%k'
-	PROMPT=$PROMPT$'%K{000}%F{012}\ue0b0%f%k'
+	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000}\ue0b0%f%k'
+	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000}\ue0b1 %f%k'
+	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000}'"$icon"$' %n@%m%f%k'
+	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000} \ue0b1%f%k'
+	PROMPT=$PROMPT$'%K{000}%F{'$bgcolor$'}\ue0b0%f%k'
 }
 
 function _prompt_vcs_info_msg() {

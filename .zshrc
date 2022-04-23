@@ -61,7 +61,15 @@ function _prompt_reset() {
 function _prompt_name() {
 	PROMPT=$PROMPT$'%K{012}%F{000}\ue0b0%f%k'
 	PROMPT=$PROMPT$'%K{012}%F{000}\ue0b1 %f%k'
-	PROMPT=$PROMPT$'%K{012}%F{000}\ue77a %n@%m%f%k'
+	local icon=$'\ue77a'
+	if which uname >/dev/null 2>&1; then
+		case "$(uname | tr '[A-Z]' '[a-z]')" in
+		linux)   icon=$'\ue712' ;;
+		darwin)  icon=$'\ue711' ;;
+		windows) icon=$'\ue70f' ;;
+		esac
+	fi
+	PROMPT=$PROMPT$'%K{012}%F{000}'"$icon"$' %n@%m%f%k'
 	PROMPT=$PROMPT$'%K{012}%F{000} \ue0b1%f%k'
 	PROMPT=$PROMPT$'%K{000}%F{012}\ue0b0%f%k'
 }
@@ -225,8 +233,10 @@ fi
 #
 # pyenv
 #
-eval "$(pyenv init -)"
-export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
+if which pyenv >/dev/null 2>&1; then
+	eval "$(pyenv init -)"
+	export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
+fi
 
 ###########################################################
 #
@@ -242,7 +252,9 @@ export NVM_DIR="$HOME/.nvm"
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
-eval "$(rbenv init -)"
+if which rbenv >/dev/null 2>&1; then
+	eval "$(rbenv init -)"
+fi
 
 colorlist() {
 	for color in {000..015}; do
@@ -256,3 +268,10 @@ colorlist() {
 		fi
 	done
 }
+
+# zsh-syntax-highlighting
+if [ -e /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+	source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
+	export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+fi

@@ -86,7 +86,7 @@ done
 
 # install configuration files
 for config in ${configs[@]}; do
-	if [ -e $HOME/$config ]; then
+	if [ -e $HOME/$config ] || [ -L $HOME/$config ]; then
 		if [[ -z $force ]]; then
 			continue
 		else

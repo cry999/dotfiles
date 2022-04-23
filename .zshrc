@@ -96,6 +96,16 @@ function _prompt_vcs_info_msg() {
 	fi
 }
 
+function _prompt_aws() {
+	if [[ -n "$AWS_PROFILE" ]]; then
+		PROMPT=$PROMPT$'%K{011}%F{000}\ue0b0%f%k'
+		PROMPT=$PROMPT$'%K{011}%F{000}\ue0b1 %f%k'
+		PROMPT=$PROMPT$'%K{011}%F{000}\uf0c2 '$AWS_PROFILE$'%f%k'
+		PROMPT=$PROMPT$'%K{011}%F{000} \ue0b1%f%k'
+		PROMPT=$PROMPT$'%K{000}%F{011}\ue0b0%f%k'
+	fi
+}
+
 function _prompt_dir() {
 	PROMPT=$PROMPT$'%K{011}%F{000}\ue0b0%f%k'
 	PROMPT=$PROMPT$'%K{011}%F{000}\ue0b1 %f%k'
@@ -288,3 +298,5 @@ if [ -e /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
 	export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
 	export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

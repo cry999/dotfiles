@@ -161,7 +161,12 @@ bindkey '^R' history-incremental-pattern-search-backward
 #####################################################
 # alias
 
-alias ls='gls --color=auto'
+if which uname >/dev/null 2>&1; then
+	case $(uname | tr '[A-Z]' '[a-z]') in
+		darwin) alias ls='gls --color=auto' ;;
+		*)      alias ls='ls --color=auto' ;;
+	esac
+fi
 alias l='ls '
 alias la='ls -a'
 alias ll='ls -al'
@@ -202,7 +207,6 @@ alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
 #######################################################
 # for OS
 export CLICOLOR=1
-alias ls='ls -G -F'
 
 #######################################################
 # PATH

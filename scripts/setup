@@ -1,0 +1,97 @@
+#!/usr/bin/env zsh
+
+set -e
+
+root=$(realpath $(dirname $0)/..)
+
+local configs=(
+	".agignore"
+	".tmux.conf"
+	".vimrc"
+	".zshrc"
+)
+local -A requirements=(
+	["ag"]="the_silver_searcher"
+	["fzf"]="fzf"
+	["zsh"]="zsh"
+	["vim"]="vim"
+	["tmux"]="tmux"
+)
+local -A version_flags=(
+	["ag"]="--version"
+	["fzf"]="--version"
+	["zsh"]="--version"
+	["vim"]="--version"
+	["tmux"]="-V"
+)
+local -A version_positions=(
+	["ag"]="3"
+	["fzf"]="1"
+	["zsh"]="2"
+	["vim"]="5"
+	["tmux"]="2"
+)
+local -A required_versions=(
+	["ag"]="2.2.0"
+	["fzf"]="0.30.0"
+	["zsh"]="5.8.1"
+	["vim"]="8.2"
+	["tmux"]="3.2"
+)
+
+# args
+while [ $# -ne 0 ]; do
+	case "$1" in
+	-f|--force) force=1; shift 1 ;;
+	*) args=(${args[@]} "$1"); shift 1 ;;
+	esac
+done
+
+# functions
+_version_check() {
+	local current=$1
+	local required=$2
+	if [ "$(echo "$current\n$required" | sort | head -1)" = "$required" ]; then
+		return 0
+	fi
+	return 1
+}
+
+# setup brew
+if which brew >/dev/null 2>&1; then
+	# brew exists
+else
+	echo "install home brew"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
+brew -v
+
+# install requirements
+for cmd in ${(k)requirements[@]}; do
+	if which $cmd >/dev/null 2>&1; then
+		# command exists
+	else
+		brew install ${requirements[$cmd]}
+	fi
+	local version_flag=${version_flags[$cmd]}
+	local version_pos=${version_positions[$cmd]}
+	local version=$($cmd $version_flag | head -1 | cut -d' ' -f$version_pos)
+	local required=${required_versions[$cmd]}
+	if _version_check $version $required; then
+		echo $cmd $version OK
+	else
+		brew upgrade ${requirements[$cmd]}
+	fi
+done
+
+# install configuration files
+for config in ${configs[@]}; do
+	if [ -e $HOME/$config ]; then
+		if [[ -z $force ]]; then
+			continue
+		else
+			rm -f $HOME/$config
+		fi
+	fi
+	ln -s $root/$config $HOME/$config
+done

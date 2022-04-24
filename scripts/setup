@@ -67,6 +67,10 @@ fi
 brew -v
 
 # install requirements
+[ -n $ZINIT ] || sh -c "$(curl -fsSL https://git.io/zinit-install)"
+which exa   >/dev/null 2>&1 || brew install exa
+which fd    >/dev/null 2>&1 || brew install fd
+which procs >/dev/null 2>&1 || brew install procs
 for cmd in ${(k)requirements[@]}; do
 	if which $cmd >/dev/null 2>&1; then
 		# command exists

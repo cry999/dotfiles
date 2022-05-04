@@ -1,38 +1,45 @@
 " Jetpacka install plugins
-call jetpack#begin()
+call plug#begin()
 
 " color theme
-Jetpack 'ulwlu/elly.vim'
-Jetpack 'morhetz/gruvbox'
+Plug 'ulwlu/elly.vim'
+Plug 'morhetz/gruvbox'
 " status bar
-Jetpack 'vim-airline/vim-airline'
-Jetpack 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " editor
-Jetpack 'tpope/vim-surround'
-Jetpack 'tpope/vim-commentary'
-Jetpack 'jeetsukumaran/vim-indentwise'
-Jetpack 'nathanaelkane/vim-indent-guides'
-Jetpack 'ntpeters/vim-better-whitespace'
-Jetpack 'jiangmiao/auto-pairs'
-Jetpack 'junegunn/fzf'
-Jetpack 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'jeetsukumaran/vim-indentwise'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/nerdfont.vim'
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'ron-rs/ron.vim'
+
+" Git
+Plug 'airblade/vim-gitgutter'
 
 " test
-Jetpack 'vim-test/vim-test'
-Jetpack 'tpope/vim-dispatch'
+Plug 'vim-test/vim-test'
+Plug 'tpope/vim-dispatch'
 
 """""""""""""""""""""
 " Language specific "
 """""""""""""""""""""
 " LSP
-Jetpack 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Golang
-Jetpack 'mattn/vim-goimports'
+Plug 'mattn/vim-goimports'
 " YAML
-Jetpack 'neoclide/coc-yaml'
+Plug 'neoclide/coc-yaml'
 
-call jetpack#end()
+call plug#end()
 
 set encoding=UTF-8
 set number
@@ -43,6 +50,11 @@ set noswapfile
 set nobackup
 set noundofile
 set re=0
+
+" neovim-remote
+let nvrcmd      = "nvr --remote-wait"
+let $VISUAL     = nvrcmd
+let $GIT_EDITOR = nvrcmd
 
 " theme
 colorscheme gruvbox
@@ -143,7 +155,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nmap <Space>rn <Plug>(coc-rename)
 
 " Formatting selected code.
 
@@ -157,16 +169,16 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <Space>a  <Plug>(coc-codeaction-selected)
+nmap <Space>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <Space>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <Space>.  <Plug>(coc-fix-current)
 
 " Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
+nmap <Space>cl  <Plug>(coc-codelens-action)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -244,35 +256,88 @@ let test#go#runner='gotest'
 let test#vim#term_position='belowright'
 
 "
+" fern.vim
+"
+let g:fern#renderer = "nerdfont"
+let g:fern#default_hidden=1
+
+"
 " my keyboar mapping
 "
-let mapleader = "\<Space>"
+let mapleader = ","
 " This is not work
 nmap <silent> <C-TAB> <Plug>AirlineSelectNextTab
 nmap <silent> <TAB> <Plug>AirlineSelectNextTab
 " This is not work
 nmap <silent> <C-S-TAB> <Plug>AirlineSelectPrevTab
 nmap <silent> <S-TAB> <Plug>AirlineSelectPrevTab
-nmap <silent> <leader>bd :CloseBufferWithoutClosingWindow<CR>
+nmap <silent> <Space>bd :CloseBufferWithoutClosingWindow<CR>
 " nmap <silent> [h <Plug>(IndentWisePreviousLesserIndent)
 nmap <silent> <c-k> <Plug>(IndentWisePreviousEqualIndent)
 " nmap <silent> [l <Plug>(IndentWisePreviousGreaterIndent)
 " nmap <silent> ]h <Plug>(IndentWiseNextLesserIndent)
 nmap <silent> <c-j> <Plug>(IndentWiseNextEqualIndent)
 " nmap <silent> ]l <Plug>(IndentWiseNextGreaterIndent)
-" nmap <silent> <leader>[_ <Plug>(IndentWisePreviousAbsoluteIndent)
-" nmap <silent> <leader>]_ <Plug>(IndentWiseNextAbsoluteIndent)
+" nmap <silent> <Space>[_ <Plug>(IndentWisePreviousAbsoluteIndent)
+" nmap <silent> <Space>]_ <Plug>(IndentWiseNextAbsoluteIndent)
 nmap <silent> [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 nmap <silent> ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
-nmap <silent> <leader>t :TestSuite<CR>
-nnoremap <silent> <leader>fs :Files<CR>
-nnoremap <silent> <leader>fg :Rg<CR>
-xmap <leader>ff <Plug>(coc-format-selected)
-nmap <leader>ff <Plug>(coc-format-selected)
+nmap <silent> <Space>tt :TestSuite<CR>
+nnoremap <silent> <Space>fs :Files<CR>
+nnoremap <silent> <Space>rg :Rg<CR>
+xmap <Space>ff <Plug>(coc-format-selected)
+nmap <Space>ff :Format<CR>
+nmap <Space>ft :Fern . -reveal=%<CR>
+nmap <Space>ev :e ~/.vimrc<CR>
+nmap <Space>sv :source ~/.vimrc<CR>
+nmap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nmap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+nmap <silent><nowait><expr> j coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\j"
+nmap <silent><nowait><expr> k coc#float#has_scroll() ? coc#float#scroll(0, 1) : "\k"
+nmap <silent><nowait><expr> <ESC> coc#float#has_scroll() ? coc#float#close_all() : "\<ESC>"
+nnoremap <Space>tg :<C-u>silent call <SID>tig_status()<CR>
+
+if has('nvim')
+	autocmd! TermOpen * startinsert
+	autocmd TermOpen * startinsert
+	autocmd! TermClose
+	" autocmd TermClose * :bd!
+endif
 
 "
 " my functions
 "
+
+function! s:tig_status() abort
+    call s:open_term('tig')
+endfunction
+
+function! s:open_term(cmd) abort
+    let split = s:split_type()
+
+	if has('nvim') " nvim
+		call execute(printf('%s term://%s', split, a:cmd))
+	else " vim8
+		call execute(printf('%s term ++close %s', split, a:cmd))
+	endif
+
+    setlocal bufhidden=delete
+    setlocal noswapfile
+    setlocal nobuflisted
+endfunction
+
+function! s:split_type() abort
+    " NOTE: my cell ratio: width:height == 1:2.1
+    let width = winwidth(win_getid())
+    let height = winheight(win_getid()) * 2.1
+
+    if height > width
+        return 'split'
+    else
+        return 'vsplit'
+    endif
+endfunction
+
 function! s:ShowErr(msg)
   echohl ErrorMsg
   echo a:msg

@@ -239,6 +239,8 @@ alias mv='mv -i'
 
 alias mkdir='mkdir -p'
 
+alias nvim='nvim'
+
 # on alias also after sudo
 alias sudo='sudo '
 
@@ -377,4 +379,9 @@ if [ -e /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
 	export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 fi
 
+export GIT_EDITR=vim
+export EDITOR=vim
 
+# SHELL LOGIN WITH TMUX / If not running interactively, do not do anything
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux

@@ -3,40 +3,56 @@
 set -e
 
 root=$(realpath $(dirname $0)/..)
+runtime_id=$(uuidgen)
 
-local configs=(
-	".agignore"
-	".tmux.conf"
-	".vimrc"
-	".zshrc"
+local -A configs=(
+	[".agignore"]=""
+	[".tmux.conf"]=""
+	[".vimrc"]=""
+	[".zshrc"]=""
+	[".tigrc"]=""
+	[".config/nvim/init.vim"]=".vimrc"
+	[".config/gitui/key_bindings.ron"]=""
 )
 local -A requirements=(
 	["ag"]="the_silver_searcher"
 	["fzf"]="fzf"
 	["zsh"]="zsh"
+	["nvim"]="nvim"
 	["vim"]="vim"
 	["tmux"]="tmux"
+	["tig"]="tig"
+	["nvr"]="nvr"
 )
 local -A version_flags=(
 	["ag"]="--version"
 	["fzf"]="--version"
 	["zsh"]="--version"
+	["nvim"]="--version"
 	["vim"]="--version"
 	["tmux"]="-V"
+	["tig"]="--version"
+	["nvr"]="--version"
 )
 local -A version_positions=(
 	["ag"]="3"
 	["fzf"]="1"
 	["zsh"]="2"
+	["nvim"]="2"
 	["vim"]="5"
 	["tmux"]="2"
+	["tig"]="3"
+	["nvr"]="2"
 )
 local -A required_versions=(
 	["ag"]="2.2.0"
 	["fzf"]="0.30.0"
 	["zsh"]="5.8.1"
-	["vim"]="8.2"
+	["nvim"]="0.7.0"
+	["vim"]="8.0.0"
 	["tmux"]="3.2"
+	["tig"]="2.5.5"
+	["nvr"]="2.4.2"
 )
 
 # args
@@ -81,7 +97,7 @@ for cmd in ${(k)requirements[@]}; do
 	local version_pos=${version_positions[$cmd]}
 	local version=$($cmd $version_flag | head -1 | cut -d' ' -f$version_pos)
 	local required=${required_versions[$cmd]}
-	if _version_check $version $required; then
+	if _version_check ${version#v} $required; then
 		echo $cmd $version OK
 	else
 		brew upgrade ${requirements[$cmd]}
@@ -89,13 +105,24 @@ for cmd in ${(k)requirements[@]}; do
 done
 
 # install configuration files
-for config in ${configs[@]}; do
+backupdir="$HOME/dotfiles.backup/$runtime_id"
+mkdir -p $backupdir
+for config in ${(k)configs[@]}; do
 	if [ -e $HOME/$config ] || [ -L $HOME/$config ]; then
-		if [[ -z $force ]]; then
-			continue
-		else
-			rm -f $HOME/$config
-		fi
+		local backup="$backupdir/$config"
+		mkdir -p "$(dirname $backup)"
+		mv $HOME/$config $backup
 	fi
-	ln -s $root/$config $HOME/$config
+	mkdir -p "$(dirname $HOME/$config)"
+	local src=${configs[$config]}
+	local dst=$config
+	[[ $src = "" ]] && src=$config
+	ln -s $root/$src $HOME/$dst
 done
+
+# setup vim
+plug_vim="$HOME/.vim/autoload/plug.vim --create-dirs"
+if [ ! -e $plug_vim ]; then
+	curl -fLo $plug_vim \
+		"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+fi

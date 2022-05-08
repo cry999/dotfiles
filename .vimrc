@@ -21,6 +21,7 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'ron-rs/ron.vim'
+Plug 'SirVer/ultisnips'
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -69,6 +70,25 @@ let g:airline_left_sep = "\ue0b0\ue0b1"
 let g:airline_right_sep = "\ue0b3\ue0b2"
 let g:airline#extensions#tabline#left_sep = "\ue0b0\ue0b1 "
 let g:airline#extensions#tabline#right_sep = "\ue0b3\ue0b2"
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<nop>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:coc_snippet_next = '<tab>'
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 "
 " coc.nvim
@@ -237,6 +257,20 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+let g:coc_global_extensions = [
+	\ 'coc-yaml',
+	\ 'coc-toml',
+	\ 'coc-json',
+	\ 'coc-html',
+	\ 'coc-prettier',
+	\ 'coc-eslint',
+	\ 'coc-tsserver',
+	\ 'coc-docker',
+	\ 'coc-go',
+	\ 'coc-diagnostic',
+	\ 'coc-snippets',
+	\ ]
 
 "
 " FZF

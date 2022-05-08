@@ -11,6 +11,7 @@ local -A configs=(
 	[".vimrc"]=""
 	[".zshrc"]=""
 	[".tigrc"]=""
+	[".vim/UltiSnips"]=""
 	[".config/nvim/init.vim"]=".vimrc"
 	[".config/gitui/key_bindings.ron"]=""
 )

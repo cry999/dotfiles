@@ -381,7 +381,3 @@ fi
 
 export GIT_EDITR=vim
 export EDITOR=vim
-
-# SHELL LOGIN WITH TMUX / If not running interactively, do not do anything
-[[ $- != *i* ]] && return
-[[ -z "$TMUX" ]] && exec tmux

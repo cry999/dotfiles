@@ -57,6 +57,9 @@ let nvrcmd      = "nvr --remote-wait"
 let $VISUAL     = nvrcmd
 let $GIT_EDITOR = nvrcmd
 
+autocmd FileType netrw setl bufhidden=wipe
+let g:netrw_fastbrowse = 0
+
 " theme
 colorscheme gruvbox
 set termguicolors

@@ -1,5 +1,6 @@
 # environment variable
 export LANG=ja_JP.UTF-8
+export TERM=xterm-256color
 # suppress ModuleNotFoundError: No module named 'setuptools._distutils'
 export SETUPTOOLS_USE_DISTUTILS=stdlib
 # export PYTHONSTARTUP=$HOME/.pythonstartup.py
@@ -227,6 +228,9 @@ if which uname >/dev/null 2>&1; then
 		*)      alias ls='ls --color=auto' ;;
 	esac
 fi
+if [ "$(which vim 2>/dev/null)" = "/usr/bin/vim" ]; then
+	alias vim='/usr/local/bin/vim'
+fi
 alias exa='exa --icons --git-ignore --sort type'
 alias ls='exa --no-icons'
 alias la='exa -a'
@@ -274,7 +278,7 @@ alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
 export CLICOLOR=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 export FZF_DEFAULT_OPTS='--info=inline --border --preview="bat -r 1:20 --color=always {}"'
 # Use ~~ as the trigger sequence instead of the default **
 export FZF_COMPLETION_TRIGGER=','
@@ -381,3 +385,5 @@ fi
 
 export GIT_EDITR=vim
 export EDITOR=vim
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"

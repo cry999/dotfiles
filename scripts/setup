@@ -10,6 +10,7 @@ local -A configs=(
 	[".tmux.conf"]=""
 	[".vimrc"]=""
 	[".zshrc"]=""
+	[".zshrc.local"]=""
 	[".tigrc"]=""
 	[".vim/UltiSnips"]=""
 	[".config/nvim/init.vim"]=".vimrc"

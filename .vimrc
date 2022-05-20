@@ -78,20 +78,6 @@ let g:airline#extensions#tabline#right_sep = "\ue0b3\ue0b2"
 let g:UltiSnipsExpandTrigger="<nop>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:coc_snippet_next = '<tab>'
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 "
 " coc.nvim
@@ -332,49 +318,10 @@ nmap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) :
 nmap <silent><nowait><expr> j coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\j"
 nmap <silent><nowait><expr> k coc#float#has_scroll() ? coc#float#scroll(0, 1) : "\k"
 nmap <silent><nowait><expr> <ESC> coc#float#has_scroll() ? coc#float#close_all() : "\<ESC>"
-nnoremap <Space>tg :<C-u>silent call <SID>tig_status()<CR>
-
-if has('nvim')
-	autocmd! TermOpen * startinsert
-	autocmd TermOpen * startinsert
-	autocmd! TermClose
-	" autocmd TermClose * :bd!
-endif
 
 "
 " my functions
 "
-
-function! s:tig_status() abort
-    call s:open_term('tig')
-endfunction
-
-function! s:open_term(cmd) abort
-    let split = s:split_type()
-
-	if has('nvim') " nvim
-		call execute(printf('%s term://%s', split, a:cmd))
-	else " vim8
-		call execute(printf('%s term ++close %s', split, a:cmd))
-	endif
-
-    setlocal bufhidden=delete
-    setlocal noswapfile
-    setlocal nobuflisted
-endfunction
-
-function! s:split_type() abort
-    " NOTE: my cell ratio: width:height == 1:2.1
-    let width = winwidth(win_getid())
-    let height = winheight(win_getid()) * 2.1
-
-    if height > width
-        return 'split'
-    else
-        return 'vsplit'
-    endif
-endfunction
-
 function! s:ShowErr(msg)
   echohl ErrorMsg
   echo a:msg

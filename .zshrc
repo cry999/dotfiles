@@ -278,7 +278,7 @@ alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
 export CLICOLOR=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_DEFAULT_OPTS='--info=inline --border --preview="bat -r 1:20 --color=always {}"'
 # Use ~~ as the trigger sequence instead of the default **
 export FZF_COMPLETION_TRIGGER=','

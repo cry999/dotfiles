@@ -1,0 +1,24 @@
+# Disable the newline at the start of the prompt
+add_newline = true
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+format="""
+[┌$fill┐](bold cyan)
+[│](bold cyan) $all
+"""
+
+[character]
+success_symbol="[❯❯❯](bold #66de93)"
+error_symbol="[❯❯❯](bold #d83a56)"
+
+[fill]
+symbol="─"
+style="bold cyan"
+
+[golang]
+format="[\ufcd1 $version](bold #34b3f1) "
+
+[aws]
+symbol="\uf0c2 "

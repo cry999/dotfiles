@@ -87,94 +87,6 @@ zstyle ':fzf-tab:*' fzf-bindings 'ctrl-y:accept'
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' unstagedstr $'\uf056'
-zstyle ':vcs_info:git:*' stagedstr $'\uf055'
-zstyle ':vcs_info:*' formats $'\uf418 %b' $'%c%u'
-zstyle ':vcs_info:*' actionformats $'\uf408(%a)%b' $'%c%u'
-
-function _prompt_reset() {
-	PROMPT=$'\n'
-}
-
-function _prompt_name() {
-	local icon=$'\ue77a'
-	local bgcolor="129"
-	local fgcolor="000"
-	if which uname >/dev/null 2>&1; then
-		case "$(uname | tr '[A-Z]' '[a-z]')" in
-		linux)
-			icon=$'\ue712'; bgcolor="015" ;
-			case "$([[ -e /etc/os-release ]] && source /etc/os-release; echo $ID)" in
-			alpine)   icon=$'\uf300'; bgcolor="159";;
-			debian)   icon=$'\uf306'; bgcolor="000"; fgcolor="001";;
-			ubuntu)   icon=$'\uf31b'; bgcolor="009";;
-			raspbian) icon=$'\uf315'; bgcolor="001";;
-			esac ;;
-		darwin)  icon=$'\ue711'; bgcolor="165" ;;
-		windows) icon=$'\ue70f'; bgcolor="012" ;;
-		esac
-	fi
-	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{000}\ue0b0%f%k'
-	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{'$fgcolor$'}\ue0b1 %f%k'
-	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{'$fgcolor$'}'"$icon"$' %n@%m%f%k'
-	PROMPT=$PROMPT$'%K{'$bgcolor$'}%F{'$fgcolor$'} \ue0b1%f%k'
-	PROMPT=$PROMPT$'%K{000}%F{'$bgcolor$'}\ue0b0%f%k'
-}
-
-function _prompt_vcs_info_msg() {
-	LANG=en_US.UTF-8 vcs_info
-	if [[ "${vcs_info_msg_0_}" != "" ]]; then
-		PROMPT=$PROMPT$'%K{013}%F{000}\ue0b0%f%k'
-		PROMPT=$PROMPT$'%K{013}%F{000}\ue0b1%f%k'
-		PROMPT=$PROMPT$'%K{013}%F{000}'" ${vcs_info_msg_0_}"'%f%k'
-		[[ "${vcs_info_msg_1_}" != "" ]] && PROMPT=$PROMPT$'%K{013}%F{000}'" ${vcs_info_msg_1_}"'%f%k'
-		[[ "${vcs_info_msg_2_}" != "" ]] && PROMPT=$PROMPT$'%K{013}%F{000}'" ${vcs_info_msg_2_}"'%f%k'
-		PROMPT=$PROMPT$'%K{013}%F{000}\ue0b1%f%k'
-		PROMPT=$PROMPT$'%K{000}%F{013}\ue0b0%f%k'
-	fi
-}
-
-function _prompt_aws() {
-	if [[ -n "$AWS_PROFILE" ]]; then
-		PROMPT=$PROMPT$'%K{009}%F{000}\ue0b0%f%k'
-		PROMPT=$PROMPT$'%K{009}%F{000}\ue0b1 %f%k'
-		PROMPT=$PROMPT$'%K{009}%F{000}\uf0c2 '$AWS_PROFILE$'%f%k'
-		PROMPT=$PROMPT$'%K{009}%F{000} \ue0b1%f%k'
-		PROMPT=$PROMPT$'%K{000}%F{009}\ue0b0%f%k'
-	fi
-}
-
-function _prompt_dir() {
-	PROMPT=$PROMPT$'%K{011}%F{000}\ue0b0%f%k'
-	PROMPT=$PROMPT$'%K{011}%F{000}\ue0b1 %f%k'
-	PROMPT=$PROMPT$'%K{011}%F{000}\uf413 %c%f%k'
-	PROMPT=$PROMPT$'%K{011}%F{000} \ue0b1%f%k'
-	PROMPT=$PROMPT$'%K{000}%F{011}\ue0b0%f%k'
-}
-
-function _prompt_finish() {
-	PROMPT=$PROMPT$'%F{000}\ue0b0%f'
-	PROMPT=$PROMPT$'\n'
-	PROMPT=$PROMPT$'\n'
-	PROMPT=$PROMPT$'%(?.%K{010}%F{000}.%K{009}%F{000})\ue0b0%f%k'
-	PROMPT=$PROMPT$'%(?.%K{010}%F{000}.%K{009}%F{000})\ue0b1%f%k'
-	PROMPT=$PROMPT$'%(?.%K{010}%F{000}.%K{009}%F{000})\ue0b1%f%k'
-	PROMPT=$PROMPT$'%(?.%K{000}%F{010}.%K{000}%F{009})\ue0b0%f%k'
-	PROMPT=$PROMPT$'%F{000}\ue0b0%f '
-}
-
-function _update_prompt() {
-	_prompt_reset
-	_prompt_name
-	_prompt_vcs_info_msg
-	_prompt_aws
-	_prompt_dir
-	_prompt_finish
-}
-
-add-zsh-hook precmd _update_prompt
-
 #####################################################
 # option (print japanese name file)
 setopt print_eight_bit
@@ -382,6 +294,9 @@ if [ -e /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
 	export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
 	export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 fi
+
+# Load starship
+eval "$(starship init zsh)"
 
 export GIT_EDITR=vim
 export EDITOR=vim

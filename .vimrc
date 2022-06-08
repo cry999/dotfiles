@@ -318,6 +318,8 @@ nmap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) :
 nmap <silent><nowait><expr> j coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\j"
 nmap <silent><nowait><expr> k coc#float#has_scroll() ? coc#float#scroll(0, 1) : "\k"
 nmap <silent><nowait><expr> <ESC> coc#float#has_scroll() ? coc#float#close_all() : "\<ESC>"
+vnoremap <silent> <C-a> :s/\%V-\=\d\+/\=submatch(0)+1/g<CR>
+vnoremap <silent> <C-x> :s/\%V-\=\d\+/\=submatch(0)-1/g<CR>
 
 "
 " my functions

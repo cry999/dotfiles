@@ -2,6 +2,9 @@
   "typescript.format.enabled": true,
   "typescript.suggest.autoImports": true,
   "tsserver.formatOnType": true,
+  "go.goplsOptions": {
+    "gofumpt": true
+  },
   "coc.preferences.formatOnSaveFiletypes": [
     "golang",
     "json",

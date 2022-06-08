@@ -1,0 +1,23 @@
+{
+  "typescript.format.enabled": true,
+  "typescript.suggest.autoImports": true,
+  "tsserver.formatOnType": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "golang",
+    "json",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "coc.preferences.formatOnType": true,
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
+}

@@ -13,6 +13,7 @@ local -A configs=(
 	[".zshrc.local"]=""
 	[".tigrc"]=""
 	[".vim/UltiSnips"]=""
+	[".vim/coc-settings.json"]=""
 	[".config/nvim/init.vim"]=".vimrc"
 	[".config/gitui/key_bindings.ron"]=""
 	[".config/starship.toml"]=""

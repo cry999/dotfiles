@@ -305,7 +305,7 @@ nmap <silent> <c-j> <Plug>(IndentWiseNextEqualIndent)
 " nmap <silent> <Space>]_ <Plug>(IndentWiseNextAbsoluteIndent)
 nmap <silent> [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 nmap <silent> ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
-nmap <silent> <Space>tt :TestSuite<CR>
+nmap <silent> <Space>tt :CocCommand go.test.toggle<CR>
 nnoremap <silent> <Space>fs :Files<CR>
 nnoremap <silent> <Space>rg :Rg<CR>
 xmap <Space>ff <Plug>(coc-format-selected)

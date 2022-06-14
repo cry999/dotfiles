@@ -4,21 +4,110 @@ add_newline = true
 # Wait 10 milliseconds for starship to check files under the current directory.
 scan_timeout = 10
 
-format="""
-[┌$fill┐](bold cyan)
-[│](bold cyan) $all
+format = """
+[┌](bold cyan) [\uf07c](bold cyan ) $directory($battery)[$fill┐](bold cyan)(
+[│](bold cyan) [\uf7a1](bold red  ) $git_branch$git_commit$git_state$git_metrics$git_status)(
+[│](bold cyan) [\uf0c2](bold white) $aws$azure$gcloud)(
+[│](bold cyan) [\uf299](bold cyan ) $env_var)(
+[│](bold cyan) [\uf425](bold white) $golang$nodejs)
+[└$fill┘](bold cyan)
+[\uf489](bold cyan) $status$cmd_duration$character
 """
 
+[aws]
+symbol = "\uf52c "
+force_display = true
+
+[azure]
+symbol = "\ufd03 "
+
+[[battery.display]]
+threshold = 25
+discharging_symbol = "\uf57b "
+charging_symbol = "\uf586 "
+style = "bold red"
+
+[[battery.display]]
+threshold = 50
+discharging_symbol = "\uf57d "
+charging_symbol = "\uf588 "
+style = "bold yellow"
+
+[[battery.display]]
+threshold = 75
+discharging_symbol = "\uf580 "
+charging_symbol = "\uf589 "
+style = "bold yellow"
+
+[[battery.display]]
+threshold = 100
+discharging_symbol = "\uf582 "
+charging_symbol = "\uf584 "
+style = "bold cyan"
+
 [character]
-success_symbol="[❯❯❯](bold #66de93)"
-error_symbol="[❯❯❯](bold #d83a56)"
+success_symbol = "[❯❯❯](bold #66de93)"
+error_symbol = "[❯❯❯](bold #d83a56)"
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+
+[directory]
+truncation_length = 128
+truncate_to_repo = false
+truncation_symbol = "(...)"
+home_symbol = "~"
+read_only = "\uf83d "
+style = "bold underline italic dimmed cyan"
+read_only_style = "bold underline italic dimmed red"
+repo_root_style = "bold underline italic yellow"
+
+[env_var]
+disabled = false
 
 [fill]
-symbol="─"
-style="bold cyan"
+symbol = "─"
+style = "bold cyan"
+
+[gcloud]
+symbol = "\uf1a0 "
+
+[git_branch]
+symbol = "\ue725 "
+style = "bold red"
+
+[git_commit]
+disabled = false
+tag_disabled = false
+only_detached = false
+tag_symbol = "\uf412 "
+format = "\\(\ue729 [$hash](dimmed white)[( $tag )]($style)\\) "
+style = "bold red"
+
+[git_metrics]
+disabled = false
+only_nonzero_diffs = false
 
 [golang]
-format="[\ufcd1 $version](bold #34b3f1) "
+format = "[\ufcd1 $version]($style) "
+style = "bright-blue"
 
-[aws]
-symbol="\uf0c2 "
+[jobs]
+symbol = "\uf0ae "
+
+[nodejs]
+format = "[$symbol$version]($style) "
+symbol = "\ue718 "
+style = "bright-green"
+detect_extensions = ["js", "mjs", "cjs", "jsx", "ts", "mts", "cts", "tsx"]
+
+[status]
+disabled = false
+style = "bold #d83a56"
+
+[username]
+format = "[\uf2c2 $user]($style)"
+disabled = false
+show_always = true
+style_user = "bold cyan"

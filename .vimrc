@@ -22,6 +22,7 @@ Plug 'lambdalisue/nerdfont.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'ron-rs/ron.vim'
 Plug 'SirVer/ultisnips'
+Plug 'easymotion/vim-easymotion'
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -320,6 +321,7 @@ nmap <silent><nowait><expr> k coc#float#has_scroll() ? coc#float#scroll(0, 1) : 
 nmap <silent><nowait><expr> <ESC> coc#float#has_scroll() ? coc#float#close_all() : "\<ESC>"
 vnoremap <silent> <C-a> :s/\%V-\=\d\+/\=submatch(0)+1/g<CR>
 vnoremap <silent> <C-x> :s/\%V-\=\d\+/\=submatch(0)-1/g<CR>
+nmap <Space>ww <Plug>(easymotion-w)
 
 "
 " my functions

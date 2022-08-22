@@ -23,6 +23,7 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'ron-rs/ron.vim'
 Plug 'SirVer/ultisnips'
 Plug 'easymotion/vim-easymotion'
+Plug 'andrewradev/linediff.vim'
 
 " Git
 Plug 'airblade/vim-gitgutter'

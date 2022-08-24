@@ -9,8 +9,8 @@ export SETUPTOOLS_USE_DISTUTILS=stdlib
 autoload -Uz colors
 colors
 
-# keybind of emacs
-bindkey -e
+# keybind of vim
+bindkey -v
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -36,6 +36,40 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 zinit light Aloxaf/fzf-tab
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
+function zvm_after_select_vi_mode() {
+  unset SV_NORMAL
+  unset SV_INSERT
+  unset SV_VISUAL
+  unset SV_REPLACE
+  case $ZVM_MODE in
+    $ZVM_MODE_NORMAL)
+      # Something you want to do...
+	  export SV_NORMAL=1
+    ;;
+    $ZVM_MODE_INSERT)
+      # Something you want to do...
+	  export SV_INSERT=1
+    ;;
+    $ZVM_MODE_VISUAL)
+      # Something you want to do...
+	  export SV_VISUAL=1
+    ;;
+    $ZVM_MODE_VISUAL_LINE)
+      # Something you want to do...
+	  export SV_VISUAL=1
+    ;;
+    $ZVM_MODE_REPLACE)
+      # Something you want to do...
+	  export SV_REPLACE=1
+    ;;
+    *)
+      export SV_INSERT=1
+	;;
+  esac
+}
 
 # history
 HISTFILE=~/.zsh_history
@@ -155,7 +189,7 @@ alias mv='mv -i'
 
 alias mkdir='mkdir -p'
 
-alias nvim='nvim'
+alias vim='nvim'
 
 # on alias also after sudo
 alias sudo='sudo '

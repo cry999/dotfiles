@@ -129,13 +129,29 @@ for config in ${(k)configs[@]}; do
 done
 
 # setup vim
-plug_vim="$HOME/.vim/autoload/plug.vim --create-dirs"
+plug_vim="$HOME/.vim/autoload/plug.vim"
 if [ ! -e $plug_vim ]; then
-	curl -fLo $plug_vim \
+	curl -fLo $plug_vim --create-dirs \
+		"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+	curl -fLo $plug_nvim --create-dirs \
+		"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+fi
+plug_nvim="$HOME/.local/share/nvim/site/autoload/plug.vim"
+if [ ! -e $plug_nvim ]; then
+	curl -fLo $plug_nvim --create-dirs \
 		"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 fi
 
 # setup tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "setup tmux plugin manager..."
+tpm_dir="~/.tmux/plugins/tpm"
+[[ ! -e $tpm_dir  ]] && git clone https://github.com/tmux-plugins/tpm $tpm_dir || echo "Done."
+
+# theme (catppuccin)
+echo "install catppuccin iterm2 theme..."
+mkdir -p "$HOME/.iterm2/schemes"
+pushd "$HOME/.iterm2/schemes" >/dev/null
+[[ ! -e "catppuccin-iterm" ]] && git clone https://github.com/catppuccin/iterm.git catppuccin-iterm || echo "Done."
+popd >/dev/null
 
 source ~/.zshrc

@@ -8,10 +8,9 @@ format = """
 [┌](bold cyan) [\uf07c](bold cyan ) $directory($battery)[$fill┐](bold cyan)(
 [│](bold cyan) [\uf7a1](bold red  ) $git_branch$git_commit$git_state$git_metrics$git_status)(
 [│](bold cyan) [\uf0c2](bold white) $aws$azure$gcloud)(
-[│](bold cyan) [\uf299](bold cyan ) $env_var)(
 [│](bold cyan) [\uf425](bold white) $golang$nodejs)
 [└$fill┘](bold cyan)
-[\uf489](bold cyan) $status$cmd_duration$character
+[\uf489](bold cyan) $env_var$status$cmd_duration$character
 """
 
 [aws]
@@ -46,8 +45,9 @@ charging_symbol = "\uf584 "
 style = "bold cyan"
 
 [character]
-success_symbol = "[❯❯❯](bold #66de93)"
-error_symbol = "[❯❯❯](bold #d83a56)"
+success_symbol = "[❯❯❯](bold green)"
+error_symbol = "[❯❯❯](bold red)"
+vimcmd_symbol = "[❯❯❯](bold green)"
 
 [cmd_duration]
 min_time = 0
@@ -65,6 +65,19 @@ repo_root_style = "bold underline italic yellow"
 
 [env_var]
 disabled = false
+
+[env_var.SV_NORMAL]
+variable = "SV_NORMAL"
+format = "[](bold cyan)[ NORMAL ](bold #1a1a1a bg:cyan)[](bold cyan) "
+[env_var.SH_INSERT]
+variable = "SV_INSERT"
+format = "[](green)[ INSERT ](bold #1a1a1a bg:green)[](bold green) "
+[env_var.SH_VISUAL]
+variable = "SV_VISUAL"
+format = "[](bold purple)[ VISUAL ](bold #1a1a1a bg:purple)[](bold purple) "
+[env_var.SH_REPLACE]
+variable = "SV_REPLACE"
+format = "[](bold red)[ REPLACE ](bold #1a1a1a bg:red)[](bold red) "
 
 [fill]
 symbol = "─"

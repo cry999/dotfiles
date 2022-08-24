@@ -4,9 +4,16 @@ call plug#begin()
 " color theme
 Plug 'ulwlu/elly.vim'
 Plug 'morhetz/gruvbox'
+Plug 'EdenEast/nightfox.nvim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+
+" tab bar
+" Plug 'nanozuki/tabby.nvim'
+Plug 'akinsho/bufferline.nvim'
+
 " status bar
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " editor
 Plug 'tpope/vim-surround'
@@ -21,9 +28,11 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'ron-rs/ron.vim'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'easymotion/vim-easymotion'
 Plug 'andrewradev/linediff.vim'
+
+Plug 'kyazdani42/nvim-tree.lua'
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -31,6 +40,9 @@ Plug 'airblade/vim-gitgutter'
 " test
 Plug 'vim-test/vim-test'
 Plug 'tpope/vim-dispatch'
+
+" tmux
+Plug 'christoomey/vim-tmux-navigator'
 
 """""""""""""""""""""
 " Language specific "
@@ -63,23 +75,83 @@ autocmd FileType netrw setl bufhidden=wipe
 let g:netrw_fastbrowse = 0
 
 " theme
-colorscheme gruvbox
+let g:catppuccin_flavour = 'frappe'
+lua << EOF
+require('catppuccin').setup {
+  integarations = {
+  	coc_nvim = true,
+	gitgutter = true,
+	nvimtree = true,
+	bufferline = true,
+  },
+}
+EOF
+colorscheme catppuccin
 set termguicolors
 
-" let g:airline_theme='violet'
-let g:airline_theme='angr'
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline_left_sep = "\ue0b0\ue0b1"
-let g:airline_right_sep = "\ue0b3\ue0b2"
-let g:airline#extensions#tabline#left_sep = "\ue0b0\ue0b1 "
-let g:airline#extensions#tabline#right_sep = "\ue0b3\ue0b2"
+let g:linediff_diffopt='iwhite'
 
-" UltiSnips
-let g:UltiSnipsExpandTrigger="<nop>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+lua << EOF
+require('lualine').setup {
+  options = {
+	  theme = 'catppuccin',
+    component_separators = '',
+    section_separators = { left = '', right = '' },
+  },
+  sections = {
+    lualine_a = {
+      { 'mode', separator = { left = '' }, right_padding = 2 },
+    },
+    lualine_b = {
+      { 'filetype', icon_only = true, separator = { left = '' } },
+      { 'filename', path = 1, symbols = {
+          modified = ' ', readonly = ' ', unnamed = '...', newfile = ' ',
+      }},
+    },
+    lualine_c = { 'diagnostics' },
+    lualine_x = {
+      { 'branch', separator = { left = '' } },
+      'diff',
+    },
+    lualine_y = { 'filetype', 'encoding', 'fileformat', 'progress' },
+    lualine_z = {
+      { 'location', separator = { right = '' }, left_padding = 2 },
+    },
+  },
+  inactive_sections = {
+    lualine_a = { 'filename' },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = { 'location' },
+  },
+  tabline = {},
+  extensions = {},
+}
+require('bufferline').setup {
+  options = {
+    offsets = {
+      {
+        filetype = "NvimTree",
+        text = function()
+        return vim.fn.getcwd()
+        end,
+        highlight = 'Directory',
+        text_align = 'left',
+      }
+    },
+    separator_style = 'slant',
+    highlight = {gui = "underline", guisp = "blue"},
+	diagnostics = 'coc',
+    diagnostics_indicator = function(count, level, diagnostics_dict, context)
+      local icon = level:match("error") and " " or " "
+      return " " .. icon .. count
+    end,
+  }
+}
+require('nvim-tree').setup()
+EOF
 
 "
 " coc.nvim
@@ -118,10 +190,10 @@ endif
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ coc#pum#visible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -250,28 +322,33 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 let g:coc_global_extensions = [
-	\ 'coc-yaml',
-	\ 'coc-toml',
-	\ 'coc-json',
-	\ 'coc-html',
-	\ 'coc-prettier',
-	\ 'coc-eslint',
-	\ 'coc-tsserver',
-	\ 'coc-docker',
-	\ 'coc-go',
-	\ 'coc-diagnostic',
-	\ 'coc-snippets',
-	\ ]
+  \ 'coc-yaml',
+  \ 'coc-toml',
+  \ 'coc-json',
+  \ 'coc-html',
+  \ 'coc-prettier',
+  \ 'coc-eslint',
+  \ 'coc-tsserver',
+  \ 'coc-docker',
+  \ 'coc-go',
+  \ 'coc-diagnostic',
+  \ ]
 
 "
 " FZF
 "
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+  \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case --hidden -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
+
+let g:fzf_action = {
+  \ 'ctrl-y': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit',
+  \ }
 
 "
 " vim-test
@@ -290,18 +367,14 @@ let g:fern#default_hidden=1
 " my keyboar mapping
 "
 let mapleader = ","
-" This is not work
-nmap <silent> <C-TAB> <Plug>AirlineSelectNextTab
-nmap <silent> <TAB> <Plug>AirlineSelectNextTab
-" This is not work
-nmap <silent> <C-S-TAB> <Plug>AirlineSelectPrevTab
-nmap <silent> <S-TAB> <Plug>AirlineSelectPrevTab
+nmap <silent> <S-Tab> :BufferLineCyclePrev<CR>
+nmap <silent> <Tab> :BufferLineCycleNext<CR>
 nmap <silent> <Space>bd :CloseBufferWithoutClosingWindow<CR>
 " nmap <silent> [h <Plug>(IndentWisePreviousLesserIndent)
-nmap <silent> <c-k> <Plug>(IndentWisePreviousEqualIndent)
+nmap <silent> <c-[> <Plug>(IndentWisePreviousEqualIndent)
 " nmap <silent> [l <Plug>(IndentWisePreviousGreaterIndent)
 " nmap <silent> ]h <Plug>(IndentWiseNextLesserIndent)
-nmap <silent> <c-j> <Plug>(IndentWiseNextEqualIndent)
+nmap <silent> <c-]> <Plug>(IndentWiseNextEqualIndent)
 " nmap <silent> ]l <Plug>(IndentWiseNextGreaterIndent)
 " nmap <silent> <Space>[_ <Plug>(IndentWisePreviousAbsoluteIndent)
 " nmap <silent> <Space>]_ <Plug>(IndentWiseNextAbsoluteIndent)
@@ -312,7 +385,7 @@ nnoremap <silent> <Space>fs :Files<CR>
 nnoremap <silent> <Space>rg :Rg<CR>
 xmap <Space>ff <Plug>(coc-format-selected)
 nmap <Space>ff :Format<CR>
-nmap <Space>ft :Fern . -reveal=%<CR>
+nmap <Space>ft :NvimTreeToggle<CR>
 nmap <Space>ev :e ~/.vimrc<CR>
 nmap <Space>sv :source ~/.vimrc<CR>
 nmap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"

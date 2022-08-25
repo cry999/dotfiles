@@ -8,7 +8,6 @@ Plug 'EdenEast/nightfox.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 
 " tab bar
-" Plug 'nanozuki/tabby.nvim'
 Plug 'akinsho/bufferline.nvim'
 
 " status bar
@@ -28,7 +27,8 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'ron-rs/ron.vim'
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'easymotion/vim-easymotion'
 Plug 'andrewradev/linediff.vim'
 
@@ -53,6 +53,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mattn/vim-goimports'
 " YAML
 Plug 'neoclide/coc-yaml'
+" Protobuf
+Plug 'rhysd/vim-clang-format'
 
 call plug#end()
 
@@ -65,6 +67,8 @@ set noswapfile
 set nobackup
 set noundofile
 set re=0
+
+let g:python3_host_prog='/usr/local/bin/python3'
 
 " neovim-remote
 let nvrcmd      = "nvr --remote-wait"
@@ -152,6 +156,10 @@ require('bufferline').setup {
 }
 require('nvim-tree').setup()
 EOF
+
+let g:UltiSnipsExpandTrigger="<nop>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 "
 " coc.nvim
@@ -332,6 +340,7 @@ let g:coc_global_extensions = [
   \ 'coc-docker',
   \ 'coc-go',
   \ 'coc-diagnostic',
+  \ 'coc-ultisnips',
   \ ]
 
 "
@@ -385,7 +394,8 @@ nnoremap <silent> <Space>fs :Files<CR>
 nnoremap <silent> <Space>rg :Rg<CR>
 xmap <Space>ff <Plug>(coc-format-selected)
 nmap <Space>ff :Format<CR>
-nmap <Space>ft :NvimTreeToggle<CR>
+" nmap <Space>ft :NvimTreeToggle<CR>
+nmap <Space>ft :Fern . -drawer -reveal=%<CR>
 nmap <Space>ev :e ~/.vimrc<CR>
 nmap <Space>sv :source ~/.vimrc<CR>
 nmap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -396,6 +406,11 @@ nmap <silent><nowait><expr> <ESC> coc#float#has_scroll() ? coc#float#close_all()
 vnoremap <silent> <C-a> :s/\%V-\=\d\+/\=submatch(0)+1/g<CR>
 vnoremap <silent> <C-x> :s/\%V-\=\d\+/\=submatch(0)-1/g<CR>
 nmap <Space>ww <Plug>(easymotion-w)
+
+augroup Golang
+  autocmd!
+  autocmd FileType golang nmap <silent> <Space>ta :CocCommand go.tags.add<CR>
+augroup END
 
 "
 " my functions

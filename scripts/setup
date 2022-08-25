@@ -14,6 +14,8 @@ local -A configs=(
 	[".tigrc"]=""
 	[".vim/UltiSnips"]=""
 	[".vim/coc-settings.json"]=""
+	[".config/nvim/coc-settings.json"]=".vim/coc-settings.json"
+	[".config/nvim/UltiSnips"]=".vim/UltiSnips"
 	[".config/nvim/init.vim"]=".vimrc"
 	[".config/gitui/key_bindings.ron"]=""
 	[".config/starship.toml"]=""
@@ -141,10 +143,12 @@ if [ ! -e $plug_nvim ]; then
 	curl -fLo $plug_nvim --create-dirs \
 		"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 fi
+# for nvim python provider
+python3 -m pip install --user --upgrade pynvim
 
 # setup tmux
 echo "setup tmux plugin manager..."
-tpm_dir="~/.tmux/plugins/tpm"
+tpm_dir="$HOME/.tmux/plugins/tpm"
 [[ ! -e $tpm_dir  ]] && git clone https://github.com/tmux-plugins/tpm $tpm_dir || echo "Done."
 
 # theme (catppuccin)

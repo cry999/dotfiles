@@ -31,7 +31,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'easymotion/vim-easymotion'
 Plug 'andrewradev/linediff.vim'
-
+Plug 'neoclide/jsonc.vim'
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Git
@@ -67,6 +67,7 @@ set noswapfile
 set nobackup
 set noundofile
 set re=0
+set cursorline
 
 let g:python3_host_prog='/usr/local/bin/python3'
 
@@ -137,7 +138,7 @@ require('bufferline').setup {
   options = {
     offsets = {
       {
-        filetype = "NvimTree",
+        filetype = "fern",
         text = function()
         return vim.fn.getcwd()
         end,
@@ -341,6 +342,7 @@ let g:coc_global_extensions = [
   \ 'coc-go',
   \ 'coc-diagnostic',
   \ 'coc-ultisnips',
+  \ 'coc-sql',
   \ ]
 
 "
@@ -371,6 +373,10 @@ let test#vim#term_position='belowright'
 "
 let g:fern#renderer = "nerdfont"
 let g:fern#default_hidden=1
+augroup FernAutoGroup
+	autocmd!
+	autocmd FileType fern nmap <buffer> q :q<CR>
+augroup END
 
 "
 " my keyboar mapping
@@ -409,7 +415,13 @@ nmap <Space>ww <Plug>(easymotion-w)
 
 augroup Golang
   autocmd!
-  autocmd FileType golang nmap <silent> <Space>ta :CocCommand go.tags.add<CR>
+  autocmd FileType go nmap <buffer> <Space>ta :CocCommand go.tags.add<CR>
+  autocmd FileType golang nmap <buffer> <Space>ta :CocCommand go.tags.add<CR>
+augroup END
+
+augroup Protobuf
+  autocmd!
+  autocmd FileType proto nmap <buffer> <Space>ff :ClangFormat<CR>
 augroup END
 
 "

@@ -332,7 +332,7 @@ fi
 # Load starship
 eval "$(starship init zsh)"
 
-export GIT_EDITR=vim
-export EDITOR=vim
+export GIT_EDITR=nvim
+export EDITOR=nvim
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"

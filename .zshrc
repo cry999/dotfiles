@@ -4,6 +4,7 @@ export TERM=xterm-256color
 # suppress ModuleNotFoundError: No module named 'setuptools._distutils'
 export SETUPTOOLS_USE_DISTUTILS=stdlib
 # export PYTHONSTARTUP=$HOME/.pythonstartup.py
+export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 
 # color
 autoload -Uz colors

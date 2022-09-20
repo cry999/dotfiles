@@ -19,6 +19,7 @@ local -A configs=(
 	[".config/nvim/init.vim"]=".vimrc"
 	[".config/gitui/key_bindings.ron"]=""
 	[".config/starship.toml"]=""
+	["..config/lazygit/config.yml"]=""
 )
 local -A requirements=(
 	["ag"]="the_silver_searcher"

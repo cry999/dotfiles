@@ -43,6 +43,7 @@ git:
   paging:
     colorArg: always
     useConfig: false
+    pager: delta
   commit:
     signOff: false
   merging:
@@ -70,8 +71,8 @@ git:
   parseEmoji: false
   diffContextSize: 3 # how many lines of context are shown around a change in diffs
 os:
-  editCommand: 'nvim' # see 'Configuring File Editing' section
-  editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
+  editCommand: 'nvr' # see 'Configuring File Editing' section
+  editCommandTemplate: '{{editor}} --remote-wait +{{line}} {{filename}}'
   openCommand: 'bat {{filename}}'
 refresher:
   refreshInterval: 10 # File/submodule refresh interval in seconds. Auto-refresh can be disabled via option 'git.autoRefresh'.
@@ -88,29 +89,29 @@ notARepository: 'prompt' # one of: 'prompt' | 'create' | 'skip' | 'quit'
 promptToReturnFromSubprocess: true # display confirmation when subprocess terminates
 keybinding:
   universal:
-    quit: 'q'
+    quit: '<esc>'
     quit-alt1: '<c-c>' # alternative/alias of quit
-    return: '<esc>' # return to previous menu, will quit if there's nowhere to return
+    return: 'q' # return to previous menu, will quit if there's nowhere to return
     quitWithoutChangingDirectory: 'Q'
     togglePanel: '<tab>' # goto the next panel
     prevItem: '<up>' # go one line up
     nextItem: '<down>' # go one line down
     prevItem-alt: 'k' # go one line up
     nextItem-alt: 'j' # go one line down
-    prevPage: ',' # go to next page in list
-    nextPage: '.' # go to previous page in list
+    prevPage: '<c-b>' # go to next page in list
+    nextPage: '<c-f>' # go to previous page in list
     gotoTop: '<' # go to top of list
     gotoBottom: '>' # go to bottom of list
-    scrollLeft: 'H' # scroll left within list view
-    scrollRight: 'L' # scroll right within list view
+    scrollLeft: 'l' # scroll left within list view
+    scrollRight: 'h' # scroll right within list view
     prevBlock: '<left>' # goto the previous block / panel
     nextBlock: '<right>' # goto the next block / panel
-    prevBlock-alt: 'h' # goto the previous block / panel
-    nextBlock-alt: 'l' # goto the next block / panel
+    prevBlock-alt: '<c-k>' # goto the previous block / panel
+    nextBlock-alt: '<c-j>' # goto the next block / panel
     jumpToBlock: ['1', '2', '3', '4', '5'] # goto the Nth block / panel
     nextMatch: 'n'
     prevMatch: 'N'
-    optionMenu: 'x' # show help menu
+    optionMenu: 'K' # show help menu
     optionMenu-alt1: '?' # show help menu
     select: '<space>'
     goInto: '<enter>'
@@ -123,10 +124,10 @@ keybinding:
     openFile: 'o'
     scrollUpMain: '<pgup>' # main panel scroll up
     scrollDownMain: '<pgdown>' # main panel scroll down
-    scrollUpMain-alt1: 'K' # main panel scroll up
-    scrollDownMain-alt1: 'J' # main panel scroll down
-    scrollUpMain-alt2: '<c-u>' # main panel scroll up
-    scrollDownMain-alt2: '<c-d>' # main panel scroll down
+    # scrollUpMain-alt1: 'K' # main panel scroll up
+    # scrollDownMain-alt1: 'J' # main panel scroll down
+    scrollUpMain-alt1: '<c-u>' # main panel scroll up
+    scrollDownMain-alt1: '<c-d>' # main panel scroll down
     executeCustomCommand: ':'
     createRebaseOptionsMenu: 'm'
     pushFiles: 'P'

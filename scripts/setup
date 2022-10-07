@@ -14,12 +14,14 @@ local -A configs=(
 	[".tigrc"]=""
 	[".vim/UltiSnips"]=""
 	[".vim/coc-settings.json"]=""
+	[".config/alacritty/alacritty.yml"]=""
 	[".config/nvim/coc-settings.json"]=".vim/coc-settings.json"
 	[".config/nvim/UltiSnips"]=".vim/UltiSnips"
 	[".config/nvim/init.vim"]=".vimrc"
+	[".config/nvim/ftplugin"]=""
 	[".config/gitui/key_bindings.ron"]=""
 	[".config/starship.toml"]=""
-	["..config/lazygit/config.yml"]=""
+	[".config/lazygit/config.yml"]=""
 )
 local -A requirements=(
 	["ag"]="the_silver_searcher"
@@ -158,5 +160,16 @@ mkdir -p "$HOME/.iterm2/schemes"
 pushd "$HOME/.iterm2/schemes" >/dev/null
 [[ ! -e "catppuccin-iterm" ]] && git clone https://github.com/catppuccin/iterm.git catppuccin-iterm || echo "Done."
 popd >/dev/null
+echo "install catppuccin alacritty theme..."
+mkdir -p "$HOME/.config/alacritty"
+[[ ! -e "$HOME/.config/alacritty/catppuccin" ]] && \
+	git clone https://github.com/catppuccin/alacritty.git ~/.config/alacritty/catppuccin || echo "Done."
+echo "install catppucin bat theme..."
+[[ ! -e "$(bat --config-dir)/.catppuccin" ]] && \
+	mkdir -p "$(bat --config-dir)/.catppucin" && \
+	git clone https://github.com/catppuccin/bat.git "$(bat --config-dir)/.catppucin"
+mkdir -p "$(bat --config-dir)/themes" && \
+	cp $(bat --config-dir)/.catppucin/*.tmTheme $(bat --config-dir)/themes && \
+	bat cache --build
 
 source ~/.zshrc

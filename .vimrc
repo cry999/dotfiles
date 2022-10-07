@@ -33,6 +33,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'andrewradev/linediff.vim'
 Plug 'neoclide/jsonc.vim'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'rust-lang/rust.vim'
+Plug 'jtdowney/vimux-cargo'
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -43,6 +45,8 @@ Plug 'tpope/vim-dispatch'
 
 " tmux
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'preservim/vimux'
+Plug 'benmills/vimux-golang'
 
 """""""""""""""""""""
 " Language specific "
@@ -73,6 +77,7 @@ let g:python3_host_prog='/usr/local/bin/python3'
 
 " neovim-remote
 let nvrcmd      = "nvr --remote-wait"
+let $EDITOR     = nvrcmd
 let $VISUAL     = nvrcmd
 let $GIT_EDITOR = nvrcmd
 
@@ -343,6 +348,7 @@ let g:coc_global_extensions = [
   \ 'coc-diagnostic',
   \ 'coc-ultisnips',
   \ 'coc-sql',
+  \ 'coc-rust-analyzer',
   \ ]
 
 "
@@ -356,7 +362,7 @@ command! -bang -nargs=* Rg
   \   fzf#vim#with_preview(), <bang>0)
 
 let g:fzf_action = {
-  \ 'ctrl-y': 'tab split',
+  \ 'ctrl-y': 'edit',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit',
   \ }
@@ -396,6 +402,7 @@ nmap <silent> <c-]> <Plug>(IndentWiseNextEqualIndent)
 nmap <silent> [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 nmap <silent> ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
 nmap <silent> <Space>tt :CocCommand go.test.toggle<CR>
+nmap <silent> <Space>tn :TestNearest<CR>
 nnoremap <silent> <Space>fs :Files<CR>
 nnoremap <silent> <Space>rg :Rg<CR>
 xmap <Space>ff <Plug>(coc-format-selected)
@@ -412,6 +419,13 @@ nmap <silent><nowait><expr> <ESC> coc#float#has_scroll() ? coc#float#close_all()
 vnoremap <silent> <C-a> :s/\%V-\=\d\+/\=submatch(0)+1/g<CR>
 vnoremap <silent> <C-x> :s/\%V-\=\d\+/\=submatch(0)-1/g<CR>
 nmap <Space>ww <Plug>(easymotion-w)
+nmap <Space>tv :NewVertTerminalWindow<CR>
+nmap <Space>ts :NewHoriTerminalWindow<CR>
+
+tnoremap <C-h> <C-\><C-n>:wincmd h<CR>
+tnoremap <C-j> <C-\><C-n>:wincmd j<CR>
+tnoremap <C-k> <C-\><C-n>:wincmd k<CR>
+tnoremap <C-l> <C-\><C-n>:wincmd l<CR>
 
 augroup Golang
   autocmd!
@@ -422,6 +436,12 @@ augroup END
 augroup Protobuf
   autocmd!
   autocmd FileType proto nmap <buffer> <Space>ff :ClangFormat<CR>
+augroup END
+
+augroup Term
+	autocmd!
+	autocmd TermOpen * startinsert
+	autocmd BufEnter term://* startinsert
 augroup END
 
 "
@@ -473,3 +493,23 @@ function! s:CloseBufferWithoutClosingWindow(bang, buffer)
   execute currentWindow.'wincmd w'
 endfunction
 command! -bang -complete=buffer -nargs=? CloseBufferWithoutClosingWindow call <SID>CloseBufferWithoutClosingWindow(<q-bang>, <q-args>)
+
+function! s:new_terminal_window(opts)
+	let l:bufnr = bufnr()
+	let l:opts = extend(a:opts, {'on_exit': function('<SID>close_terminal_window', [l:bufnr])}, 'force')
+	call termopen(&shell, l:opts)
+endfunction
+function! s:new_vert_terminal_window(opts)
+	execute('vert rightbelow new')
+	call s:new_terminal_window(a:opts)
+endfunction
+function! s:new_hori_terminal_window(opts)
+	execute('split rightbelow new')
+	call s:new_terminal_window(a:opts)
+endfunction
+function! s:close_terminal_window(bufnr, job_id, code, event)
+	call execute('bdelete! '..a:bufnr)
+endfunction
+command! -nargs=? NewTerminalWindow call <SID>new_terminal_window({})
+command! -nargs=? NewVertTerminalWindow call <SID>new_vert_terminal_window({})
+command! -nargs=? NewHoriTerminalWindow call <SID>new_hori_terminal_window({})

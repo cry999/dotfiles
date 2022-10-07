@@ -2,6 +2,8 @@
   "typescript.format.enabled": true,
   "typescript.suggest.autoImports": true,
   "tsserver.formatOnType": true,
+  "rust-analyzer.checkOnSave.enable": true,
+  "rust-analyzer.diagnostics.enable": true,
   "go.goplsOptions": {
     "gofumpt": true
   },

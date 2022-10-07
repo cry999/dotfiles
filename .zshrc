@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # environment variable
 export LANG=ja_JP.UTF-8
 export TERM=xterm-256color
@@ -10,7 +17,7 @@ export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 autoload -Uz colors
 colors
 
-# keybind of vim
+# keybind of emacs
 bindkey -v
 
 ### Added by Zinit's installer
@@ -37,40 +44,11 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 zinit light Aloxaf/fzf-tab
+# zinit ice depth=1
+# zinit light jeffreytse/zsh-vi-mode
 zinit ice depth=1
-zinit light jeffreytse/zsh-vi-mode
+zinit light romkatv/powerlevel10k
 
-function zvm_after_select_vi_mode() {
-  unset SV_NORMAL
-  unset SV_INSERT
-  unset SV_VISUAL
-  unset SV_REPLACE
-  case $ZVM_MODE in
-    $ZVM_MODE_NORMAL)
-      # Something you want to do...
-	  export SV_NORMAL=1
-    ;;
-    $ZVM_MODE_INSERT)
-      # Something you want to do...
-	  export SV_INSERT=1
-    ;;
-    $ZVM_MODE_VISUAL)
-      # Something you want to do...
-	  export SV_VISUAL=1
-    ;;
-    $ZVM_MODE_VISUAL_LINE)
-      # Something you want to do...
-	  export SV_VISUAL=1
-    ;;
-    $ZVM_MODE_REPLACE)
-      # Something you want to do...
-	  export SV_REPLACE=1
-    ;;
-    *)
-      export SV_INSERT=1
-	;;
-  esac
-}
 
 # history
 HISTFILE=~/.zsh_history
@@ -220,6 +198,12 @@ alias g++='g++ -std=c++11'
 
 # vscode
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
+
+# tmux
+function _tmux_cd() {
+	tmux new-window -c "$(realpath $1)" -n "$(realpath $1)"
+}
+alias tcd='_tmux_cd'
 #######################################################
 # for OS
 export CLICOLOR=1
@@ -331,9 +315,12 @@ if [ -e /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
 fi
 
 # Load starship
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 
 export GIT_EDITR=nvim
 export EDITOR=nvim
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

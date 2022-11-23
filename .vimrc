@@ -35,6 +35,7 @@ Plug 'neoclide/jsonc.vim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'rust-lang/rust.vim'
 Plug 'jtdowney/vimux-cargo'
+Plug 'sunjon/shade.nvim'
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -85,18 +86,30 @@ autocmd FileType netrw setl bufhidden=wipe
 let g:netrw_fastbrowse = 0
 
 " theme
-let g:catppuccin_flavour = 'frappe'
 lua << EOF
-require('catppuccin').setup {
-  integarations = {
-  	coc_nvim = true,
-	gitgutter = true,
-	nvimtree = true,
-	bufferline = true,
+local M = require('catppuccin')
+M.setup({
+  dim_inactive = {
+		enabled = true,
+		shade = "dark",
+		percentage = 0.15,
   },
-}
+  transparent_background = true,
+  flavour = 'frappe',
+  styles = {
+    comments = { 'italic' },
+	types = { 'italic', 'bold' },
+  },
+  integarations = {
+    coc_nvim = true,
+    gitgutter = true,
+    nvimtree = true,
+    bufferline = true,
+  },
+})
+
+vim.cmd.colorscheme('catppuccin')
 EOF
-colorscheme catppuccin
 set termguicolors
 
 let g:linediff_diffopt='iwhite'
@@ -104,7 +117,7 @@ let g:linediff_diffopt='iwhite'
 lua << EOF
 require('lualine').setup {
   options = {
-	  theme = 'catppuccin',
+    theme = 'catppuccin',
     component_separators = '',
     section_separators = { left = '', right = '' },
   },
@@ -153,7 +166,7 @@ require('bufferline').setup {
     },
     separator_style = 'slant',
     highlight = {gui = "underline", guisp = "blue"},
-	diagnostics = 'coc',
+  diagnostics = 'coc',
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
       local icon = level:match("error") and " " or " "
       return " " .. icon .. count
@@ -353,9 +366,11 @@ let g:coc_global_extensions = [
 
 "
 " FZF
-"
+
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+command! -bang -nargs=* Buffers
+      \ call fzf#vim#buffers({'source': map(fzf#vim#_buflisted_sorted(), 'fzf#vim#_format_buffer(v:val)')}, <bang>0)
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case --hidden -- '.shellescape(<q-args>), 1,
@@ -380,8 +395,8 @@ let test#vim#term_position='belowright'
 let g:fern#renderer = "nerdfont"
 let g:fern#default_hidden=1
 augroup FernAutoGroup
-	autocmd!
-	autocmd FileType fern nmap <buffer> q :q<CR>
+  autocmd!
+  autocmd FileType fern nmap <buffer> q :q<CR>
 augroup END
 
 "
@@ -403,14 +418,14 @@ nmap <silent> [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 nmap <silent> ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
 nmap <silent> <Space>tt :CocCommand go.test.toggle<CR>
 nmap <silent> <Space>tn :TestNearest<CR>
-nnoremap <silent> <Space>fs :Files<CR>
+nnoremap <silent> <Space>sf :Files<CR>
+nnoremap <silent> <Space>sb :Buffers<CR>
 nnoremap <silent> <Space>rg :Rg<CR>
 xmap <Space>ff <Plug>(coc-format-selected)
 nmap <Space>ff :Format<CR>
-" nmap <Space>ft :NvimTreeToggle<CR>
 nmap <Space>ft :Fern . -drawer -reveal=%<CR>
 nmap <Space>ev :e ~/.vimrc<CR>
-nmap <Space>sv :source ~/.vimrc<CR>
+nmap <Space>rv :source ~/.vimrc<CR>
 nmap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nmap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 nmap <silent><nowait><expr> j coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\j"
@@ -439,9 +454,9 @@ augroup Protobuf
 augroup END
 
 augroup Term
-	autocmd!
-	autocmd TermOpen * startinsert
-	autocmd BufEnter term://* startinsert
+  autocmd!
+  autocmd TermOpen * startinsert
+  autocmd BufEnter term://* startinsert
 augroup END
 
 "
@@ -454,7 +469,6 @@ function! s:ShowErr(msg)
 endfunction
 
 function! s:CloseBufferWithoutClosingWindow(bang, buffer)
-" detect target which you want to close
   if empty(a:buffer)          " current window
     let target = bufnr('%')
   elseif a:buffer ~= '^\d\+$' " buffer number specified
@@ -495,20 +509,20 @@ endfunction
 command! -bang -complete=buffer -nargs=? CloseBufferWithoutClosingWindow call <SID>CloseBufferWithoutClosingWindow(<q-bang>, <q-args>)
 
 function! s:new_terminal_window(opts)
-	let l:bufnr = bufnr()
-	let l:opts = extend(a:opts, {'on_exit': function('<SID>close_terminal_window', [l:bufnr])}, 'force')
-	call termopen(&shell, l:opts)
+  let l:bufnr = bufnr()
+  let l:opts = extend(a:opts, {'on_exit': function('<SID>close_terminal_window', [l:bufnr])}, 'force')
+  call termopen(&shell, l:opts)
 endfunction
 function! s:new_vert_terminal_window(opts)
-	execute('vert rightbelow new')
-	call s:new_terminal_window(a:opts)
+  execute('vert rightbelow new')
+  call s:new_terminal_window(a:opts)
 endfunction
 function! s:new_hori_terminal_window(opts)
-	execute('split rightbelow new')
-	call s:new_terminal_window(a:opts)
+  execute('split rightbelow new')
+  call s:new_terminal_window(a:opts)
 endfunction
 function! s:close_terminal_window(bufnr, job_id, code, event)
-	call execute('bdelete! '..a:bufnr)
+  call execute('bdelete! '..a:bufnr)
 endfunction
 command! -nargs=? NewTerminalWindow call <SID>new_terminal_window({})
 command! -nargs=? NewVertTerminalWindow call <SID>new_vert_terminal_window({})

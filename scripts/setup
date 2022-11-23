@@ -23,50 +23,6 @@ local -A configs=(
 	[".config/starship.toml"]=""
 	[".config/lazygit/config.yml"]=""
 )
-local -A requirements=(
-	["ag"]="the_silver_searcher"
-	["fzf"]="fzf"
-	["zsh"]="zsh"
-	["nvim"]="nvim"
-	["vim"]="vim"
-	["tmux"]="tmux"
-	["tig"]="tig"
-	["nvr"]="nvr"
-	["starship"]="starship"
-)
-local -A version_flags=(
-	["ag"]="--version"
-	["fzf"]="--version"
-	["zsh"]="--version"
-	["nvim"]="--version"
-	["vim"]="--version"
-	["tmux"]="-V"
-	["tig"]="--version"
-	["nvr"]="--version"
-	["starship"]="--version"
-)
-local -A version_positions=(
-	["ag"]="3"
-	["fzf"]="1"
-	["zsh"]="2"
-	["nvim"]="2"
-	["vim"]="5"
-	["tmux"]="2"
-	["tig"]="3"
-	["nvr"]="2"
-	["starship"]="2"
-)
-local -A required_versions=(
-	["ag"]="2.2.0"
-	["fzf"]="0.30.0"
-	["zsh"]="5.8.1"
-	["nvim"]="0.7.0"
-	["vim"]="8.0.0"
-	["tmux"]="3.2"
-	["tig"]="2.5.5"
-	["nvr"]="2.4.2"
-	["starship"]="1.6.3"
-)
 
 # args
 while [ $# -ne 0 ]; do
@@ -75,16 +31,6 @@ while [ $# -ne 0 ]; do
 	*) args=(${args[@]} "$1"); shift 1 ;;
 	esac
 done
-
-# functions
-_version_check() {
-	local current=$1
-	local required=$2
-	if [ "$(echo "$current\n$required" | sort | head -1)" = "$required" ]; then
-		return 0
-	fi
-	return 1
-}
 
 # setup brew
 if which brew >/dev/null 2>&1; then
@@ -95,27 +41,12 @@ else
 fi
 brew -v
 
+[ -n $HOME/Brewfile ] || ln -s $root/Brewfile $HOME/Brewfile
+
+brew bundle
+
 # install requirements
 [ -n $ZINIT ] || sh -c "$(curl -fsSL https://git.io/zinit-install)"
-which exa   >/dev/null 2>&1 || brew install exa
-which fd    >/dev/null 2>&1 || brew install fd
-which procs >/dev/null 2>&1 || brew install procs
-for cmd in ${(k)requirements[@]}; do
-	if which $cmd >/dev/null 2>&1; then
-		# command exists
-	else
-		brew install ${requirements[$cmd]}
-	fi
-	local version_flag=${version_flags[$cmd]}
-	local version_pos=${version_positions[$cmd]}
-	local version=$($cmd $version_flag | head -1 | cut -d' ' -f$version_pos)
-	local required=${required_versions[$cmd]}
-	if _version_check ${version#v} $required; then
-		echo $cmd $version OK
-	else
-		brew upgrade ${requirements[$cmd]}
-	fi
-done
 
 # install configuration files
 backupdir="$HOME/dotfiles.backup/$runtime_id"
@@ -155,11 +86,6 @@ tpm_dir="$HOME/.tmux/plugins/tpm"
 [[ ! -e $tpm_dir  ]] && git clone https://github.com/tmux-plugins/tpm $tpm_dir || echo "Done."
 
 # theme (catppuccin)
-echo "install catppuccin iterm2 theme..."
-mkdir -p "$HOME/.iterm2/schemes"
-pushd "$HOME/.iterm2/schemes" >/dev/null
-[[ ! -e "catppuccin-iterm" ]] && git clone https://github.com/catppuccin/iterm.git catppuccin-iterm || echo "Done."
-popd >/dev/null
 echo "install catppuccin alacritty theme..."
 mkdir -p "$HOME/.config/alacritty"
 [[ ! -e "$HOME/.config/alacritty/catppuccin" ]] && \

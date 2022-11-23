@@ -122,6 +122,13 @@ set termguicolors
 
 let g:linediff_diffopt='iwhite'
 
+highlight CursorLine guibg=#414559
+augroup CursorLine
+	autocmd!
+	autocmd VimEnter,WinEnter,BufWinEnter,BufEnter,FocusGained * setlocal cursorline
+	autocmd VimLeave,WinLeave,BufWinLeave,BufLeave,FocusLost * setlocal nocursorline
+augroup END
+
 lua << EOF
 require('lualine').setup {
   options = {

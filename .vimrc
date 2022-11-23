@@ -99,6 +99,7 @@ M.setup({
   background = {
 	  dark = "frappe",
 	  },
+  transparent_background = true,
   flavour = 'frappe',
   styles = {
     comments = { 'italic' },
@@ -113,6 +114,7 @@ M.setup({
 	treesitter = true,
   },
 })
+M.compile()
 
 vim.cmd.colorscheme('catppuccin')
 EOF

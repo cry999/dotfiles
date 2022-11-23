@@ -12,6 +12,7 @@ export TERM=xterm-256color
 export SETUPTOOLS_USE_DISTUTILS=stdlib
 # export PYTHONSTARTUP=$HOME/.pythonstartup.py
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
+export HOMEBREW_BUNDLE_FILE="$HOME/Brewfile"
 
 # color
 autoload -Uz colors

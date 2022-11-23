@@ -1,4 +1,4 @@
-" Jetpacka install plugins
+" Jetpack install plugins
 call plug#begin()
 
 " color theme
@@ -6,7 +6,9 @@ Plug 'ulwlu/elly.vim'
 Plug 'morhetz/gruvbox'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'lukas-reineke/indent-blankline.nvim'
 " tab bar
 Plug 'akinsho/bufferline.nvim'
 
@@ -94,7 +96,9 @@ M.setup({
 		shade = "dark",
 		percentage = 0.15,
   },
-  transparent_background = true,
+  background = {
+	  dark = "frappe",
+	  },
   flavour = 'frappe',
   styles = {
     comments = { 'italic' },
@@ -105,6 +109,8 @@ M.setup({
     gitgutter = true,
     nvimtree = true,
     bufferline = true,
+	fern = true,
+	treesitter = true,
   },
 })
 
@@ -158,14 +164,18 @@ require('bufferline').setup {
       {
         filetype = "fern",
         text = function()
-        return vim.fn.getcwd()
+        return ' Fern'
         end,
         highlight = 'Directory',
-        text_align = 'left',
+        text_align = 'center',
       }
     },
-    separator_style = 'slant',
+	separator_style = 'thick',
     highlight = {gui = "underline", guisp = "blue"},
+	indicator = {
+		style = 'icon'
+		},
+		show_tab_indicators = true,
   diagnostics = 'coc',
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
       local icon = level:match("error") and " " or " "
@@ -174,6 +184,62 @@ require('bufferline').setup {
   }
 }
 require('nvim-tree').setup()
+
+require'nvim-treesitter.configs'.setup {
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
+require'treesitter-context'.setup{
+    enable = true,
+    max_lines = 0,
+    trim_scope = 'outer',
+    min_window_height = 0,
+    patterns = {
+        default = {
+            'class',
+            'function',
+            'method',
+            'for',
+            'while',
+            'if',
+            'switch',
+            'case',
+            'interface',
+            'struct',
+            'enum',
+        },
+        rust = {
+            'impl_item',
+        },
+        terraform = {
+            'block',
+            'object_elem',
+            'attribute',
+        },
+        markdown = {
+            'section',
+        },
+        json = {
+            'pair',
+        },
+        typescript = {
+            'export_statement',
+        },
+        yaml = {
+            'block_mapping_pair',
+        },
+    },
+}
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
 EOF
 
 let g:UltiSnipsExpandTrigger="<nop>"
@@ -397,6 +463,7 @@ let g:fern#default_hidden=1
 augroup FernAutoGroup
   autocmd!
   autocmd FileType fern nmap <buffer> q :q<CR>
+  autocmd FileTYpe fern nmap <buffer> D <Plug>(fern-action-remove)
 augroup END
 
 "

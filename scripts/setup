@@ -33,22 +33,6 @@ while [ $# -ne 0 ]; do
 	esac
 done
 
-# setup brew
-if which brew >/dev/null 2>&1; then
-	# brew exists
-else
-	echo "install home brew"
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-fi
-export PATH=/opt/homebrew/bin:$PATH
-brew -v
-
-if [ ! -e $HOME/Brewfile ]; then
-	ln -s $root/Brewfile $HOME/Brewfile
-fi
-
-# brew bundle
-
 # install requirements
 [ -n $ZINIT ] || sh -c "$(curl -fsSL https://git.io/zinit-install)"
 

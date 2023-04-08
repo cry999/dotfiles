@@ -37,6 +37,7 @@ return require('packer').startup(function(use)
 		branch = '0.1.x',
 		requires = { { 'nvim-lua/plenary.nvim' } }
 	}
+	use { 'nvim-tree/nvim-tree.lua', requires = { 'nvim-tree/nvim-web-devicons' }, }
 	use 'lambdalisue/fern.vim'
 	use 'lambdalisue/nerdfont.vim'
 	use 'lambdalisue/fern-renderer-nerdfont.vim'

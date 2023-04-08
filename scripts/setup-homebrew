@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+if which brew >/dev/null 2>&1; then
+	echo "brew already exists"
+else
+	echo "install home brew"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
+export PATH=/opt/homebrew/bin:$PATH
+brew -v
+
+# brew bundle
+
+brew_wrap="$(brew --prefix)/etc/brew-wrap"
+if [ -f $brew_wrap ]; then
+	source $brew_wrap
+fi

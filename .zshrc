@@ -323,6 +323,11 @@ export BAT_THEME="Catppuccin-frappe"
 export GIT_EDITR=nvim
 export EDITOR=nvim
 
+brew_wrap="$(brew --prefix)/etc/brew-wrap"
+if [ -f $brew_wrap ]; then
+	source $brew_wrap
+fi
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

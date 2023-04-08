@@ -67,6 +67,7 @@ zstyle ':zle:*' word-style unspecified
 # completion
 fpath+=~/.zfunc
 fpath+=/usr/local/share/zsh-completions
+fpath+=/opt/homebrew/share/zsh/site-functions
 autoload -Uz compinit
 compinit
 
@@ -315,8 +316,9 @@ if [ -e /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
 	export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 fi
 
-# Load starship
-# eval "$(starship init zsh)"
+
+export PATH=/opt/homebrew/bin:$PATH
+export BAT_THEME="Catppuccin-frappe"
 
 export GIT_EDITR=nvim
 export EDITOR=nvim
@@ -325,3 +327,5 @@ export EDITOR=nvim
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export PATH="${PATH}:${HOME}/.krew/bin"
+alias k=kubectl

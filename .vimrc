@@ -2,9 +2,6 @@
 call plug#begin()
 
 " color theme
-Plug 'ulwlu/elly.vim'
-Plug 'morhetz/gruvbox'
-Plug 'EdenEast/nightfox.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -62,6 +59,9 @@ Plug 'mattn/vim-goimports'
 Plug 'neoclide/coc-yaml'
 " Protobuf
 Plug 'rhysd/vim-clang-format'
+" C#
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'wbthomason/packer.nvim'
 
 call plug#end()
 
@@ -76,7 +76,9 @@ set noundofile
 set re=0
 set cursorline
 
-let g:python3_host_prog='/usr/local/bin/python3'
+source $VIMRUNTIME/macros/matchit.vim
+
+let g:python3_host_prog='/opt/homebrew/bin/python3'
 
 " neovim-remote
 let nvrcmd      = "nvr --remote-wait"
@@ -515,11 +517,6 @@ vnoremap <silent> <C-x> :s/\%V-\=\d\+/\=submatch(0)-1/g<CR>
 nmap <Space>ww <Plug>(easymotion-w)
 nmap <Space>tv :NewVertTerminalWindow<CR>
 nmap <Space>ts :NewHoriTerminalWindow<CR>
-
-tnoremap <C-h> <C-\><C-n>:wincmd h<CR>
-tnoremap <C-j> <C-\><C-n>:wincmd j<CR>
-tnoremap <C-k> <C-\><C-n>:wincmd k<CR>
-tnoremap <C-l> <C-\><C-n>:wincmd l<CR>
 
 augroup Golang
   autocmd!

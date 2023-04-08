@@ -17,7 +17,8 @@ local -A configs=(
 	[".config/alacritty/alacritty.yml"]=""
 	[".config/nvim/coc-settings.json"]=".vim/coc-settings.json"
 	[".config/nvim/UltiSnips"]=".vim/UltiSnips"
-	[".config/nvim/init.vim"]=".vimrc"
+	[".config/nvim/init.lua"]=""
+	[".config/nvim/lua"]=""
 	[".config/nvim/ftplugin"]=""
 	[".config/gitui/key_bindings.ron"]=""
 	[".config/starship.toml"]=""
@@ -39,11 +40,14 @@ else
 	echo "install home brew"
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
+export PATH=/opt/homebrew/bin:$PATH
 brew -v
 
-[ -n $HOME/Brewfile ] || ln -s $root/Brewfile $HOME/Brewfile
+if [ ! -e $HOME/Brewfile ]; then
+	ln -s $root/Brewfile $HOME/Brewfile
+fi
 
-brew bundle
+# brew bundle
 
 # install requirements
 [ -n $ZINIT ] || sh -c "$(curl -fsSL https://git.io/zinit-install)"
@@ -77,6 +81,10 @@ if [ ! -e $plug_nvim ]; then
 	curl -fLo $plug_nvim --create-dirs \
 		"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 fi
+packer_nvim="~/.local/share/nvim/site/pack/packer/start/packer.nvim"
+if [ ! -e $packer_nvim ]; then
+	git clone --depth 1 https://github.com/wbthomason/packer.nvim $packer_nvim
+fi
 # for nvim python provider
 python3 -m pip install --user --upgrade pynvim
 
@@ -91,9 +99,10 @@ mkdir -p "$HOME/.config/alacritty"
 [[ ! -e "$HOME/.config/alacritty/catppuccin" ]] && \
 	git clone https://github.com/catppuccin/alacritty.git ~/.config/alacritty/catppuccin || echo "Done."
 echo "install catppucin bat theme..."
-[[ ! -e "$(bat --config-dir)/.catppuccin" ]] && \
-	mkdir -p "$(bat --config-dir)/.catppucin" && \
-	git clone https://github.com/catppuccin/bat.git "$(bat --config-dir)/.catppucin"
+if [[ ! -d "$(bat --config-dir)/.catppuccin" ]]; then
+	mkdir -p "$(bat --config-dir)/.catppuccin"
+	git clone https://github.com/catppuccin/bat.git "$(bat --config-dir)/.catppuccin"
+fi
 mkdir -p "$(bat --config-dir)/themes" && \
 	cp $(bat --config-dir)/.catppucin/*.tmTheme $(bat --config-dir)/themes && \
 	bat cache --build

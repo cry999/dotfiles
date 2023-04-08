@@ -327,6 +327,7 @@ brew_wrap="$(brew --prefix)/etc/brew-wrap"
 if [ -f $brew_wrap ]; then
 	source $brew_wrap
 fi
+export HOMEBREW_BREWFILE_EDITOR="nvim"
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"
 

@@ -1,5 +1,5 @@
 vim.cmd [[packadd packer.nvim]]
-return require('packer').startup(function(use)
+require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
@@ -47,7 +47,6 @@ return require('packer').startup(function(use)
 	use 'easymotion/vim-easymotion'
 	use 'andrewradev/linediff.vim'
 	use 'neoclide/jsonc.vim'
-	use 'kyazdani42/nvim-tree.lua'
 	use 'rust-lang/rust.vim'
 	use 'jtdowney/vimux-cargo'
 	use 'sunjon/shade.nvim'
@@ -68,7 +67,17 @@ return require('packer').startup(function(use)
 	-- LANGUAGE
 	--
 	-- LSP
-	use { 'neoclide/coc.nvim', branch = 'release' }
+	-- use { 'neoclide/coc.nvim', branch = 'release' }
+	use { 'neovim/nvim-lspconfig' }
+	use { 'williamboman/mason.nvim' }
+	use { 'williamboman/mason-lspconfig.nvim' }
+	use { 'hrsh7th/nvim-cmp' }
+	use { 'hrsh7th/cmp-nvim-lsp' }
+	use { 'hrsh7th/cmp-buffer' }
+	use { 'hrsh7th/cmp-path' }
+	use { 'hrsh7th/cmp-cmdline' }
+	use { 'L3MON4D3/LuaSnip', run = 'make install_jsregexp' }
+	use { 'saadparwaiz1/cmp_luasnip' }
 	-- Golang
 	use 'mattn/vim-goimports'
 	-- YAML
@@ -78,3 +87,8 @@ return require('packer').startup(function(use)
 	-- C#
 	use 'OmniSharp/omnisharp-vim'
 end)
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+	pattern = '.config/nvim/**/*.lua',
+	command = 'source <afile> | PackerCompile',
+})

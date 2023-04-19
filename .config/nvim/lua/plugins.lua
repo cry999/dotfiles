@@ -38,9 +38,7 @@ require('packer').startup(function(use)
 		requires = { { 'nvim-lua/plenary.nvim' } }
 	}
 	use { 'nvim-tree/nvim-tree.lua', requires = { 'nvim-tree/nvim-web-devicons' }, }
-	use 'lambdalisue/fern.vim'
 	use 'lambdalisue/nerdfont.vim'
-	use 'lambdalisue/fern-renderer-nerdfont.vim'
 	use 'ron-rs/ron.vim'
 	use 'SirVer/ultisnips'
 	use 'honza/vim-snippets'
@@ -67,21 +65,19 @@ require('packer').startup(function(use)
 	-- LANGUAGE
 	--
 	-- LSP
-	-- use { 'neoclide/coc.nvim', branch = 'release' }
-	use { 'neovim/nvim-lspconfig' }
-	use { 'williamboman/mason.nvim' }
-	use { 'williamboman/mason-lspconfig.nvim' }
-	use { 'hrsh7th/nvim-cmp' }
-	use { 'hrsh7th/cmp-nvim-lsp' }
-	use { 'hrsh7th/cmp-buffer' }
-	use { 'hrsh7th/cmp-path' }
-	use { 'hrsh7th/cmp-cmdline' }
+	use 'neovim/nvim-lspconfig'
+	use 'williamboman/mason.nvim'
+	use 'williamboman/mason-lspconfig.nvim'
+	use 'hrsh7th/nvim-cmp'
+	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-buffer'
+	use 'hrsh7th/cmp-path'
+	use 'hrsh7th/cmp-cmdline'
 	use { 'L3MON4D3/LuaSnip', run = 'make install_jsregexp' }
-	use { 'saadparwaiz1/cmp_luasnip' }
+	use 'saadparwaiz1/cmp_luasnip'
+	use 'onsails/lspkind.nvim'
 	-- Golang
 	use 'mattn/vim-goimports'
-	-- YAML
-	use 'neoclide/coc-yaml'
 	-- Protobuf
 	use 'rhysd/vim-clang-format'
 	-- C#

@@ -6,12 +6,11 @@ local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup {}
 
-local status, nvim_lsp = pcall(require, "lspconfig")
-if (not status) then return end
+local lspconfig = require("lspconfig")
 
 mason_lspconfig.setup_handlers {
 	function(server_name)
-		nvim_lsp[server_name].setup {}
+		lspconfig[server_name].setup {}
 	end,
 }
 
@@ -48,13 +47,13 @@ protocol.CompletionItemKind = {
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-nvim_lsp.tsserver.setup {
+lspconfig.tsserver.setup {
 	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
 	cmd = { "typescript-language-server", "--stdio" },
 	capabilities = capabilities
 }
 
-nvim_lsp.lua_ls.setup {
+lspconfig.lua_ls.setup {
 	capabilities = capabilities,
 	settings = {
 		Lua = {
@@ -71,7 +70,7 @@ nvim_lsp.lua_ls.setup {
 	},
 }
 
-nvim_lsp.gopls.setup {
+lspconfig.gopls.setup {
 	filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
 	capabilities = capabilities,
 }

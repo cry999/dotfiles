@@ -268,6 +268,8 @@ PATH=$PATH:$BREW_PATH
 if [ -x /usr/libexec/path_helper ]; then
 	eval $(/usr/libexec/path_helper -s)
 fi
+export PATH=$PATH:$HOME/.dotnet/tools
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 
 ###########################################################
 #

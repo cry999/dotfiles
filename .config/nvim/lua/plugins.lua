@@ -40,7 +40,6 @@ require('packer').startup(function(use)
 	use { 'nvim-tree/nvim-tree.lua', requires = { 'nvim-tree/nvim-web-devicons' }, }
 	use 'lambdalisue/nerdfont.vim'
 	use 'ron-rs/ron.vim'
-	use 'SirVer/ultisnips'
 	use 'honza/vim-snippets'
 	use 'easymotion/vim-easymotion'
 	use 'andrewradev/linediff.vim'
@@ -82,6 +81,24 @@ require('packer').startup(function(use)
 	use 'rhysd/vim-clang-format'
 	-- C#
 	use 'OmniSharp/omnisharp-vim'
+	use {
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({})
+		end,
+	}
+	use {
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			require("copilot_cmp").setup({
+				suggestion = { enabled = false },
+				panel = { enabled = false },
+			})
+		end
+	}
 end)
 
 vim.api.nvim_create_autocmd('BufWritePost', {

@@ -8,12 +8,6 @@ mason_lspconfig.setup {}
 
 local lspconfig = require("lspconfig")
 
-mason_lspconfig.setup_handlers {
-	function(server_name)
-		lspconfig[server_name].setup {}
-	end,
-}
-
 local protocol = require('vim.lsp.protocol')
 
 protocol.CompletionItemKind = {
@@ -47,6 +41,14 @@ protocol.CompletionItemKind = {
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+mason_lspconfig.setup_handlers {
+	function(server_name)
+		lspconfig[server_name].setup {
+			capabilities = capabilities,
+		}
+	end,
+}
+
 lspconfig.tsserver.setup {
 	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
 	cmd = { "typescript-language-server", "--stdio" },
@@ -73,6 +75,15 @@ lspconfig.lua_ls.setup {
 lspconfig.gopls.setup {
 	filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
 	capabilities = capabilities,
+}
+
+lspconfig.yamlls.setup {
+	capabilities = capabilities,
+	settings = {
+		yaml = {
+			keyOrdering = false,
+		},
+	},
 }
 
 -- Diagnostic symbols in the sign column (gutter)

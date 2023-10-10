@@ -1,19 +1,61 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.opt.backspace:append { "nostop" }
+vim.opt.diffopt:append "linematch:60"
 
-vim.opt.encoding = 'utf-8'
-vim.opt.number = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undofile = false
-vim.opt.cursorline = true
-vim.opt.clipboard:append { 'unnamedplus' }
-vim.opt.mouse = ''
-vim.opt.termguicolors = true
-vim.opt.hidden = true
-vim.opt.cmdheight = 2
-vim.opt.updatetime = 300
-vim.opt.signcolumn = 'yes'
-vim.opt.shortmess:append('c')
+local options = {
+	opt = {
+		breakindent = true,
+		clipboard = "unnamedplus",
+		cmdheight = 0,
+		completeopt = { "menu", "menuone", "noselect" },
+		copyindent = true,
+		cursorline = true,
+		expandtab = true,
+		fileencoding = "utf-8",
+		fillchars = { eob = " " },
+		ignorecase = true,
+		infercase = true,
+		linebreak = true,
+		mouse = "",
+		number = true,
+		preserveindent = true,
+		pumheight = 10,
+		shiftwidth = 2,
+		showtabline = 2,
+		signcolumn = "yes",
+		smartcase = true,
+		splitbelow = true,
+		splitright = true,
+		tabstop = 2,
+		termguicolors = true,
+		timeoutlen = 500,
+		undofile = true,
+		updatetime = 300,
+		virtualedit = "block",
+		wrap = false,
+		writebackup = false,
+	},
+	g = {
+		mapleader = " ",
+		maplocallaeder = ",",
+		autoformat_enabled = true,
+		autopairs_enabled = true,
+		cmp_enabled = true,
+		codelens_enabled = true,
+		diagnostics_mode = 3,
+		highlighturl_enabled = true,
+		icons_enabled = true,
+		inlay_hints_enabled = false,
+		lsp_handlers_enabled = true,
+		semantic_tokens_enabled = true,
+		ui_notifications_enabled = true,
+		git_worktrees = nil,
+	},
+	t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() },
+}
+
+for scope, settings in pairs(options) do
+	for setting, value in pairs(settings) do
+		vim[scope][setting] = value
+	end
+end
+

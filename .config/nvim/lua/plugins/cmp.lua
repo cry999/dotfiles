@@ -1,14 +1,14 @@
-local function has_words_before()
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line-1, line, true)[1]:sub(col, col):match "%s" == nil
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
-
-local function has_copilot()
+local has_copilot = function()
   if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
     return false
   end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match "^%s*$" == nil
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match "^%s*$" == nil
 end
 
 return {
@@ -19,10 +19,12 @@ return {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-nvim-lsp",
     "onsails/lspkind.nvim",
-    { "zbirenbaum/copilot-cmp", after = { "copilot.lua" } },
+    "L3MON4D3/LuaSnip",
+    "zbirenbaum/copilot-cmp",
   },
   event = "InsertEnter",
   opts = function()
+    local luasnip = require("luasnip")
     local cmp = require("cmp")
     return {
       mapping = {
@@ -37,35 +39,28 @@ return {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item(has_copilot() and { behavior = cmp.SelectBehavior.Select } or {})
-            return
-          end
-          -- if luasnip.expand_or_jumpable() then
-          --   luasnip.expand_or_jump()
-          --   return
-          -- end
-          if has_words_before() then
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif has_words_before() then
             cmp.complete()
-            return
+          else
+            fallback()
           end
-
-          fallback()
-        end, {'i', 's'}),
+        end, { 'i', 's' }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
-            return
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
           end
-          -- if luasnip.jumpable(-1) then
-          --   luasnip.jump(-1)
-          --   return
-          -- end
-          fallback()
         end, { 'i', 's' })
       },
       sources = cmp.config.sources({
         { name = "nvim_lsp", priority = 1000 },
         { name = "copilot",  priority = 800 },
-        -- { name = "luasnip",   priority = 500 },
+        { name = "luasnip",  priority = 750 },
         { name = "buffer",   priority = 500 },
         { name = "path",     priority = 250 },
       }),

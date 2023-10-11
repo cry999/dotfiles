@@ -9,9 +9,13 @@ local mappings = {
     -- fuzzy finder
 
     ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", desc = "Find file" },
+    ["<leader>fk"] = { "<cmd>Telescope keymaps<cr>", desc = "Find keymaps" },
     ["<leader>fb"] = { "<cmd>Telescope buffers<cr>", desc = "Find buffer" },
     ["<leader>fw"] = { "<cmd>Telescope live_grep<cr>", desc = "Find word" },
     ["<leader>fn"] = { "<cmd>Telescope notify<cr>", desc = "Find notifications" },
+    ["<leader>fd"] = { "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Find diagnostics current buffer" },
+    ["<leader>fD"] = { "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Find all diagnostics" },
+    ["<leader>fli"] = { "<cmd>Telescope lsp_implementations<cr>", desc = "Find implementations" },
 
     ["<leader>e"] = { "<cmd>Neotree<cr>", desc = "Toggle NeoTree" },
 
@@ -76,6 +80,7 @@ if wk_ok then
   local icons = require("icons")
   wk.register({
     ["<leader>f"] = { name = icons.Search .. "  Fuzzy Finder" },
+    ["<leader>fl"] = { name = icons.Search .. "  LSP" },
     ["<leader>l"] = { name = icons.ActiveLSP .. "  LSP" },
     ["<leader>p"] = { name = icons.Package .. "  Package Manager" },
     ["<leader>t"] = { name = icons.Terminal .. "  Terminal" },

@@ -53,6 +53,13 @@ local mappings = {
     -- Source
     ["<leader>ss"] = { "<cmd>source ~/.config/nvim/init.lua<cr>", desc = "Re-sourcing init.lua" },
     ["<leader>sp"] = { "<cmd>source %<cr>", desc = "Re-sourcing current file" },
+
+    -- Git
+    ["<leader>gb"] = { function() require("gitsigns").toggle_current_line_blame() end, desc = "View git blame" },
+    ["<leader>gd"] = { function() require("gitsigns").diffthis() end, desc = "View git diff" },
+
+    -- Outline
+    ["<leader>ot"] = { "<cmd>AerialToggle!<cr>", desc = "Toggle outline panel" },
   },
   t = {
     ["<C-h>"] = { [[<cmd>wincmd h<cr>]], desc = "Move to left split" },
@@ -73,6 +80,8 @@ if wk_ok then
     ["<leader>p"] = { name = icons.Package .. "  Package Manager" },
     ["<leader>t"] = { name = icons.Terminal .. "  Terminal" },
     ["<leader>s"] = { name = icons.WordFile .. "  Re-Sourcing configurations" },
+    ["<leader>g"] = { name = icons.Git .. "  Git" },
+    ["<leader>o"] = { name = "  Outline" },
   })
 end
 

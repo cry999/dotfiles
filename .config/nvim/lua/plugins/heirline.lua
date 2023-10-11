@@ -33,38 +33,38 @@ local ViMode = {
   static = {
     mode_names = { -- change the strings if you like it vvvvverbose!
       n = "NORMAL",
-      -- no = "N?",
-      -- nov = "N?",
-      -- noV = "N?",
-      -- ["no\22"] = "N?",
-      -- niI = "Ni",
-      -- niR = "Nr",
-      -- niV = "Nv",
-      -- nt = "Nt",
+      no = "N?",
+      nov = "N?",
+      noV = "N?",
+      ["no\22"] = "N?",
+      niI = "Ni",
+      niR = "Nr",
+      niV = "Nv",
+      nt = "Nt",
       v = "VISUAL",
-      -- vs = "Vs",
+      vs = "Vs",
       V = "L-VISUAL",
-      -- Vs = "Vs",
+      Vs = "Vs",
       ["\22"] = "B-VISUAL",
       ["\22s"] = "B-VISUAL",
-      -- s = "S",
-      -- S = "S_",
-      -- ["\19"] = "^S",
+      s = "S",
+      S = "S_",
+      ["\19"] = "^S",
       i = "INSERT",
-      -- ic = "Ic",
-      -- ix = "Ix",
+      ic = "Ic",
+      ix = "Ix",
       R = "REPLACE",
-      -- Rc = "Rc",
-      -- Rx = "Rx",
-      -- Rv = "Rv",
-      -- Rvc = "Rv",
-      -- Rvx = "Rv",
+      Rc = "Rc",
+      Rx = "Rx",
+      Rv = "Rv",
+      Rvc = "Rv",
+      Rvx = "Rv",
       c = "COMMAND",
-      -- cv = "Ex",
-      -- r = "...",
-      -- rm = "M",
-      -- ["r?"] = "?",
-      -- ["!"] = "!",
+      cv = "Ex",
+      r = "...",
+      rm = "M",
+      ["r?"] = "?",
+      ["!"] = "!",
       t = "TERMINAL",
     },
     mode_colors = mode_colors,
@@ -337,6 +337,40 @@ local NavicWinbar = {
   hl = { bg = "bg" },
 }
 
+local FileNameWinbar = {
+  condition = function()
+    local filename = vim.api.nvim_buf_get_name(0)
+    local term = "term://"
+    local neotree = "neo-tree filesystem"
+    return string.sub(filename, 1, string.len(term)) ~= term
+        and string.sub(vim.fn.fnamemodify(filename, ":t"), 1, string.len(neotree)) ~= neotree
+  end,
+  init = function(self)
+    self.tailname = vim.api.nvim_buf_get_name(0)
+    if self.filename == "" then
+      self.tailname = "[No Name]"
+    else
+      self.tailname = vim.fn.fnamemodify(self.tailname, ":t")
+    end
+    self.icon, self.icon_color =
+        require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+  end,
+  {
+    hl = function(self) return { bg = self.icon_color, fg = "bg" } end,
+    provider = function(self)
+      if vim.bo.filetype == "help" then
+        return " HELP " .. self.tailname .. " "
+      end
+      return " " .. self.icon .. " " .. self.tailname .. " "
+    end,
+  },
+  {
+    hl = function(self) return { fg = self.icon_color, bg = "bg" } end,
+    provider = ""
+  },
+  Separator,
+}
+
 local Align = { provider = "%=" }
 
 return {
@@ -361,6 +395,7 @@ return {
         Separator,
       },
       winbar = {
+        FileNameWinbar,
         NavicWinbar,
       },
       tabline = {

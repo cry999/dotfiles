@@ -14,6 +14,10 @@ local mode_colors = {
   t = "magenta",
 }
 
+local get_hl = function(name)
+  return vim.api.nvim_get_hl(0, { name = name })
+end
+
 local Separator = { provider = "  " }
 
 local ViMode = {
@@ -138,7 +142,7 @@ local FileName = {
     {
       provider = function(self)
         if vim.bo.filetype == "help" then
-          return self.icon .. " " .. self.tailname
+          return "HELP " .. self.tailname
         end
         return self.icon .. " " .. self.filename
       end,
@@ -189,35 +193,148 @@ local Git = {
         self.status_dict.removed ~= 0 or
         self.status_dict.changed ~= 0
   end,
-  hl = { fg = "magenta" },
-  { -- branch name
-    provider = function(self) return require("icons").GitBranch .. " " .. self.status_dict.head end,
-  },
-  { provider = " " },
   {
-    condition = function(self) return self.has_changes end,
-    provider = function(self)
-      local count = self.status_dict.added or 0
-      return count > 0 and (require("icons").GitAdd .. " " .. self.status_dict.added)
+    { -- branch name
+      provider = function(self) return require("icons").GitBranch .. " " .. self.status_dict.head end,
+      hl = { fg = "magenta" },
+    },
+    {
+      {
+        condition = function(self) return self.has_changes end,
+        provider = function(self)
+          local count = self.status_dict.added or 0
+          return count > 0 and (" " .. require("icons").GitAdd .. " " .. self.status_dict.added)
+        end,
+        hl = { fg = "green" },
+      },
+      {
+        condition = function(self) return self.has_changes end,
+        provider = function(self)
+          local count = self.status_dict.removed or 0
+          return count > 0 and (" " .. require("icons").GitDelete .. " " .. self.status_dict.removed)
+        end,
+        hl = { fg = "red" },
+      },
+      {
+        condition = function(self) return self.has_changes end,
+        provider = function(self)
+          local count = self.status_dict.changed or 0
+          return count > 0 and (" " .. require("icons").GitChange .. " " .. self.status_dict.changed)
+        end,
+        hl = { fg = "red" },
+      },
+    },
+  },
+}
+
+local MacroRec = {
+  condition = function(self)
+    self.reg = vim.fn.reg_recording()
+    return vim.fn.reg_recording() ~= ""
+  end,
+  provider = function(self)
+    return require("icons").MacroRecording .. " " .. self.reg
+  end,
+  hl = { fg = "orange", bold = true },
+  update = {
+    "RecordingEnter",
+    "RecordingLeave",
+  }
+}
+
+local TablineFileName = {
+  init = function(self)
+    if self.filename == "" then
+      self.filename = "[No Name]"
+    else
+      self.filename = vim.fn.fnamemodify(self.filename, ":t")
+    end
+  end,
+  provider = function(self) return self.filename end,
+  hl = function(self) return self.is_active and "TabLineSel" or "TabLine" end,
+}
+
+local TablineFileFlags = {
+  { -- modified
+    condition = function(self)
+      return vim.api.nvim_buf_get_option(self.bufnr, "modified")
+    end,
+    provider = function()
+      return require("icons").FileModified
     end,
     hl = { fg = "green" },
   },
-  {
-    condition = function(self) return self.has_changes end,
+  { -- read-only
+    condition = function(self)
+      return vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+    end,
     provider = function(self)
-      local count = self.status_dict.removed or 0
-      return count > 0 and (require("icons").GitDelete .. " " .. self.status_dict.removed)
+      return require("icons").FileReadOnly
     end,
     hl = { fg = "red" },
   },
-  {
-    condition = function(self) return self.has_changes end,
-    provider = function(self)
-      local count = self.status_dict.changed or 0
-      return count > 0 and (require("icons").GitChange .. " " .. self.status_dict.changed)
-    end,
-    hl = { fg = "red" },
-  },
+}
+
+local FileActive = {
+  provider = function(self) return self.is_active and require("icons").GitSign or " " end,
+  hl = { fg = "blue", bg = "bg" },
+}
+
+local FileIcon = {
+  init = function(self)
+    local filename = vim.fn.fnamemodify(self.filename, ":t")
+    local ext = vim.fn.fnamemodify(self.filename, ":e")
+    self.icon, self.icon_color =
+        require("nvim-web-devicons").get_icon_color(filename, ext)
+    if not self.icon then self.icon = "" end
+    if not self.icon_color then self.icon_color = get_hl("TabLine").fg end
+  end,
+  provider = function(self) return self.icon and (" " .. self.icon .. " ") or "" end,
+  hl = function(self) return { fg = self.icon_color } end,
+}
+
+local TablineFileNameBlock = {
+  init = function(self)
+    self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+  end,
+  hl = function(self)
+    return self.is_active and "TabLineSel" or "TabLine"
+  end,
+  FileIcon,
+  TablineFileName,
+  Separator,
+  TablineFileFlags,
+}
+
+local TablineExplorer = {
+  condition = function(self)
+    self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
+    local bufnr = vim.api.nvim_win_get_buf(self.winid)
+    return vim.bo[bufnr or 0].filetype == "neo-tree"
+  end,
+  provider = function(self)
+    local width = vim.api.nvim_win_get_width(self.winid) + 1
+    local lb = string.rep(" ", (width - 1) / 2)
+    local rb = string.rep(" ", (width - 1) / 2)
+    if width - 1 % 2 then
+      lb = lb .. " "
+    end
+    return lb .. require("icons").Tree .. rb
+  end,
+}
+
+local TablineBufferBlock = {
+  FileActive, TablineFileNameBlock, FileActive,
+}
+
+local NavicWinbar = {
+  condition = function()
+    return require("nvim-navic").is_available()
+  end,
+  provider = function()
+    return require("nvim-navic").get_location()
+  end,
+  hl = { bg = "bg" },
 }
 
 local Align = { provider = "%=" }
@@ -227,6 +344,7 @@ return {
   event = "BufEnter",
   dependencies = { "catppuccin/nvim", "nvim-tree/nvim-web-devicons", "lewis6991/gitsigns.nvim" },
   opts = function()
+    local utils = require("heirline.utils")
     return {
       statusline = {
         hl = { bg = "bg" },
@@ -236,25 +354,101 @@ return {
         FileName,
         Separator,
         Diagnostics,
+        Separator,
+        MacroRec,
         Align,
         Git,
         Separator,
+      },
+      winbar = {
+        NavicWinbar,
+      },
+      tabline = {
+        TablineExplorer,
+        utils.make_buflist(
+          TablineBufferBlock,
+          { provider = "", hl = { fg = "lavender" } },
+          { provider = "", hl = { fg = "lavender" } }
+        ),
       },
     }
   end,
   config = function(_, opts)
     local heirline = require("heirline")
-    local frappe = require("catppuccin.palettes").get_palette("frappe")
+    local C = require("catppuccin.palettes").get_palette("frappe")
+    -- local brighten = require("catppuccin.utils.colors").brighten
+    -- local darken = require("catppuccin.utils.colors").darken
+
+    local highlights = {
+      --[[
+    local Normal = { fg = C.fg, bg = C.base }
+    local Comment = { fg = brighten(C.subtext1, 0.5), bg = C.base }
+    local Error = { fg = C.red, bg = C.base }
+    local StatusLine = { fg = C.fg, bg = C.mantle }
+    ]]
+      TabLine = { fg = C.surface2, bg = C.base },
+      TabLineFill = { fg = C.fg, bg = C.mantle },
+      TabLineSel = { fg = C.fg, bg = C.base, italic = true },
+      WinBar = { fg = C.fg, bg = C.base }
+      --[[
+    local WinBarNC = get_hlgroup("WinBarNC", { fg = C.grey, bg = C.base })
+    local Conditional = get_hlgroup("Conditional", { fg = C.bright_purple, bg = C.mantle })
+    local String = get_hlgroup("String", { fg = C.green, bg = C.mantle })
+    local TypeDef = get_hlgroup("TypeDef", { fg = C.yellow, bg = C.mantle })
+    local GitSignsAdd = get_hlgroup("GitSignsAdd", { fg = C.green, bg = C.mantle })
+    local GitSignsChange = get_hlgroup("GitSignsChange", { fg = C.orange, bg = C.mantle })
+    local GitSignsDelete = get_hlgroup("GitSignsDelete", { fg = C.bright_red, bg = C.mantle })
+    local DiagnosticError = get_hlgroup("DiagnosticError", { fg = C.bright_red, bg = C.mantle })
+    local DiagnosticWarn = get_hlgroup("DiagnosticWarn", { fg = C.orange, bg = C.mantle })
+    local DiagnosticInfo = get_hlgroup("DiagnosticInfo", { fg = C.white, bg = C.mantle })
+    local DiagnosticHint = get_hlgroup("DiagnosticHint", { fg = C.bright_yellow, bg = C.mantle })
+    local HeirlineInactive = resolve_lualine(get_hlgroup("HeirlineInactive", { bg = nil }).bg, "inactive", C.dark_grey)
+    local HeirlineNormal = resolve_lualine(get_hlgroup("HeirlineNormal", { bg = nil }).bg, "normal", C.blue)
+    local HeirlineInsert = resolve_lualine(get_hlgroup("HeirlineInsert", { bg = nil }).bg, "insert", C.green)
+    local HeirlineVisual = resolve_lualine(get_hlgroup("HeirlineVisual", { bg = nil }).bg, "visual", C.purple)
+    local HeirlineReplace = resolve_lualine(get_hlgroup("HeirlineReplace", { bg = nil }).bg, "replace", C.bright_red)
+    local HeirlineCommand = resolve_lualine(get_hlgroup("HeirlineCommand", { bg = nil }).bg, "command", C.bright_yellow)
+    local HeirlineTerminal = resolve_lualine(get_hlgroup("HeirlineTerminal", { bg = nil }).bg, "insert", HeirlineInsert)
+]]
+    }
+
+    for name, val in pairs(highlights) do
+      vim.api.nvim_set_hl(0, name, val)
+    end
+
     heirline.load_colors({
-      bg = frappe.base,
-      fg = frappe.text,
-      purple = frappe.mauve,
-      red = frappe.red,
-      magenta = frappe.maroon,
-      yellow = frappe.yellow,
-      green = frappe.green,
-      blue = frappe.blue,
-      dark = frappe.dark,
+      bg = C.base,
+      fg = C.text,
+      dark_bg = C.dark,
+      purple = C.mauve,
+      red = C.red,
+      magenta = C.maroon,
+      yellow = C.yellow,
+      green = C.green,
+      blue = C.blue,
+      lavender = C.lavender,
+
+      rosewater = C.rosewater,
+      flamingo = C.flamingo,
+      pink = C.pink,
+      mauve = C.mauve,
+      maroon = C.maroon,
+      peach = C.peach,
+      teal = C.teal,
+      sky = C.sky,
+      sapphire = C.sapphire,
+      text = C.text,
+      subtext1 = C.subtext1,
+      subtext0 = C.subtext0,
+      overlay2 = C.overlay2,
+      overlay1 = C.overlay1,
+      overlay0 = C.overlay0,
+      surface2 = C.surface2,
+      surface1 = C.surface1,
+      surface0 = C.surface0,
+      base = C.base,
+      mantle = C.mantle,
+      crust = C.crust,
     })
     heirline.setup(opts)
   end,

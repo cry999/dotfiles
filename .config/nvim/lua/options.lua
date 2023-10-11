@@ -20,6 +20,7 @@ local options = {
 		preserveindent = true,
 		pumheight = 10,
 		shiftwidth = 2,
+		showcmd = true,
 		showtabline = 2,
 		signcolumn = "yes",
 		smartcase = true,

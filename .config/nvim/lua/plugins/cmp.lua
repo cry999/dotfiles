@@ -19,8 +19,15 @@ return {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-nvim-lsp",
     "onsails/lspkind.nvim",
-    "L3MON4D3/LuaSnip",
-    "zbirenbaum/copilot-cmp",
+    {
+      "L3MON4D3/LuaSnip",
+      build = "make install_jsregexp",
+      config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
+    },
+    {
+      "zbirenbaum/copilot-cmp",
+      config = function() require("copilot_cmp").setup() end,
+    }
   },
   event = "InsertEnter",
   opts = function()

@@ -6,9 +6,21 @@ return {
   },
   config = function()
     require("telescope").setup({
+      defaults = {
+        vimgrep_arguments = {
+          "rg",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--hidden",
+          "-g", "!.git",
+        },
+      },
       pickers = {
         find_files = {
-          find_command = {"rg", "--files", "--hidden", "-g", "!.git"},
+          find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
         },
       },
     })

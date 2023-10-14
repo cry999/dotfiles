@@ -6,4 +6,5 @@ return {
       names = false,
     })
   end,
+  lazy = false,
 }

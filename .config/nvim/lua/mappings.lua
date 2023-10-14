@@ -64,6 +64,30 @@ local mappings = {
 
     -- Outline
     ["<leader>ot"] = { "<cmd>AerialToggle!<cr>", desc = "Toggle outline panel" },
+
+    -- Comment Out
+    ["<leader>//"] = { function()
+      return vim.v.count == 0
+          and "<plug>(comment_toggle_linewise_current)"
+          or "<plug>(comment_toggle_linewise_count)"
+    end,
+      desc = "Toggle comment linewise",
+      expr = true,
+    },
+    ["<leader>/*"] = {
+      function()
+        return vim.v.count == 0
+            and "<plug>(comment_toggle_blockwise_current)"
+            or "<plug>(comment_toggle_blockwise_count)"
+      end,
+      desc = "Toggle comment blockwise",
+      expr = true,
+    },
+  },
+  x = {
+    -- Comment out
+    ["<leader>//"] = { "<plug>(comment_toggle_linewise_visual)", desc = "Toggle comment linewise" },
+    ["<leader>/*"] = { "<plug>(comment_toggle_blockwise_visual)", desc = "Toggle comment blockwise" },
   },
   t = {
     ["<C-h>"] = { [[<cmd>wincmd h<cr>]], desc = "Move to left split" },
@@ -87,6 +111,7 @@ if wk_ok then
     ["<leader>s"] = { name = icons.WordFile .. "  Re-Sourcing configurations" },
     ["<leader>g"] = { name = icons.Git .. "  Git" },
     ["<leader>o"] = { name = "  Outline" },
+    ["<leader>/"] = { name = "// Comment Out" },
   })
 end
 

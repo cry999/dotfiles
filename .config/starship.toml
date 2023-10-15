@@ -1,18 +1,27 @@
 palette = "catppuccin_frappe"
 
+format  = """
+$aws$directory$fill\
+$git_branch$git_metrics$git_status$golang$gradle$java$lua$nodejs$package$python$rust$swift$terraform$vimcmd_symbol$line_break
+$character
+"""
+
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol        = "[▎  ](green)"
-error_symbol          = "[▎  ](red  )"
-vimcmd_symbol         = "[▎  ](blue )"
+success_symbol        = "[▎   ](green)"
+error_symbol          = "[▎   ](red  )"
+vimcmd_symbol         = "[▎   ](blue )"
+
+[fill]
+symbol = "┄"
 
 [directory]
 truncation_length = 4
 # Catppuccin 'lavender'
-format = "[  ](inverted lavender)[ $path ](lavender)"
+format = "[  ](inverted lavender)[ $path ](lavender)"
 
 [git_branch]
-format="([  ](inverted bold peach)[ $branch(:$remote_branch) ](peach))"
+format="([  ](inverted bold peach)[ $branch(:$remote_branch) ](peach))"
 
 # [git_commit]
 # format = "([ 󰓹 $hash$tag ](inverted peach))"

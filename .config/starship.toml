@@ -2,17 +2,59 @@ palette = "catppuccin_frappe"
 
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol = "[[♥](green) ❯](maroon)"
-error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
+success_symbol        = "[▎  ](green)"
+error_symbol          = "[▎  ](red  )"
+vimcmd_symbol         = "[▎  ](blue )"
 
 [directory]
 truncation_length = 4
 # Catppuccin 'lavender'
-style = "bold lavender"
+format = "[  ](inverted lavender)[ $path ](lavender)"
+
+[git_branch]
+format="([  ](inverted bold peach)[ $branch(:$remote_branch) ](peach))"
+
+# [git_commit]
+# format = "([ 󰓹 $hash$tag ](inverted peach))"
+# tag_disabled = false
+
+[git_metrics]
+disabled = false
+format = "([ $added ](green))([ $deleted ](red))"
+
+[git_status]
+format = "([$all_status$ahead_behind](peach))"
+conflicted = ""
+modified = " "
+untracked = "★ "
+staged = "✓"
+renamed = "➜"
+deleted = "✗"
+
+[aws]
+format = "[ 󰸏 ](inverted yellow)[ $profile ](yellow)"
 
 [battery]
 disabled = true
+
+[container]
+format = "[▎   ](bold sky)"
+style = "bold sky"
+
+[golang]
+format = "[  ](inverted bold sky)[( $version )](sky)"
+
+[gradle]
+format = "[  ](inverted bold text)[( $version )](text)"
+
+[java]
+format = "[ 󰬷 ](inverted bold flamingo)[( $version )](flamingo)"
+
+[lua]
+format = "[ 󰢱 ](inverted bold yellow)[( $version )](yellow)"
+
+[nodejs]
+format = "[ 󰎙 ](inverted bold green)[( $version )](green)"
 
 [palettes.catppuccin_frappe]
 rosewater = "#f2d5cf"

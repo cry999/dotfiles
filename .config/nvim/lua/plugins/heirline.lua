@@ -244,7 +244,6 @@ local MacroRec = {
 
 local TablineFileName = {
   provider = function(self)
-    print("filename:", self.filename)
     if self.filename == "" then
       return "[No Name]"
     else

@@ -12,3 +12,8 @@ fi
 
 # --- LazyGit ---
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
+
+export BAT_THEME="Catppuccin-frappe"
+
+export GIT_EDITR=nvim
+export EDITOR=nvim

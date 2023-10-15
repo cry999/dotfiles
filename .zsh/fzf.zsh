@@ -19,13 +19,29 @@ _fzf_comprun() {
 	shift
 
 	case "$command" in
-		cd)					  fzf "$@" --preview 'tree -C {} | head -200' ;;
-		export|unset) fzf "$@" --preview "eval 'echo \$'{}" ;;
-		ssh)					fzf "$@" --preview 'dig {}' ;;
-		*)						fzf "$@" ;;
+		cd)					  fzf --preview 'exa -T --color=always {} | head -200'   "$@" ;;
+		export|unset) fzf --preview "eval 'echo \$'{}"                       "$@" ;;
+		ssh)					fzf --preview 'dig {}'                                 "$@" ;;
+		ps)           fzf --preview 'echo {}'                                "$@" ;;
+		*)						fzf --preview 'bat -n --color=always {}'               "$@" ;;
 	esac
 }
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_DEFAULT_OPTS='--info=inline --border --preview="bat -r 1:20 --color=always {}"'
-export FZF_COMPLETION_TRIGGER=',' # Use ~~ as the trigger sequence instead of the default **
+
+# Setup fzf
+# ---------
+if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+fi
+
+# Auto-completion
+# ---------------
+if [[ $- == *i* ]]; then
+  source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+fi
+
+# Key bindings
+# ------------
+source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"

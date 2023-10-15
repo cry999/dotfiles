@@ -1,11 +1,28 @@
-FROM alpine:3.15
+FROM alpine:latest
 
-ADD https://raw.githubusercontent.com/cry999/my-configs/master/.zshrc /root/.zshrc
+ADD https://raw.githubusercontent.com/cry999/dotfiles/master/.zshrc /root/.zshrc
+
 RUN apk update
 RUN apk add --no-cache \
 	git \
 	zsh \
-	zsh-vcs
+	zsh-vcs \
+	neovim \
+	tmux \
+	exa \
+	fzf \
+	bat
+
+ARG WORKDIR=/root/github.com/cry999/dotfiles
+WORKDIR ${WORKDIR}
+
+RUN git clone https://github.com/cry999/dotfiles.git ${WORKDIR}
+
+RUN ln -s ${WORKDIR}/.p10k.zsh       /root/.p10k.zsh
+RUN ln -s ${WORKDIR}/.tmux.conf      /root/.tmux.conf
+RUN mkdir -p /root/.config
+RUN ln -s ${WORKDIR}/.config/nvim    /root/.config/nvim
+RUN ln -s ${WORKDIR}/.config/lazygit /root/.config/lazygit
 
 ENV TERM xterm-256color
 

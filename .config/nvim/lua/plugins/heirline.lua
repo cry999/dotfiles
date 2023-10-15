@@ -243,14 +243,14 @@ local MacroRec = {
 }
 
 local TablineFileName = {
-  init = function(self)
+  provider = function(self)
+    print("filename:", self.filename)
     if self.filename == "" then
-      self.filename = "[No Name]"
+      return "[No Name]"
     else
-      self.filename = vim.fn.fnamemodify(self.filename, ":t")
+      return vim.fn.fnamemodify(self.filename, ":t")
     end
   end,
-  provider = function(self) return self.filename end,
   hl = function(self) return self.is_active and "TabLineSel" or "TabLine" end,
 }
 
@@ -260,7 +260,7 @@ local TablineFileFlags = {
       return vim.api.nvim_buf_get_option(self.bufnr, "modified")
     end,
     provider = function()
-      return require("icons").FileModified
+      return require("icons").FileModified .. " "
     end,
     hl = { fg = "green" },
   },
@@ -269,7 +269,7 @@ local TablineFileFlags = {
       return vim.api.nvim_buf_get_option(self.bufnr, "readonly")
     end,
     provider = function(self)
-      return require("icons").FileReadOnly
+      return require("icons").FileReadOnly .. " "
     end,
     hl = { fg = "red" },
   },
@@ -324,7 +324,7 @@ local TablineExplorer = {
 }
 
 local TablineBufferBlock = {
-  FileActive, TablineFileNameBlock, FileActive,
+  FileActive, TablineFileNameBlock,
 }
 
 local NavicWinbar = {

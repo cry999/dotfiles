@@ -2,15 +2,15 @@ palette = "catppuccin_frappe"
 
 format  = """
 $aws$directory$fill\
-$git_branch$git_metrics$git_status$golang$gradle$java$lua$nodejs$package$python$rust$swift$terraform$vimcmd_symbol$line_break
+$git_branch$git_metrics$git_status$golang$gradle$java$lua$nodejs$package$python$rust$swift$terraform$vimcmd_symbol
 $character
 """
 
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol        = "[▎   ](green)"
-error_symbol          = "[▎   ](red  )"
-vimcmd_symbol         = "[▎   ](blue )"
+success_symbol        = "[  ](inverted green)[ ➜ ](green)"
+error_symbol          = "[  ](inverted red  )[ ➜ ](red  )"
+vimcmd_symbol         = "[  ](inverted blue )[ ➜ ](blue )"
 
 [fill]
 symbol = "┄"
@@ -32,10 +32,11 @@ disabled = false
 format = "([ $added ](green))([ $deleted ](red))"
 
 [git_status]
-format = "([$all_status$ahead_behind](peach))"
+format = "([$all_status$ahead_behind](mauve))"
 conflicted = ""
 modified = " "
 untracked = "★ "
+stashed = " "
 staged = "✓"
 renamed = "➜"
 deleted = "✗"
@@ -47,8 +48,7 @@ format = "[ 󰸏 ](inverted yellow)[ $profile ](yellow)"
 disabled = true
 
 [container]
-format = "[▎   ](bold sky)"
-style = "bold sky"
+format = "[  ](inverted sky)"
 
 [golang]
 format = "[  ](inverted bold sky)[( $version )](sky)"

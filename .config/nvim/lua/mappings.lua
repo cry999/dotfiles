@@ -1,4 +1,16 @@
-local terms = {}
+local lazygit = nil
+local function toggle_lazygit()
+  if not lazygit then
+    lazygit = require("toggleterm.terminal").Terminal:new({
+      cmd = "lazygit",
+      name = "lazygit",
+      hidden = true,
+      direction = "float"
+    })
+  end
+  lazygit:toggle()
+end
+
 local mappings = {
   n = {
     ["<C-h>"] = { function() require("smart-splits").move_cursor_left() end, desc = "Move to left split" },
@@ -8,14 +20,24 @@ local mappings = {
 
     -- fuzzy finder
 
-    ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", desc = "Find file" },
-    ["<leader>fk"] = { "<cmd>Telescope keymaps<cr>", desc = "Find keymaps" },
+    ["<leader>fa"] = { "<cmd>Telescope autocommands<cr>", desc = "Find autocommands" },
     ["<leader>fb"] = { "<cmd>Telescope buffers<cr>", desc = "Find buffer" },
-    ["<leader>fw"] = { "<cmd>Telescope live_grep<cr>", desc = "Find word" },
-    ["<leader>fn"] = { "<cmd>Telescope notify<cr>", desc = "Find notifications" },
+    ["<leader>fc"] = { "<cmd>Telescope commands<cr>", desc = "Find command" },
+    ["<leader>fC"] = { "<cmd>Telescope command_history<cr>", desc = "Find command in history" },
     ["<leader>fd"] = { "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Find diagnostics current buffer" },
-    ["<leader>fD"] = { "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Find all diagnostics" },
+    ["<leader>fD"] = { "<cmd>Telescope diagnostics bufnr=<cr>", desc = "Find all diagnostics" },
+    ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", desc = "Find file" },
+    ["<leader>fh"] = { "<cmd>Telescope help_tags<cr>", desc = "Find help tags" },
+    ["<leader>fk"] = { "<cmd>Telescope keymaps<cr>", desc = "Find keymaps" },
+    ["<leader>fm"] = { "<cmd>Telescope marks<cr>", desc = "Find mark" },
+    ["<leader>fn"] = { "<cmd>Telescope notify<cr>", desc = "Find notifications" },
+    ["<leader>fr"] = { "<cmd>Telescope registers<cr>", desc = "Find register" },
+    ["<leader>ft"] = { function() require("telescope-tabs").list_tabs() end, desc = "Find tabs" },
+    ["<leader>fw"] = { "<cmd>Telescope live_grep<cr>", desc = "Find word" },
+    ["<leader>fW"] = { "<cmd>Telescope current_buffer_fuzzy_find skip_empty_lines=true<cr>", desc = "Find current buffer" },
+    ["<leader>f/"] = { "<cmd>Telescope search_history<cr>", desc = "Find search word in history" },
     ["<leader>fli"] = { "<cmd>Telescope lsp_implementations<cr>", desc = "Find implementations" },
+    ["<leader>flr"] = { "<cmd>Telescope lsp_references jump_type=vsplit<cr>", desc = "Find references" },
 
     ["<leader>e"] = { "<cmd>Neotree<cr>", desc = "Toggle NeoTree" },
 
@@ -36,19 +58,7 @@ local mappings = {
     ["<leader>pm"] = { "<cmd>Lazy<cr>", desc = "Open Lazy" },
 
     -- Term
-    ["<leader>tl"] = {
-      function()
-        if not terms.lazygit then
-          terms.lazygit = require("toggleterm.terminal").Terminal:new({
-            cmd = "lazygit",
-            hidden = true,
-            direction = "float"
-          })
-        end
-        terms.lazygit:toggle()
-      end,
-      desc = "Open lazygit terminal",
-    },
+    ["<leader>tl"] = { toggle_lazygit, desc = "Open lazygit terminal" },
     ["<leader>tf"] = { "<cmd>ToggleTerm direction=float<cr>", desc = "Open floating terminal" },
     ["<leader>th"] = { "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Open horizontal terminal" },
     ["<leader>tv"] = { "<cmd>ToggleTerm direction=vertical<cr>", desc = "Open vertical terminal" },
@@ -94,6 +104,7 @@ local mappings = {
     ["<C-l>"] = { [[<cmd>wincmd l<cr>]], desc = "Move to right split" },
     ["<C-k>"] = { [[<cmd>wincmd k<cr>]], desc = "Move to up split" },
     ["<C-j>"] = { [[<cmd>wincmd j<cr>]], desc = "Move to down split" },
+    ["<C-\\><C-\\>"] = { [[<C-\><C-n>]], desc = "Move to down split" },
   },
 }
 

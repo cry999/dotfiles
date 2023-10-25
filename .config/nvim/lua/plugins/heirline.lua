@@ -40,7 +40,7 @@ local ViMode = {
       niI = "Ni",
       niR = "Nr",
       niV = "Nv",
-      nt = "Nt",
+      nt = "T-NORMAL",
       v = "VISUAL",
       vs = "Vs",
       V = "L-VISUAL",
@@ -133,17 +133,19 @@ local FileName = {
       self.filename = vim.fn.fnamemodify(self.filename, ":.")
       self.tailname = vim.fn.fnamemodify(self.filename, ":t")
     end
-    self.icon, self.icon_color =
-        require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+    if vim.bo and vim.bo.filetype == "help" then
+      self.filename = self.tailname
+      self.icon, self.icon_color = require("icons").Help, "mauve"
+    else
+      self.icon, self.icon_color =
+          require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+    end
   end,
   {
     flexible = true,
     hl = function(self) return { fg = self.icon_color, bg = "bg" } end,
     {
       provider = function(self)
-        if vim.bo.filetype == "help" then
-          return "HELP " .. self.tailname
-        end
         return self.icon .. " " .. self.filename
       end,
     },
@@ -337,6 +339,13 @@ local NavicWinbar = {
 }
 
 local FileNameWinbar = {
+  static = {
+    plugins = {
+      lazy = true,
+      mason = true,
+      TelescopePrompt = true,
+    },
+  },
   condition = function()
     local filename = vim.api.nvim_buf_get_name(0)
     local term = "term://"
@@ -351,15 +360,19 @@ local FileNameWinbar = {
     else
       self.tailname = vim.fn.fnamemodify(self.tailname, ":t")
     end
-    self.icon, self.icon_color =
-        require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+    if vim.bo.filetype == "help" then
+      self.icon, self.icon_color = require("icons").Help, "mauve"
+    elseif self.plugins[vim.bo.filetype] then
+      self.tailname = vim.bo.filetype
+      self.icon, self.icon_color = require("icons").Plugin, "mauve"
+    else
+      self.icon, self.icon_color =
+          require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+    end
   end,
   {
     hl = function(self) return { bg = self.icon_color, fg = "bg" } end,
     provider = function(self)
-      if vim.bo.filetype == "help" then
-        return " HELP " .. self.tailname .. " "
-      end
       return " " .. self.icon .. " " .. self.tailname .. " "
     end,
   },

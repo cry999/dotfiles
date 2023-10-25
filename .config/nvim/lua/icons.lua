@@ -39,6 +39,8 @@ return {
   GitStaged = "✓",
   GitUnstaged = "✗",
   GitUntracked = "★",
+  Help = "󰋖",
+  Plugin = "",
   LSPLoading1 = "",
   LSPLoading2 = "󰀚",
   LSPLoading3 = "",

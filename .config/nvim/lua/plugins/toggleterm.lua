@@ -4,7 +4,7 @@ return {
   cmd = { "ToggleTerm", "TermExec" },
   config = function()
     require("toggleterm").setup({
-      direction = "float",
+      direction = "horizontal",
       size = function(term)
         if term.direction == "horizontal" then
           return 20

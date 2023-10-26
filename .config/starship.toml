@@ -1,8 +1,8 @@
 palette = "catppuccin_frappe"
 
 format  = """
-$aws$directory$fill\
-$git_branch$git_metrics$git_status$golang$gradle$java$lua$nodejs$package$python$rust$swift$terraform$vimcmd_symbol
+$aws$directory$golang$gradle$java$lua$nodejs$package$python$rust$swift$terraform$fill\
+$git_branch$git_commit$git_metrics$git_status
 $character
 """
 
@@ -18,52 +18,55 @@ symbol = "┄"
 [directory]
 truncation_length = 4
 # Catppuccin 'lavender'
-format = "[  ](inverted lavender)[ $path ](lavender)"
+format = "[  ](inverted lavender)[ $path ](lavender bg:surface1)"
 
 [git_branch]
-format="([  ](inverted bold peach)[ $branch(:$remote_branch) ](peach))"
+format="([  ](inverted bold peach)[ $branch(:$remote_branch) ](peach bg:surface1))"
 
-# [git_commit]
-# format = "([ 󰓹 $hash$tag ](inverted peach))"
-# tag_disabled = false
+[git_commit]
+format = "([ $hash $tag ](peach bg:surface1))"
+tag_symbol = "󰓹 "
+only_detached = false
+tag_disabled = false
+disabled = false
 
 [git_metrics]
 disabled = false
-format = "([ $added ](green))([ $deleted ](red))"
+format = "([ $added ](green bg:surface1))([ $deleted ](red bg:surface1))"
 
 [git_status]
-format = "([$all_status$ahead_behind](mauve))"
-conflicted = ""
-modified = " "
-untracked = "★ "
-stashed = " "
-staged = "✓"
-renamed = "➜"
-deleted = "✗"
+format = "$all_status$ahead_behind"
+conflicted = "[ ](red bg:surface1)"
+modified = "[ ](mauve bg:surface1)"
+untracked = "[★ ] (yellow bg:surface1)"
+stashed = "[ ](teal bg:surface1)"
+staged = "[✓ ](green bg:surface1)"
+renamed = "[➜ ](mauve bg:surface1)"
+deleted = "[✗ ](red bg:surface1)"
 
 [aws]
-format = "[ 󰸏 ](inverted yellow)[ $profile ](yellow)"
+format = "[ 󰸏 ](inverted yellow)[ $profile ](yellow bg:surface1)"
 
 [battery]
 disabled = true
 
 [container]
-format = "[  ](inverted sky)"
+format = "[  ](inverted sky bg:surface1)"
 
 [golang]
-format = "[  ](inverted bold sky)[( $version )](sky)"
+format = "[  ](inverted bold sky)[( $version )](sky bg:surface1)"
 
 [gradle]
-format = "[  ](inverted bold text)[( $version )](text)"
+format = "[  ](inverted bold text)[( $version )](text bg:surface1)"
 
 [java]
-format = "[ 󰬷 ](inverted bold flamingo)[( $version )](flamingo)"
+format = "[ 󰬷 ](inverted bold flamingo)[( $version )](flamingo bg:surface1)"
 
 [lua]
-format = "[ 󰢱 ](inverted bold yellow)[( $version )](yellow)"
+format = "[ 󰢱 ](inverted bold yellow)[( $version )](yellow bg:surface1)"
 
 [nodejs]
-format = "[ 󰎙 ](inverted bold green)[( $version )](green)"
+format = "[ 󰎙 ](inverted bold green)[( $version )](green bg:surface1)"
 
 [palettes.catppuccin_frappe]
 rosewater = "#f2d5cf"

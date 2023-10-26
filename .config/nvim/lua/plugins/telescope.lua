@@ -5,8 +5,9 @@ return {
       { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
       { "nvim-lua/plenary.nvim" },
     },
-    config = function()
-      require("telescope").setup({
+    opts = function()
+      local actions = require("telescope.actions")
+      return {
         defaults = {
           vimgrep_arguments = {
             "rg",
@@ -18,13 +19,27 @@ return {
             "--hidden",
             "-g", "!.git",
           },
+          mappings = {
+            i = {
+              ["<C-y>"] = actions.select_default,
+              ["<C-x>"] = actions.select_horizontal,
+              ["<C-v>"] = actions.select_vertical,
+              ["<C-w>"] = actions.select_tab,
+            },
+            n = {
+              ["<C-y>"] = actions.select_default,
+              ["<C-x>"] = actions.select_horizontal,
+              ["<C-v>"] = actions.select_vertical,
+              ["<C-w>"] = actions.select_tab,
+            },
+          },
         },
         pickers = {
           find_files = {
             find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
           },
         },
-      })
+      }
     end,
   },
   {

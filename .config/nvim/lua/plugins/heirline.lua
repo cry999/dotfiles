@@ -269,7 +269,7 @@ local TablineFileFlags = {
     condition = function(self)
       return vim.api.nvim_buf_get_option(self.bufnr, "readonly")
     end,
-    provider = function(self)
+    provider = function()
       return require("icons").FileReadOnly .. " "
     end,
     hl = { fg = "red" },
@@ -324,6 +324,17 @@ local TablineExplorer = {
   end,
 }
 
+local TablineTabNumber = {
+  init = function(self)
+    self.tabnr = vim.api.nvim_tabpage_get_number(0)
+  end,
+  provider = function(self)
+    local icons = require("icons")
+    return icons.GitSign .. icons.Tab .. " " .. self.tabnr .. " " .. icons.GitSign
+  end,
+  hl = { fg = "lavender" },
+}
+
 local TablineBufferBlock = {
   FileActive, TablineFileNameBlock,
 }
@@ -343,7 +354,6 @@ local FileNameWinbar = {
     plugins = {
       lazy = true,
       mason = true,
-      TelescopePrompt = true,
     },
   },
   condition = function()
@@ -352,6 +362,8 @@ local FileNameWinbar = {
     local neotree = "neo-tree filesystem"
     return string.sub(filename, 1, string.len(term)) ~= term
         and string.sub(vim.fn.fnamemodify(filename, ":t"), 1, string.len(neotree)) ~= neotree
+        and vim.bo.filetype ~= "alpha"
+        and vim.bo.filetype ~= "TelescopePrompt"
   end,
   init = function(self)
     self.tailname = vim.api.nvim_buf_get_name(0)
@@ -412,6 +424,7 @@ return {
       },
       tabline = {
         TablineExplorer,
+        TablineTabNumber,
         utils.make_buflist(
           TablineBufferBlock,
           { provider = "", hl = { fg = "lavender" } },
@@ -423,8 +436,6 @@ return {
   config = function(_, opts)
     local heirline = require("heirline")
     local C = require("catppuccin.palettes").get_palette("frappe")
-    -- local brighten = require("catppuccin.utils.colors").brighten
-    -- local darken = require("catppuccin.utils.colors").darken
 
     local highlights = {
       --[[

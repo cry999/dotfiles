@@ -2,6 +2,7 @@ return {
   "petertriho/nvim-scrollbar",
   opts = {
     show = true,
+    show_in_active_only = true,
     handle = {
       text = " ",
       blend = 0,

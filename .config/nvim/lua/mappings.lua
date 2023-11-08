@@ -72,6 +72,11 @@ local mappings = {
     ["<leader>gb"] = { function() require("gitsigns").toggle_current_line_blame() end, desc = "View git blame" },
     ["<leader>gd"] = { function() require("gitsigns").diffthis() end, desc = "View git diff" },
 
+    -- Hop
+    ["<leader>h1"] = { "<cmd>HopChar1<cr>", desc = "Hop to char 1" },
+    ["<leader>hw"] = { "<cmd>HopWord<cr>", desc = "Hop to word" },
+    ["<leader>ha"] = { "<cmd>HopAnywhere<cr>", desc = "Hop to anywhere" },
+
     -- Outline
     ["<leader>ot"] = { "<cmd>AerialToggle!<cr>", desc = "Toggle outline panel" },
 
@@ -93,6 +98,13 @@ local mappings = {
       desc = "Toggle comment blockwise",
       expr = true,
     },
+
+    -- fold
+    ["zR"] = { function() require("ufo").openAllFolds() end, desc = "Open all folds" },
+    ["zM"] = { function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
+    ["zr"] = { function() require("ufo").openFoldsExceptKinds() end, desc = "Fold less" },
+    ["zm"] = { function() require("ufo").closeFoldsWith() end, desc = "Fold more" },
+    ["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" },
   },
   x = {
     -- Comment out
@@ -121,6 +133,7 @@ if wk_ok then
     ["<leader>t"] = { name = icons.Terminal .. "  Terminal" },
     ["<leader>s"] = { name = icons.WordFile .. "  Re-Sourcing configurations" },
     ["<leader>g"] = { name = icons.Git .. "  Git" },
+    ["<leader>h"] = { name = "󰑣  Hop" },
     ["<leader>o"] = { name = "  Outline" },
     ["<leader>/"] = { name = "// Comment Out" },
   })

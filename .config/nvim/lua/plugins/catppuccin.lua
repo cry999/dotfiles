@@ -5,11 +5,17 @@ return {
   config = function()
     require("catppuccin").setup({
       flavour = "frappe",
+      dim_inactive = {
+        enabled = true,
+        shade = "dark",
+        percentage = 0.15,
+      },
       integrations = {
         alpha = true,
         cmp = true,
         flash = true,
         gitsigns = true,
+        hop = true,
         illuminate = true,
         indent_blankline = { enabled = true },
         lsp_trouble = true,
@@ -29,6 +35,7 @@ return {
         noice = true,
         notify = true,
         neotree = true,
+        octo = true,
         semantic_tokens = true,
         telescope = true,
         treesitter = true,

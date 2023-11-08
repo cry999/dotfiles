@@ -349,6 +349,10 @@ local NavicWinbar = {
   hl = { bg = "bg" },
 }
 
+local has_prefix = function(str, prefix)
+  return str:sub(1, #prefix) == prefix
+end
+
 local FileNameWinbar = {
   static = {
     plugins = {
@@ -360,14 +364,15 @@ local FileNameWinbar = {
     local filename = vim.api.nvim_buf_get_name(0)
     local term = "term://"
     local neotree = "neo-tree filesystem"
-    return string.sub(filename, 1, string.len(term)) ~= term
-        and string.sub(vim.fn.fnamemodify(filename, ":t"), 1, string.len(neotree)) ~= neotree
+    return not has_prefix(filename, term)
+        and not has_prefix(vim.fn.fnamemodify(filename, ":t"), neotree)
         and vim.bo.filetype ~= "alpha"
         and vim.bo.filetype ~= "TelescopePrompt"
+        and vim.bo.filetype ~= "chatgpt-input"
   end,
   init = function(self)
     self.tailname = vim.api.nvim_buf_get_name(0)
-    if self.filename == "" then
+    if self.tailname == "" then
       self.tailname = "[No Name]"
     else
       self.tailname = vim.fn.fnamemodify(self.tailname, ":t")
@@ -403,6 +408,7 @@ return {
   dependencies = { "catppuccin/nvim", "nvim-tree/nvim-web-devicons", "lewis6991/gitsigns.nvim" },
   opts = function()
     local utils = require("heirline.utils")
+    local conditions = require("heirline.conditions")
     return {
       statusline = {
         hl = { bg = "bg" },
@@ -430,6 +436,14 @@ return {
           { provider = "", hl = { fg = "lavender" } },
           { provider = "", hl = { fg = "lavender" } }
         ),
+      },
+      opts = {
+        disable_winbar_cb = function()
+          return conditions.buffer_matches({
+            buftype = { "nofile", "prompt", "help", "quickfix" },
+            filetype = { "^git.*", "fugitive", "Trouble", "dashboard" },
+          })
+        end,
       },
     }
   end,

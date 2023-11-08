@@ -89,7 +89,7 @@ local ViMode = {
   update = {
     "ModeChanged",
     pattern = "*:*",
-    callback = vim.schedule_wrap(function(self)
+    callback = vim.schedule_wrap(function()
       vim.cmd("redrawstatus")
     end),
   },
@@ -330,9 +330,9 @@ local TablineTabNumber = {
   end,
   provider = function(self)
     local icons = require("icons")
-    return icons.GitSign .. icons.Tab .. " " .. self.tabnr .. " " .. icons.GitSign
+    return " " .. icons.Tab .. " " .. self.tabnr .. " "
   end,
-  hl = { fg = "lavender" },
+  hl = { fg = "base", bg = "lavender" },
 }
 
 local TablineBufferBlock = {

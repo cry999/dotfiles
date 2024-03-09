@@ -99,6 +99,12 @@ local mappings = {
       expr = true,
     },
 
+    -- Telekasten (Zettelkasten)
+    ["<leader>zf"] = { "<cmd>Telekasten find_notes<cr>", desc = "Find Zettelkasten notes" },
+    ["<leader>zg"] = { "<cmd>Telekasten search_notes<cr>", desc = "Find Zettelkasten notes by word" },
+    ["<leader>zn"] = { "<cmd>Telekasten new_note<cr>", desc = "Find Zettelkasten notes by word" },
+    ["<leader>zd"] = { "<cmd>Telekasten new_daily_note<cr>", desc = "Find Zettelkasten notes by word" },
+
     -- fold
     ["zR"] = { function() require("ufo").openAllFolds() end, desc = "Open all folds" },
     ["zM"] = { function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
@@ -116,7 +122,7 @@ local mappings = {
     ["<C-l>"] = { [[<cmd>wincmd l<cr>]], desc = "Move to right split" },
     ["<C-k>"] = { [[<cmd>wincmd k<cr>]], desc = "Move to up split" },
     ["<C-j>"] = { [[<cmd>wincmd j<cr>]], desc = "Move to down split" },
-    ["<C-\\><C-\\>"] = { [[<C-\><C-n>]], desc = "Move to down split" },
+    ["<C-\\><C-\\>"] = { [[<C-\><C-n>]], desc = "Escape" },
   },
 }
 
@@ -135,6 +141,7 @@ if wk_ok then
     ["<leader>g"] = { name = icons.Git .. "  Git" },
     ["<leader>h"] = { name = "󰑣  Hop" },
     ["<leader>o"] = { name = "  Outline" },
+    ["<leader>z"] = { name = "󰎚  Zettelkasten" },
     ["<leader>/"] = { name = "// Comment Out" },
   })
 end

@@ -31,6 +31,7 @@ local options = {
     smartcase = true,
     splitbelow = true,
     splitright = true,
+    swapfile = false,
     tabstop = 2,
     termguicolors = true,
     timeoutlen = 500,

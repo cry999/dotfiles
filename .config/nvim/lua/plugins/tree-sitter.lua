@@ -23,7 +23,6 @@ return {
   build = ":TSUpdate",
   opts = {
     autotag = { enable = true },
-    context_commentstring = { enable = true, enable_autocmd = false },
     highlight = { enable = true, disable = function(_, bufnr) return vim.b[bufnr].large_buf end },
     incremental_selection = { enable = true },
     indent = { enable = true },
@@ -87,5 +86,11 @@ return {
   },
   config = function(_, opts)
     require("nvim-treesitter.configs").setup(opts)
+    require("ts_context_commentstring").setup({
+      enable_autocmd = true,
+      commentary_integration = {},
+      languages = {},
+      config = {},
+    })
   end,
 }

@@ -11,26 +11,24 @@ gui:
     lightTheme: false # For terminals with a light background
     # from: https://github.com/catppuccin/lazygit/blob/main/themes/frappe/frappe-lavender.yml
     activeBorderColor:
-    - '#babbf1'
-    - bold
+      - '#ca9ee6'
+      - bold
     inactiveBorderColor:
-    - '#a5adce'
+      - '#a5adce'
     optionsTextColor:
-    - '#8caaee'
+      - '#8caaee'
     selectedLineBgColor:
-    - '#414559'
-    selectedRangeBgColor:
-    - '#414559'
+      - '#414559'
     cherryPickedCommitBgColor:
-    - '#51576d'
+      - '#51576d'
     cherryPickedCommitFgColor:
-    - '#babbf1'
+      - '#ca9ee6'
     unstagedChangesColor:
-    - '#e78284'
+      - '#e78284'
     defaultFgColor:
-    - '#c6d0f5'
+      - '#c6d0f5'
     searchingActiveBorderColor:
-    - '#e5c890'
+      - '#e5c890'
   commitLength:
     show: true
   mouseEvents: false

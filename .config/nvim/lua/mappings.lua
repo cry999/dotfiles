@@ -71,9 +71,10 @@ local mappings = {
     -- Git
     ["<leader>gb"] = { function() require("gitsigns").toggle_current_line_blame() end, desc = "View git blame" },
     ["<leader>gd"] = { function() require("gitsigns").diffthis() end, desc = "View git diff" },
+    ["<leader>gl"] = { "<cmd>Flog<cr>", desc = "View git log" },
 
     -- Hop
-    ["<leader>h1"] = { "<cmd>HopChar1<cr>", desc = "Hop to char 1" },
+    ["<leader>hh"] = { "<cmd>HopChar1<cr>", desc = "Hop to char 1" },
     ["<leader>hw"] = { "<cmd>HopWord<cr>", desc = "Hop to word" },
     ["<leader>ha"] = { "<cmd>HopAnywhere<cr>", desc = "Hop to anywhere" },
 

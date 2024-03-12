@@ -3,7 +3,6 @@ ZSH_CONFIG_DIR=${ZSH_CONFIG_DIR:-~/.zsh}
 # load env at first
 source ${ZSH_CONFIG_DIR}/env.zsh
 
-source ${ZSH_CONFIG_DIR}/env.zsh
 source ${ZSH_CONFIG_DIR}/zinit.zsh
 source ${ZSH_CONFIG_DIR}/fzf.zsh
 source ${ZSH_CONFIG_DIR}/go.zsh

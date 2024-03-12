@@ -7,11 +7,11 @@ fi
 if [ "$(which vim 2>/dev/null)" = "/usr/bin/vim" ]; then
 	alias vim='/usr/local/bin/vim'
 fi
-alias exa='exa --icons --git-ignore --sort type'
-alias ls='exa --no-icons'
-alias la='exa -a'
-alias ll='exa -al'
-alias lt='exa --tree'
+alias eza='eza --icons=always --git-ignore --sort type'
+alias ls='eza --icons=never'
+alias la='eza -a'
+alias ll='eza -al'
+alias lt='eza --tree'
 
 alias rm='rm -i'
 alias cp='cp -i'

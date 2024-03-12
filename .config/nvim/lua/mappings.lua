@@ -11,6 +11,34 @@ local function toggle_lazygit()
   lazygit:toggle()
 end
 
+local function copilot_chat(query_textobject)
+  local function selection()
+    local shared = require("nvim-treesitter.textobjects.shared")
+    local bufnr, textobject = shared.textobject_at_point(query_textobject, "textobjects")
+    local start_row, start_col, end_row, end_col = vim.treesitter.get_node_range(textobject)
+    local lines = vim.api.nvim_buf_get_text(bufnr, start_row, start_col, end_row, end_col + 1, {})
+    local text = table.concat(lines, "\n")
+
+    if vim.trim(text) == "" then
+      return nil
+    end
+    return {
+      lines = text,
+      start_row = start_row + 1,
+      start_col = start_col + 1,
+      end_row = end_row + 1,
+      end_col = end_col + 1,
+    }
+  end
+
+  local input = vim.fn.input("CopilotChat: ")
+  if input ~= "" then
+    require("CopilotChat").ask(input, {
+      selection = selection,
+    })
+  end
+end
+
 local mappings = {
   n = {
     ["<C-h>"] = { function() require("smart-splits").move_cursor_left() end, desc = "Move to left split" },
@@ -82,11 +110,12 @@ local mappings = {
     ["<leader>ot"] = { "<cmd>AerialToggle!<cr>", desc = "Toggle outline panel" },
 
     -- Comment Out
-    ["<leader>//"] = { function()
-      return vim.v.count == 0
-          and "<plug>(comment_toggle_linewise_current)"
-          or "<plug>(comment_toggle_linewise_count)"
-    end,
+    ["<leader>//"] = {
+      function()
+        return vim.v.count == 0
+            and "<plug>(comment_toggle_linewise_current)"
+            or "<plug>(comment_toggle_linewise_count)"
+      end,
       desc = "Toggle comment linewise",
       expr = true,
     },
@@ -112,6 +141,24 @@ local mappings = {
     ["zr"] = { function() require("ufo").openFoldsExceptKinds() end, desc = "Fold less" },
     ["zm"] = { function() require("ufo").closeFoldsWith() end, desc = "Fold more" },
     ["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" },
+
+    -- Copilot Chat
+    ["<leader>cB"] = {
+      function()
+        local input = vim.fn.input("CopilotChat: ")
+        if input ~= "" then
+          require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+        end
+      end,
+      desc = "CopilotChat - Chat with current buffer"
+    },
+    ["<leader>cif"] = { function() copilot_chat("@function.inner") end, desc = "CopilotChat - Chat about inner function" },
+    ["<leader>caf"] = { function() copilot_chat("@function.outer") end, desc = "CopilotChat - Chat about outer function" },
+    ["<leader>cib"] = { function() copilot_chat("@block.inner") end, desc = "CopilotChat - Chat about inner block" },
+    ["<leader>cab"] = { function() copilot_chat("@block.outer") end, desc = "CopilotChat - Chat about outer block" },
+    ["<leader>cil"] = { function() copilot_chat("@loop.inner") end, desc = "CopilotChat - Chat about inner loop" },
+    ["<leader>cal"] = { function() copilot_chat("@loop.outer") end, desc = "CopilotChat - Chat about outer loop" },
+    ["<leader>cr"] = { "<cmd>CopilotChatReset<cr>", desc = "CopilotChat - Reset chat history and clear buffer" },
   },
   x = {
     -- Comment out
@@ -134,6 +181,9 @@ if wk_ok then
   local icons = require("icons")
   wk.register({
     ["<leader>f"] = { name = icons.Search .. "  Fuzzy Finder" },
+    ["<leader>c"] = { name = icons.Copilot .. "  Copilot Chat" },
+    ["<leader>ci"] = { name = icons.Copilot .. "  Copilot Chat - inner text objects" },
+    ["<leader>ca"] = { name = icons.Copilot .. "  Copilot Chat - outer text objects" },
     ["<leader>fl"] = { name = icons.Search .. "  LSP" },
     ["<leader>l"] = { name = icons.ActiveLSP .. "  LSP" },
     ["<leader>p"] = { name = icons.Package .. "  Package Manager" },

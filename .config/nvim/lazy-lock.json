@@ -1,7 +1,7 @@
 {
   "ChatGPT.nvim": { "branch": "main", "commit": "df53728e05129278d6ea26271ec086aa013bed90" },
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
-  "CopilotChat.nvim": { "branch": "canary", "commit": "c5b0f79ba942edb9385ff4903a925bc20d00de64" },
+  "CopilotChat.nvim": { "branch": "canary", "commit": "d9dc1822a549cb29b057b61d4a0959f10ca6b02c" },
   "LuaSnip": { "branch": "master", "commit": "8ae1dedd988eb56441b7858bd1e8554dfadaa46d" },
   "aerial.nvim": { "branch": "master", "commit": "31fbd369bbbeb53080c4b1ead9e76be322725ef5" },
   "alpha-nvim": { "branch": "main", "commit": "41283fb402713fc8b327e60907f74e46166f4cfd" },

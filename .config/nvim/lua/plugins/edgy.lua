@@ -26,6 +26,14 @@ return {
         end,
       },
       { ft = "spectre_panel", size = { height = 0.4 } },
+      {
+        title = "GitHub Copilot Chat",
+        ft = "markdown",
+        filter = function(buf)
+          return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t") == "copilot-chat"
+        end,
+        size = { height = 0.4 },
+      },
     },
     left = {
       -- Neo-tree filesystem always takes half the screen height

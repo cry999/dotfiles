@@ -84,6 +84,7 @@ local mappings = {
 
     -- Package manager (Lazy)
     ["<leader>pm"] = { "<cmd>Lazy<cr>", desc = "Open Lazy" },
+    ["<leader>pc"] = { "<cmd>LazyClose<cr>", desc = "Close Lazy" },
 
     -- Term
     ["<leader>tl"] = { toggle_lazygit, desc = "Open lazygit terminal" },

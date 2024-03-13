@@ -1,6 +1,6 @@
 return {
   "williamboman/mason.nvim",
-  cmd = { 
+  cmd = {
     "Mason",
     "MasonIsntall",
     "MasonUnisntall",
@@ -16,6 +16,7 @@ return {
         package_uninstalled = "✗",
         package_pending = "⟳",
       },
+      border = "rounded",
     },
   },
 }

@@ -68,12 +68,12 @@ return {
             end,
           },
           condition = {
-            function (args)
+            function(args)
               local filetype = vim.bo[args.buf].filetype
               return filetype ~= "neo-tree" and
-                filetype ~= "aerial" and
-                filetype ~= "neotest-summary" and
-                filetype ~= "alpha"
+                  filetype ~= "aerial" and
+                  filetype ~= "neotest-summary" and
+                  filetype ~= "alpha"
             end
           },
         },

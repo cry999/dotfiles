@@ -47,7 +47,7 @@ return {
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
     },
-    config = {
+    opts = {
       entry_formatter = function(tab_id, _, file_names, file_paths, is_current)
         return string.format('%s %d: %s', is_current and '*' or ' ', tab_id, table.concat(file_names, ', '))
       end,

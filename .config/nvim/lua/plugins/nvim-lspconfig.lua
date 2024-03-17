@@ -4,16 +4,19 @@ return {
     { "hrsh7th/cmp-nvim-lsp" },
     {
       "williamboman/mason-lspconfig.nvim",
-      cmp = { "LspInstall", "LspUninstall" },
+      cmd = { "LspInstall", "LspUninstall" },
       opts = function()
         local cmp_nvim_lsp = require('cmp_nvim_lsp')
         return {
           handlers = {
             function(server)
+              local capabilities = vim.lsp.protocol.make_client_capabilities()
+              capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+              }
               require("lspconfig")[server].setup({
-                capabilities = cmp_nvim_lsp.default_capabilities(
-                  vim.lsp.protocol.make_client_capabilities()
-                ),
+                capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
               })
             end,
           },

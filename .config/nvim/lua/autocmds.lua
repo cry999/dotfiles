@@ -8,8 +8,8 @@ local autocmds = {
       end
     end,
   },
-  LSP = {
-    event = "LspAttach",
+  LSPInlayHintEnable = {
+    event = { "LspAttach" },
     callback = function(args)
       if vim.lsp.inlay_hint ~= nil and not vim.lsp.inlay_hint.is_enabled(args.buf) then
         vim.lsp.inlay_hint.enable(args.buf, true)

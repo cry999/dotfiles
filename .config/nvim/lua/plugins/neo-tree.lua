@@ -1,7 +1,7 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
-  requires = {
+  dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
@@ -11,7 +11,7 @@ return {
       event = 'VeryLazy',
       version = '2.*',
       config = function()
-        require 'window-picker'.setup()
+        require('window-picker').setup()
       end,
     },
   },
@@ -35,7 +35,7 @@ return {
       },
       sources = { "document_symbols", "filesystem", "buffers", "git_status" },
       open_files_do_not_replace_types = { "terminal", "trouble", "qf", "edgy" }, -- when opening files, do not use windows containing these filetypes or buftypes
-      sort_case_insensitive = false,                                     -- used when sorting files and directories in the tree
+      sort_case_insensitive = false,                                             -- used when sorting files and directories in the tree
       default_component_configs = {
         container = {
           enable_character_fade = true

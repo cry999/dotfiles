@@ -45,6 +45,15 @@ return {
       custom_highlights = function(colors)
         return {
           LspInlayHint = { fg = U.blend(colors.overlay0, colors.surface0, 0.5), bg = colors.none },
+          FoldCol0 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.95) },
+          FoldCol1 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.90) },
+          FoldCol2 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.85) },
+          FoldCol3 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.80) },
+          FoldCol4 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.75) },
+          FoldCol5 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.70) },
+          FoldCol6 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.65) },
+          FoldCol7 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.60) },
+          FoldCol8 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.55) },
         }
       end,
     })

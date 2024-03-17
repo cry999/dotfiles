@@ -67,6 +67,15 @@ return {
               return hl .. foldstr .. '%#LineNr# '
             end,
           },
+          condition = {
+            function (args)
+              local filetype = vim.bo[args.buf].filetype
+              return filetype ~= "neo-tree" and
+                filetype ~= "aerial" and
+                filetype ~= "neotest-summary" and
+                filetype ~= "alpha"
+            end
+          },
         },
         -- line number
         {

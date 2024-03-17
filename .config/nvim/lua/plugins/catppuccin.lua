@@ -3,6 +3,7 @@ return {
   name = "catppuccin",
   priority = 1000,
   config = function()
+    local U = require("catppuccin.utils.colors")
     require("catppuccin").setup({
       flavour = "frappe",
       dim_inactive = {
@@ -41,6 +42,11 @@ return {
         treesitter = true,
         which_key = true,
       },
+      custom_highlights = function(colors)
+        return {
+          LspInlayHint = { fg = U.blend(colors.overlay0, colors.surface0, 0.5), bg = colors.none },
+        }
+      end,
     })
     vim.cmd.colorscheme("catppuccin")
   end,

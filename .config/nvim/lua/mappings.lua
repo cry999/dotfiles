@@ -160,6 +160,11 @@ local mappings = {
     ["<leader>cil"] = { function() copilot_chat("@loop.inner") end, desc = "CopilotChat - Chat about inner loop" },
     ["<leader>cal"] = { function() copilot_chat("@loop.outer") end, desc = "CopilotChat - Chat about outer loop" },
     ["<leader>cr"] = { "<cmd>CopilotChatReset<cr>", desc = "CopilotChat - Reset chat history and clear buffer" },
+
+    -- Neotest
+    ["<leader>nr"] = { "<cmd>Neotest run<cr>", desc = "Run tests" },
+    ["<leader>no"] = { "<cmd>Neotest output-panel<cr>", desc = "View tests outputs" },
+    ["<leader>nt"] = { "<cmd>Neotest summary<cr>", desc = "View test tree" },
   },
   x = {
     -- Comment out
@@ -181,18 +186,19 @@ local wk_ok, wk = pcall(require, "which-key")
 if wk_ok then
   local icons = require("icons")
   wk.register({
-    ["<leader>f"] = { name = icons.Search .. "  Fuzzy Finder" },
     ["<leader>c"] = { name = icons.Copilot .. "  Copilot Chat" },
     ["<leader>ci"] = { name = icons.Copilot .. "  Copilot Chat - inner text objects" },
     ["<leader>ca"] = { name = icons.Copilot .. "  Copilot Chat - outer text objects" },
+    ["<leader>f"] = { name = icons.Search .. "  Fuzzy Finder" },
     ["<leader>fl"] = { name = icons.Search .. "  LSP" },
-    ["<leader>l"] = { name = icons.ActiveLSP .. "  LSP" },
-    ["<leader>p"] = { name = icons.Package .. "  Package Manager" },
-    ["<leader>t"] = { name = icons.Terminal .. "  Terminal" },
-    ["<leader>s"] = { name = icons.WordFile .. "  Re-Sourcing configurations" },
     ["<leader>g"] = { name = icons.Git .. "  Git" },
     ["<leader>h"] = { name = "󰑣  Hop" },
+    ["<leader>l"] = { name = icons.ActiveLSP .. "  LSP" },
+    ["<leader>n"] = { name = icons.Test .. "  Neotest" },
     ["<leader>o"] = { name = "  Outline" },
+    ["<leader>p"] = { name = icons.Package .. "  Package Manager" },
+    ["<leader>s"] = { name = icons.WordFile .. "  Re-Sourcing configurations" },
+    ["<leader>t"] = { name = icons.Terminal .. "  Terminal" },
     ["<leader>z"] = { name = "󰎚  Zettelkasten" },
     ["<leader>/"] = { name = "// Comment Out" },
   })

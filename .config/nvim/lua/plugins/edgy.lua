@@ -1,3 +1,5 @@
+local icons = require("icons")
+
 return {
   "folke/edgy.nvim",
   event = "VeryLazy",
@@ -27,18 +29,23 @@ return {
       },
       { ft = "spectre_panel", size = { height = 0.4 } },
       {
-        title = "GitHub Copilot Chat",
+        title = icons.Copilot .. " Copilot",
         ft = "markdown",
         filter = function(buf)
           return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t") == "copilot-chat"
         end,
         size = { height = 0.4 },
       },
+      {
+        title = icons.Test .. " Neotest - Output",
+        ft = "neotest-output-panel",
+        size = { height = 0.4 },
+      },
     },
     left = {
       -- Neo-tree filesystem always takes half the screen height
       {
-        title = "Neo-Tree",
+        title = icons.Tree .. " Neo-Tree",
         ft = "neo-tree",
         filter = function(buf)
           return vim.b[buf].neo_tree_source == "filesystem"
@@ -46,7 +53,7 @@ return {
         size = { height = 0.5 },
       },
       {
-        title = "Neo-Tree Git",
+        title = icons.Git .. " Git",
         ft = "neo-tree",
         filter = function(buf)
           return vim.b[buf].neo_tree_source == "git_status"
@@ -55,7 +62,7 @@ return {
         open = "Neotree position=right git_status",
       },
       {
-        title = "Neo-Tree Buffers",
+        title = icons.Tab .. " Buffers",
         ft = "neo-tree",
         filter = function(buf)
           return vim.b[buf].neo_tree_source == "buffers"
@@ -68,6 +75,14 @@ return {
         ft = "aerial",
         pinned = true,
         open = "AerialOpen",
+      },
+    },
+    right = {
+      {
+        title = icons.Test .. " Neotest",
+        ft = "neotest-summary",
+        pinned = true,
+        open = "Neotest summary",
       },
     },
   },

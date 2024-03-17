@@ -57,6 +57,7 @@ return {
   Tab = "󰓩",
   TabClose = "󰅙",
   Terminal = "",
+  Test = "󰙨",
   Tree = "",
   Window = "",
   WordFile = "󰈭",

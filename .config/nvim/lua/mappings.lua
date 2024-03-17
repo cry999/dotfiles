@@ -103,9 +103,9 @@ local mappings = {
     ["<leader>gl"] = { "<cmd>Flog<cr>", desc = "View git log" },
 
     -- Hop
-    ["<leader>hh"] = { "<cmd>HopChar1<cr>", desc = "Hop to char 1" },
-    ["<leader>hw"] = { "<cmd>HopWord<cr>", desc = "Hop to word" },
-    ["<leader>ha"] = { "<cmd>HopAnywhere<cr>", desc = "Hop to anywhere" },
+    ["<leader>h"] = { "<cmd>HopChar1<cr>", desc = "Hop to char 1" },
+    -- ["<leader>hw"] = { "<cmd>HopWord<cr>", desc = "Hop to word" },
+    -- ["<leader>ha"] = { "<cmd>HopAnywhere<cr>", desc = "Hop to anywhere" },
 
     -- Outline
     ["<leader>ot"] = { "<cmd>AerialToggle!<cr>", desc = "Toggle outline panel" },

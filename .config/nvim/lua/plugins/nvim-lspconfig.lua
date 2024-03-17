@@ -41,7 +41,7 @@ return {
           telemetry = {
             enable = false,
           },
-          hints = {
+          hint = {
             enable = true,
           },
         },
@@ -74,8 +74,8 @@ return {
           hints = {
             assignVariableTypes = true,
             compositeLiteralFields = true,
-            compositeLiteralTypes = true,
-            constantValues = true,
+            compositeLiteralTypes = false,
+            constantValues = false,
             functionTypeParameters = true,
             parameterNames = true,
             rangeVariableTypes = true,

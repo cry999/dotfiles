@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+
+function _in_git_repo() {
+  git rev-parse --is-inside-work-tree &>/dev/null
+}
+
+function _pretty_pwd(){
+  temp_pwd=$PWD
+
+  if [[ _in_git_repo ]]; then
+    # get the root of the git repo
+    git_root=$(git rev-parse --show-toplevel)
+    git_root_rel=(${(s:/:)git_root})
+    git_root_rel=$git_root_rel[-1]
+    temp_pwd=${temp_pwd/$git_root/$git_root_rel}
+  fi
+
+  temp_pwd=${temp_pwd/$HOME/}
+  # temp_pwd=""
+
+  paths=(${(s:/:)temp_pwd})
+  if [[ $#paths -gt 3 ]]; then
+    temp_pwd="$paths[1]  ...  $paths[-1]"
+  else
+    temp_pwd=$(echo "$paths[@]" | sed 's/ /  /g')
+  fi
+  
+  if [[ "$temp_pwd[1]" != "" ]]; then
+    temp_pwd=" $temp_pwd"
+  fi
+
+  echo $temp_pwd
+}
+
+_pretty_pwd

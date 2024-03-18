@@ -449,44 +449,7 @@ return {
   end,
   config = function(_, opts)
     local heirline = require("heirline")
-    local C = require("catppuccin.palettes").get_palette("frappe")
-
-    local highlights = {
-      --[[
-    local Normal = { fg = C.fg, bg = C.base }
-    local Comment = { fg = brighten(C.subtext1, 0.5), bg = C.base }
-    local Error = { fg = C.red, bg = C.base }
-    local StatusLine = { fg = C.fg, bg = C.mantle }
-    ]]
-      TabLine = { fg = C.surface2, bg = C.base },
-      TabLineFill = { fg = C.fg, bg = C.mantle },
-      TabLineSel = { fg = C.fg, bg = C.base, italic = true },
-      WinBar = { fg = C.fg, bg = C.base }
-      --[[
-    local WinBarNC = get_hlgroup("WinBarNC", { fg = C.grey, bg = C.base })
-    local Conditional = get_hlgroup("Conditional", { fg = C.bright_purple, bg = C.mantle })
-    local String = get_hlgroup("String", { fg = C.green, bg = C.mantle })
-    local TypeDef = get_hlgroup("TypeDef", { fg = C.yellow, bg = C.mantle })
-    local GitSignsAdd = get_hlgroup("GitSignsAdd", { fg = C.green, bg = C.mantle })
-    local GitSignsChange = get_hlgroup("GitSignsChange", { fg = C.orange, bg = C.mantle })
-    local GitSignsDelete = get_hlgroup("GitSignsDelete", { fg = C.bright_red, bg = C.mantle })
-    local DiagnosticError = get_hlgroup("DiagnosticError", { fg = C.bright_red, bg = C.mantle })
-    local DiagnosticWarn = get_hlgroup("DiagnosticWarn", { fg = C.orange, bg = C.mantle })
-    local DiagnosticInfo = get_hlgroup("DiagnosticInfo", { fg = C.white, bg = C.mantle })
-    local DiagnosticHint = get_hlgroup("DiagnosticHint", { fg = C.bright_yellow, bg = C.mantle })
-    local HeirlineInactive = resolve_lualine(get_hlgroup("HeirlineInactive", { bg = nil }).bg, "inactive", C.dark_grey)
-    local HeirlineNormal = resolve_lualine(get_hlgroup("HeirlineNormal", { bg = nil }).bg, "normal", C.blue)
-    local HeirlineInsert = resolve_lualine(get_hlgroup("HeirlineInsert", { bg = nil }).bg, "insert", C.green)
-    local HeirlineVisual = resolve_lualine(get_hlgroup("HeirlineVisual", { bg = nil }).bg, "visual", C.purple)
-    local HeirlineReplace = resolve_lualine(get_hlgroup("HeirlineReplace", { bg = nil }).bg, "replace", C.bright_red)
-    local HeirlineCommand = resolve_lualine(get_hlgroup("HeirlineCommand", { bg = nil }).bg, "command", C.bright_yellow)
-    local HeirlineTerminal = resolve_lualine(get_hlgroup("HeirlineTerminal", { bg = nil }).bg, "insert", HeirlineInsert)
-]]
-    }
-
-    for name, val in pairs(highlights) do
-      vim.api.nvim_set_hl(0, name, val)
-    end
+    local C = require("catppuccin.palettes").get_palette()
 
     heirline.load_colors({
       bg = C.base,

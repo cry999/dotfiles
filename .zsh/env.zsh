@@ -13,7 +13,9 @@ fi
 # --- LazyGit ---
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 
-export BAT_THEME="Catppuccin-frappe"
+export CATPPUCCIN_FLAVOUR="frappe"
+
+export BAT_THEME="Catppuccin-${CATPPUCCIN_FLAVOUR}"
 
 export GIT_EDITR=nvim
 export EDITOR=nvim
@@ -26,3 +28,5 @@ export EZA_COLORS="${EZA_COLORS}:sn=0;38;2;166;209;137" # file size
 export EZA_COLORS="${EZA_COLORS}:ur=0;38;2;229;200;144" # user's read permission
 export EZA_COLORS="${EZA_COLORS}:uw=0;38;2;229;200;144" # user's write permission
 export EZA_COLORS="${EZA_COLORS}:ux=0;38;2;229;200;144" # user's execute permission
+
+export PATH="$HOME/bin:$PATH"

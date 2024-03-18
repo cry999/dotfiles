@@ -5,7 +5,7 @@ return {
   config = function()
     local U = require("catppuccin.utils.colors")
     require("catppuccin").setup({
-      flavour = "frappe",
+      flavour = vim.env.CATPPUCCIN_FLAVOUR or "mocha",
       dim_inactive = {
         enabled = true,
         shade = "dark",
@@ -44,7 +44,14 @@ return {
       },
       custom_highlights = function(colors)
         return {
+          -- for heirline
+          TabLine = { fg = colors.surface2, bg = colors.base },
+          TabLineFill = { fg = colors.fg, bg = colors.mantle },
+          TabLineSel = { fg = colors.fg, bg = colors.base, italic = true },
+          WinBar = { fg = colors.fg, bg = colors.base },
+          -- for LSP
           LspInlayHint = { fg = U.blend(colors.overlay0, colors.surface0, 0.5), bg = colors.none },
+          -- for folding (ufo)
           FoldCol0 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.95) },
           FoldCol1 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.90) },
           FoldCol2 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.85) },

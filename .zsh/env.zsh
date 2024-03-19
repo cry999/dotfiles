@@ -1,5 +1,5 @@
 export LANG=ja_JP.UTF-8
-export TERM=xterm-256color
+export TERM=screen-256color
 # history
 export HISTFILE=~/.zsh_history
 export HISTSIZE=1000000
@@ -10,12 +10,16 @@ if [ -x /usr/libexec/path_helper ]; then
   eval `/usr/libexec/path_helper -s`
 fi
 
+function capitalize() {
+  echo $1 | awk '{print toupper(substr($0, 1, 1)) tolower(substr($0, 2))}'
+}
+
 # --- LazyGit ---
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 
 export CATPPUCCIN_FLAVOUR="frappe"
 
-export BAT_THEME="Catppuccin-${CATPPUCCIN_FLAVOUR}"
+export BAT_THEME="Catppuccin $(capitalize ${CATPPUCCIN_FLAVOUR})"
 
 export GIT_EDITR=nvim
 export EDITOR=nvim

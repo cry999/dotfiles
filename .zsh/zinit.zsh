@@ -19,3 +19,4 @@ zinit light-mode for \
 	zdharma-continuum/zinit-annex-rust
 
 zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-autosuggestions

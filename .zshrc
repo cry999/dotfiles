@@ -24,7 +24,6 @@ source ${ZSH_CONFIG_DIR}/completion.zsh
 source ${ZSH_CONFIG_DIR}/opts.zsh
 source ${ZSH_CONFIG_DIR}/starship.zsh
 source ${ZSH_CONFIG_DIR}/zsh-highlight.zsh
-
-. /opt/homebrew/etc/profile.d/z.sh
+source ${ZSH_CONFIG_DIR}/zoxide.zsh
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"

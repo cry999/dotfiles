@@ -43,3 +43,5 @@ fi
 
 # compiling cpp by c++11
 alias g++='g++ -std=c++11'
+
+alias zi='__zoxide_zi'

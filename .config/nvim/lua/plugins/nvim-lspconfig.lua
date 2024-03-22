@@ -17,6 +17,11 @@ return {
               }
               require("lspconfig")[server].setup({
                 capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
+                handlers = {
+                  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+                    border = "rounded",
+                  }),
+                },
               })
             end,
           },

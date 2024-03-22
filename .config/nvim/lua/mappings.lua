@@ -79,8 +79,8 @@ local mappings = {
     ["K"] = { function() vim.lsp.buf.hover() end, desc = "LSP Comment" },
     ["gd"] = { function() vim.lsp.buf.definition() end, desc = "LSP Jump to defition" },
     ["gy"] = { function() vim.lsp.buf.type_definition() end, desc = "LSP Jump to defition of current type" },
-    ["[d"] = { function() vim.diagnostic.goto_prev() end, desc = "LSP Previous diagnostic" },
-    ["]d"] = { function() vim.diagnostic.goto_next() end, desc = "LSP Next diagnostic" },
+    ["[d"] = { function() vim.diagnostic.goto_prev({ float = { border = "rounded" } }) end, desc = "LSP Previous diagnostic" },
+    ["]d"] = { function() vim.diagnostic.goto_next({ float = { border = "rounded" } }) end, desc = "LSP Next diagnostic" },
 
     -- Package manager (Lazy)
     ["<leader>pm"] = { "<cmd>Lazy<cr>", desc = "Open Lazy" },

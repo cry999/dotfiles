@@ -20,6 +20,7 @@ export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 export CATPPUCCIN_FLAVOUR="frappe"
 
 export BAT_THEME="Catppuccin $(capitalize ${CATPPUCCIN_FLAVOUR})"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export GIT_EDITR=nvim
 export EDITOR=nvim

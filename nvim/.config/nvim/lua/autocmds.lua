@@ -16,6 +16,13 @@ local autocmds = {
       end
     end,
   },
+  GitConfig = {
+    event = { "BufRead", "BufNewFile" },
+    pattern = "*.gitconfig",
+    callback = function()
+      vim.bo[0].filetype = "gitconfig"
+    end,
+  },
 }
 
 for group, def in pairs(autocmds) do

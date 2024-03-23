@@ -1,25 +1,13 @@
 #!/usr/bin/env bash
 
-HERE=$(dirname $(realpath $0))
+DOTFILES_REPO="github.com/cry999/dotfiles"
+DOTFILES_DIR="$HOME/$DOTFILES_REPO"
 
-function check_command() {
-  if ! command -v "$1" &> /dev/null; then
-      echo "$1 is not installed. Please install it first."
-      exit 1
-  fi
-}
+if [ ! -d "$DOTFILES_DIR" ]; then
+  echo "Cloning dotfiles..."
+  git clone "https://$DOTFILES_REPO" "$DOTFILES_DIR" || exit 1
+fi
 
-check_command stow
-check_command git
-
-stow -R -v -d ${HERE} -t $HOME \
-  git \
-  homebrew \
-  iterm2 \
-  lazygit \
-  nvim \
-  starship \
-  tmux \
-  zsh
-
-git config --global --add include.path "~/.config/git/delta.gitconfig"
+pushd "$DOTFILES_DIR" || exit 1
+echo "Installing dotfiles..."
+./install.sh

@@ -3,7 +3,5 @@
 ## Setup
 
 ```sh
-git clone https://github.com/cry999/dotfiles.git ~/github.com/cry999/dotfiles
-cd $_
-./install.sh
+curl -L https://raw.githubusercontent.com/cry999/dotfiles/master/install.sh | bash
 ```

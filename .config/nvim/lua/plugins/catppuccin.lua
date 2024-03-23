@@ -4,9 +4,10 @@ return {
   priority = 1000,
   config = function()
     local U = require("catppuccin.utils.colors")
+    local tp = true
     require("catppuccin").setup({
       flavour = vim.env.CATPPUCCIN_FLAVOUR or "mocha",
-      transparent_background = true,
+      transparent_background = tp,
       dim_inactive = {
         enabled = true,
         shade = "dark",
@@ -39,29 +40,31 @@ return {
         neotree = true,
         octo = true,
         semantic_tokens = true,
-        telescope = true,
+        telescope = {
+          enable = true,
+        },
         treesitter = true,
         which_key = true,
       },
-      custom_highlights = function(colors)
+      custom_highlights = function(c)
         return {
           -- for heirline
-          TabLine = { fg = colors.surface2, bg = colors.base },
-          TabLineFill = { fg = colors.fg, bg = colors.mantle },
-          TabLineSel = { fg = colors.fg, bg = colors.base, italic = true },
-          WinBar = { fg = colors.fg, bg = colors.base },
+          TabLine = { fg = c.surface2, bg = tp and c.none or c.base },
+          TabLineFill = { fg = c.fg, bg = tp and c.none or c.mantle },
+          TabLineSel = { fg = c.fg, bg = tp and c.none or c.base, italic = true },
+          WinBar = { fg = c.fg, bg = tp and c.none or c.base },
           -- for LSP
-          LspInlayHint = { fg = U.blend(colors.overlay0, colors.surface0, 0.5), bg = colors.none },
+          LspInlayHint = { fg = U.blend(c.overlay0, c.surface0, 0.5), bg = c.none },
           -- for folding (ufo)
-          FoldCol0 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.98) },
-          FoldCol1 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.94) },
-          FoldCol2 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.89) },
-          FoldCol3 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.82) },
-          FoldCol4 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.76) },
-          FoldCol5 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.70) },
-          FoldCol6 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.65) },
-          FoldCol7 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.60) },
-          FoldCol8 = { fg = colors.text, bg = U.blend(colors.base, colors.text, 0.55) },
+          FoldCol0 = { fg = c.text, bg = U.blend(c.base, c.text, 0.98) },
+          FoldCol1 = { fg = c.text, bg = U.blend(c.base, c.text, 0.94) },
+          FoldCol2 = { fg = c.text, bg = U.blend(c.base, c.text, 0.89) },
+          FoldCol3 = { fg = c.text, bg = U.blend(c.base, c.text, 0.82) },
+          FoldCol4 = { fg = c.text, bg = U.blend(c.base, c.text, 0.76) },
+          FoldCol5 = { fg = c.text, bg = U.blend(c.base, c.text, 0.70) },
+          FoldCol6 = { fg = c.text, bg = U.blend(c.base, c.text, 0.65) },
+          FoldCol7 = { fg = c.text, bg = U.blend(c.base, c.text, 0.60) },
+          FoldCol8 = { fg = c.text, bg = U.blend(c.base, c.text, 0.55) },
         }
       end,
     })

@@ -394,7 +394,12 @@ local FileNameWinbar = {
     end,
   },
   {
-    hl = function(self) return { fg = self.icon_color, bg = "bg" } end,
+    hl = function(self)
+      return {
+        fg = self.icon_color,
+        bg = (require("catppuccin").options.transparent_background and nil) or "bg"
+      }
+    end,
     provider = ""
   },
   Separator,
@@ -454,7 +459,6 @@ return {
     heirline.load_colors({
       bg = C.base,
       fg = C.text,
-      dark_bg = C.dark,
       purple = C.mauve,
       red = C.red,
       magenta = C.maroon,

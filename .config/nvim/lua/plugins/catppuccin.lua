@@ -39,6 +39,7 @@ return {
           enable = true,
         },
         treesitter = true,
+        treesitter_context = true,
         which_key = true,
       },
       custom_highlights = function(c)

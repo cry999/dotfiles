@@ -37,6 +37,17 @@ local diagnostics = function(icons, _)
   }
 end
 
+local recording = function(icons, colors)
+  return {
+    'macro-recording',
+    fmt = function()
+      local reg = vim.fn.reg_recording()
+      return reg == '' and '' or icons.MacroRecording .. ' ' .. reg
+    end,
+    color = { fg = colors.yellow, bold = true },
+  }
+end
+
 local enable_fileinfo = function()
   return vim.bo[0].buftype ~= 'nofile' and
       vim.bo[0].filetype ~= 'toggleterm'
@@ -70,7 +81,7 @@ return {
           { 'filename', cond = enable_fileinfo },
         },
 
-        lualine_x = { diagnostics(icons, colors) },
+        lualine_x = { recording(icons, colors), diagnostics(icons, colors) },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },

@@ -4,3 +4,4 @@
 
 - [ ] <https://github.com/Bekaboo/dropbar.nvim>
 - [ ] <https://github.com/edluffy/hologram.nvim>
+- [ ] set filetype=gitconfig when '*.gitconfig'

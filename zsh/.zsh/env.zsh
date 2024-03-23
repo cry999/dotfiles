@@ -35,3 +35,5 @@ export EZA_COLORS="${EZA_COLORS}:uw=0;38;2;229;200;144" # user's write permissio
 export EZA_COLORS="${EZA_COLORS}:ux=0;38;2;229;200;144" # user's execute permission
 
 export PATH="$HOME/bin:$PATH"
+
+export XDG_CONFIG_HOME="$HOME/.config"

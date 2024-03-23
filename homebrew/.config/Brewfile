@@ -1,0 +1,88 @@
+tap "aws/tap"
+tap "dapr/tap"
+tap "hashicorp/tap"
+tap "homebrew/bundle"
+tap "homebrew/cask-fonts"
+tap "koekeishiya/formulae"
+
+# docker
+brew "dive" # docker image explorer
+brew "docker", link: false
+
+# python
+brew "python@3.12"
+
+# c/c++
+brew "gcc"
+brew "clang-format"
+
+# go
+brew "go"
+
+# lua
+brew "luajit"
+
+# rust
+brew "rustup-init"
+
+# terraform
+brew "terraform"
+
+# js
+brew "node"
+brew "yarn"
+
+# k8s
+brew "kind"
+brew "kubernetes-cli"
+
+# cli
+brew "awscli"
+brew "bash"
+brew "bat"
+brew "coreutils"
+brew "curl"
+brew "eza"
+brew "fd"
+brew "fpp"
+brew "fzf"
+brew "gh" # github cli
+brew "gibo" # gitignore
+brew "git"
+brew "git-delta" # git diff
+brew "gnu-sed"
+brew "gnupg" # gpg
+brew "jq"
+brew "lazygit"
+brew "make"
+brew "ranger" # file manager
+brew "ripgrep" # rg
+brew "stow" # symlink manager
+brew "the_silver_searcher" # ag
+brew "vivid" # colorizer
+brew "wget" # download
+brew "zoxide" # jump around
+
+# neovim
+brew "neovim", args: ["HEAD"]
+brew "neovim-remote"
+
+# zsh
+brew "starship"
+brew "zsh"
+brew "zsh-completions"
+brew "zsh-syntax-highlighting"
+
+# tmux
+brew "tmux"
+
+# application
+cask "alfred" # alfred
+cask "amethyst" # window manager
+cask "docker" # docker desktop
+
+# font
+cask "font-hack-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-open-dyslexic-nerd-font"
+cask "font-sauce-code-pro-nerd-font"

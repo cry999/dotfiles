@@ -68,7 +68,7 @@ return {
         section_separators = { left = '', right = '' },
         component_separators = { left = '│', right = '│' },
         disabled_filetypes = {
-          statusline = { 'alpha', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
+          statusline = { 'alpha' },
           winbar = { 'alpha', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
         },
       },
@@ -81,11 +81,18 @@ return {
         },
         lualine_b = { 'branch', diff(icons, colors) },
         lualine_c = {
-          { 'filetype', cond = enable_fileinfo },
-          { 'filename', cond = enable_fileinfo },
+          {
+            'filename',
+            fmt = function(str) return '%=' .. str end,
+            cond = enable_fileinfo
+          },
         },
 
-        lualine_x = { recording(icons, colors), diagnostics(icons, colors) },
+        lualine_x = {
+          recording(icons, colors),
+          diagnostics(icons, colors),
+          { 'filetype', cond = enable_fileinfo },
+        },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },

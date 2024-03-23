@@ -15,7 +15,9 @@ local function copilot_chat(query_textobject)
   local function selection()
     local shared = require("nvim-treesitter.textobjects.shared")
     local bufnr, textobject = shared.textobject_at_point(query_textobject, "textobjects")
+    ---@diagnostic disable-next-line: param-type-mismatch
     local start_row, start_col, end_row, end_col = vim.treesitter.get_node_range(textobject)
+    ---@diagnostic disable-next-line: param-type-mismatch
     local lines = vim.api.nvim_buf_get_text(bufnr, start_row, start_col, end_row, end_col + 1, {})
     local text = table.concat(lines, "\n")
 
@@ -160,6 +162,13 @@ local mappings = {
     ["<leader>cil"] = { function() copilot_chat("@loop.inner") end, desc = "CopilotChat - Chat about inner loop" },
     ["<leader>cal"] = { function() copilot_chat("@loop.outer") end, desc = "CopilotChat - Chat about outer loop" },
     ["<leader>cr"] = { "<cmd>CopilotChatReset<cr>", desc = "CopilotChat - Reset chat history and clear buffer" },
+    ["<leader>cfp"] = {
+      function()
+        local actions = require("CopilotChat.actions")
+        require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+      end,
+      desc = "CopilotChat - Prompt actions",
+    },
 
     -- Neotest
     ["<leader>nr"] = { "<cmd>Neotest run<cr>", desc = "Run tests" },

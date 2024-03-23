@@ -9,5 +9,5 @@ if [ ! -d "$DOTFILES_DIR" ]; then
 fi
 
 pushd "$DOTFILES_DIR" || exit 1
-echo "Installing dotfiles..."
-./install.sh
+echo "Setup dotfiles..."
+./setup.sh

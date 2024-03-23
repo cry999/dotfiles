@@ -1,3 +1,5 @@
+local icons = require("icons")
+
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
@@ -5,7 +7,10 @@ return {
     cmdline = {
       enabled = true,         -- enables the Noice cmdline UI
       view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
-      opts = {},              -- global options for the cmdline. See section on views
+      -- global options for the cmdline. See section on views
+      opts = {
+        position = { row = "10%", col = "50%" },
+      },
       format = {
         -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
         -- view: (default is cmdline view)
@@ -13,11 +18,13 @@ return {
         -- icon_hl_group: optional hl_group for the icon
         -- title: set to anything or empty string to hide
         cmdline = { pattern = "^:", icon = "", lang = "vim" },
-        search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-        search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+        search_down = { kind = "search", pattern = "^/", icon = icons.Search .. " ", lang = "regex" },
+        search_up = { kind = "search", pattern = "^%?", icon = icons.Search .. " ", lang = "regex" },
         filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
         lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-        help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+        help = { pattern = "^:%s*he?l?p?%s+", icon = icons.Help },
+        copilot = { pattern = "^:%s*CopilotChat%s+", icon = icons.Copilot },
+        cc = { pattern = "^:%s*CC%s+", icon = icons.Copilot },
         input = {}, -- Used by input()
         -- lua = false, -- to disable a format, set to `false`
       },

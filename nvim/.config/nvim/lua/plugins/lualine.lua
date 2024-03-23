@@ -67,6 +67,10 @@ return {
         theme = 'catppuccin',
         section_separators = { left = '', right = '' },
         component_separators = { left = '│', right = '│' },
+        disabled_filetypes = {
+          statusline = { 'alpha', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
+          winbar = { 'alpha', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
+        },
       },
       sections = {
         lualine_a = {
@@ -87,7 +91,7 @@ return {
       },
       winbar = {
         lualine_a = {},
-        lualine_b = {},
+        lualine_b = { 'filename' },
         lualine_c = { 'navic' },
 
         lualine_x = {},

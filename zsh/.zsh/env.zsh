@@ -37,3 +37,4 @@ export EZA_COLORS="${EZA_COLORS}:ux=0;38;2;229;200;144" # user's execute permiss
 export PATH="$HOME/bin:$PATH"
 
 export XDG_CONFIG_HOME="$HOME/.config"
+export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"

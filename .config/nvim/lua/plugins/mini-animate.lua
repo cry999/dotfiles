@@ -31,7 +31,7 @@ return {
       -- Window resize
       resize = {
         -- Whether to enable this animation
-        enable = true,
+        enable = false,
 
         -- Timing of animation (how steps will progress in time)
         -- timing = --<function: implements linear total 250ms animation duration>,
@@ -43,7 +43,7 @@ return {
       -- Window open
       open = {
         -- Whether to enable this animation
-        enable = true,
+        enable = false,
 
         -- Timing of animation (how steps will progress in time)
         -- timing = --<function: implements linear total 250ms animation duration>,
@@ -61,7 +61,7 @@ return {
       -- Window close
       close = {
         -- Whether to enable this animation
-        enable = true,
+        enable = false,
 
         -- Timing of animation (how steps will progress in time)
         -- timing = --<function: implements linear total 250ms animation duration>,

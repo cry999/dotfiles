@@ -1,10 +1,10 @@
 local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  if vim.api.nvim_buf_get_option_value(0, "buftype") == "prompt" then return false end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
 local has_copilot = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+  if vim.api.nvim_buf_get_option_value(0, "buftype") == "prompt" then
     return false
   end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -34,6 +34,7 @@ return {
   opts = function()
     local luasnip = require("luasnip")
     local cmp = require("cmp")
+    local cmpwin = require('cmp.config.window')
     return {
       mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
@@ -72,6 +73,10 @@ return {
         { name = "buffer",   priority = 500 },
         { name = "path",     priority = 250 },
       }),
+      window = {
+        completion = cmpwin.bordered(),
+        documentation = cmpwin.bordered(),
+      },
       formatting = {
         format = require("lspkind").cmp_format({
           mode = "symbol",

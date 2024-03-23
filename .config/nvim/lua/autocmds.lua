@@ -30,7 +30,7 @@ end
 
 local function close_relwin(target_ft)
   local inactive_floating_wins = vim.fn.filter(vim.api.nvim_list_wins(), function(_, v)
-    local win_ft = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(v), "filetype")
+    local win_ft = vim.api.nvim_buf_get_option_value(vim.api.nvim_win_get_buf(v), "filetype")
 
     return vim.api.nvim_win_get_config(v).relative ~= ""
         and v ~= vim.api.nvim_get_current_win()

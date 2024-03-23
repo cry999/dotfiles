@@ -8,11 +8,6 @@ return {
     require("catppuccin").setup({
       flavour = vim.env.CATPPUCCIN_FLAVOUR or "mocha",
       transparent_background = tp,
-      dim_inactive = {
-        enabled = true,
-        shade = "dark",
-        percentage = 0.15,
-      },
       integrations = {
         alpha = true,
         cmp = true,

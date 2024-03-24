@@ -78,6 +78,7 @@ local mappings = {
     ["<leader>lf"] = { function() vim.lsp.buf.format() end, desc = "LSP format buffer" },
     ["<leader>lr"] = { function() vim.lsp.buf.rename() end, desc = "LSP rename current symbol" },
     ["<leader>lh"] = { function() vim.lsp.buf.signature_help() end, desc = "LSP show signature help" },
+    -- NOTE: In help, you can jump to help definition using <C-]>.
     ["K"] = { function() vim.lsp.buf.hover() end, desc = "LSP Comment" },
     ["gd"] = { function() vim.lsp.buf.definition() end, desc = "LSP Jump to defition" },
     ["gy"] = { function() vim.lsp.buf.type_definition() end, desc = "LSP Jump to defition of current type" },

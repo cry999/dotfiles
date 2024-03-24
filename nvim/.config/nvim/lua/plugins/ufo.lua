@@ -15,21 +15,24 @@ return {
       win_config = {
         border = { '', '─', '', '', '', '─', '', '' },
         winhighlight = 'Normal:Folded',
-        winblend = 0
+        winblend = 0,
       },
       mappings = {
         scrollU = '<C-u>',
         scrollD = '<C-d>',
         jumpTop = '[',
-        jumpBot = ']'
-      }
+        jumpBot = ']',
+      },
     },
     provider_selector = function()
       return { "treesitter", "indent" }
     end,
     fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
       local newVirtText = {}
-      local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+      local endTexts = vim.api.nvim_buf_get_text(0, endLnum-1, 0, endLnum-1, -1, {})
+      local endText = #endTexts > 0 and endTexts[1] or ''
+      endText = endText:gsub('%s*$', ''):gsub('^%s*', '')
+      local suffix = (' 󰁂 %d %s'):format(endLnum - lnum, endText)
       local sufWidth = vim.fn.strdisplaywidth(suffix)
       local targetWidth = width - sufWidth
       local curWidth = 0

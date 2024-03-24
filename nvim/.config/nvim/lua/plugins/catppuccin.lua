@@ -35,6 +35,7 @@ return {
         neotree = true,
         octo = true,
         semantic_tokens = true,
+        telekasten = true,
         telescope = {
           enable = true,
         },

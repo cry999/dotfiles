@@ -146,10 +146,12 @@ local mappings = {
     },
 
     -- Telekasten (Zettelkasten)
-    ["<leader>zf"] = { "<cmd>Telekasten find_notes<cr>", desc = "Find Zettelkasten notes" },
-    ["<leader>zg"] = { "<cmd>Telekasten search_notes<cr>", desc = "Find Zettelkasten notes by word" },
-    ["<leader>zn"] = { "<cmd>Telekasten new_note<cr>", desc = "Find Zettelkasten notes by word" },
-    ["<leader>zd"] = { "<cmd>Telekasten new_daily_note<cr>", desc = "Find Zettelkasten notes by word" },
+    ["<leader>zp"] = { "<cmd>Telekasten panel<cr>", desc = "Open the Telekasten panel" },
+    ["<leader>zo"] = { "<cmd>Telekasten open_note<cr>", desc = "Open Telekasten note" },
+    ["<leader>zf"] = { "<cmd>Telekasten find_notes<cr>", desc = "Find Telekasten notes" },
+    ["<leader>zg"] = { "<cmd>Telekasten search_notes<cr>", desc = "Find Telekasten notes by word" },
+    ["<leader>zn"] = { "<cmd>Telekasten new_note<cr>", desc = "Find Telekasten notes by word" },
+    ["<leader>zd"] = { "<cmd>Telekasten new_daily_note<cr>", desc = "Find Telekasten notes by word" },
 
     -- fold
     ["zR"] = { function() require("ufo").openAllFolds() end, desc = "Open all folds" },

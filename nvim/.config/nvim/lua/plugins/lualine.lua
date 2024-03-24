@@ -48,6 +48,18 @@ local recording = function(icons, colors)
   }
 end
 
+local filename = function(icons, _)
+  return {
+    'filename',
+    symbols = {
+      modified = icons.FileModified, -- Text to show when the file is modified.
+      readonly = icons.FileReadOnly, -- Text to show when the file is non-modifiable or readonly.
+      unnamed = icons.FileNew,       -- Text to show for unnamed buffers.
+      newfile = icons.FileNew,       -- Text to show for newly created file before first write
+    },
+  }
+end
+
 local enable_fileinfo = function()
   return vim.bo[0].buftype ~= 'nofile' and
       vim.bo[0].buftype ~= 'help' and
@@ -84,7 +96,8 @@ return {
         },
         lualine_b = { 'branch', diff(icons, colors) },
         lualine_c = {
-          { 'filename', fmt = function(s) return '%=' .. s end, cond = enable_fileinfo },
+          { 'center', fmt = function() return '%=' end, separator = { left = '', right = '' } },
+          filename(icons, colors),
         },
 
         lualine_x = {
@@ -103,7 +116,7 @@ return {
       },
       winbar = {
         lualine_a = {},
-        lualine_b = { 'filename' },
+        lualine_b = { filename(icons, colors) },
         lualine_c = { 'navic' },
 
         lualine_x = {},
@@ -112,7 +125,7 @@ return {
       },
       inactive_winbar = {
         lualine_a = {},
-        lualine_b = { 'filename' },
+        lualine_b = { filename(icons, colors) },
         lualine_c = {},
 
         lualine_x = {},

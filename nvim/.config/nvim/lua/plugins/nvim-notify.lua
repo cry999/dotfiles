@@ -13,6 +13,7 @@ return {
     },
     level = 2,
     minimum_width = 50,
+    max_width = 50,
     render = "wrapped-compact",
     stages = "fade_in_slide_out",
     time_formats = {

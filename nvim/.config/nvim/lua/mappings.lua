@@ -189,6 +189,9 @@ local mappings = {
     ["<leader>nr"] = { "<cmd>Neotest run<cr>", desc = "Run tests" },
     ["<leader>no"] = { "<cmd>Neotest output-panel<cr>", desc = "View tests outputs" },
     ["<leader>nt"] = { "<cmd>Neotest summary<cr>", desc = "View test tree" },
+
+    -- Notify
+    ["cn"] = { function() require('notify').dismiss() end, desc = "Close notifications" },
   },
   x = {
     -- Comment out

@@ -29,6 +29,7 @@ return {
           },
         },
         navic = { enabled = true },
+        neogit = true,
         neotest = true,
         noice = true,
         notify = true,

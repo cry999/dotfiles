@@ -60,6 +60,21 @@ local filename = function(icons, _)
   }
 end
 
+local search = function(icons, colors)
+  return {
+    'search',
+    fmt = function()
+      -- local search = require("noice").api.status.search.get()
+      local search = vim.fn.getreg('/')
+      local search_count = vim.fn.searchcount()
+      return search == '' and '' or
+      icons.Search .. ' ' .. search .. ' ' .. search_count.current .. '/' .. search_count.total
+    end,
+    cond = require("noice").api.status.search.has,
+    color = { fg = colors.yellow, bold = true },
+  }
+end
+
 local enable_fileinfo = function()
   return vim.bo[0].buftype ~= 'nofile' and
       vim.bo[0].buftype ~= 'help' and
@@ -102,6 +117,7 @@ return {
 
         lualine_x = {
           recording(icons, colors),
+          search(icons, colors),
           diagnostics(icons, colors),
           { 'filetype', cond = enable_fileinfo },
         },

@@ -72,9 +72,30 @@ return {
             function(args)
               local filetype = vim.bo[args.buf].filetype
               return filetype ~= "neo-tree" and
-                  filetype ~= "aerial" and
                   filetype ~= "neotest-summary" and
-                  filetype ~= "alpha"
+                  filetype ~= "alpha" and
+                  filetype:sub(1, #"Neogit") ~= "Neogit"
+            end
+          },
+        },
+        -- select line number
+        {
+          text = {
+            function(args)
+              local pos = vim.fn.getpos('.')
+              local lnum = pos[2]
+              if args.lnum == lnum then
+                return "%#CursorLineNr#"
+              else
+                return " "
+              end
+            end,
+          },
+          condition = {
+            function(args)
+              local ft = vim.bo[args.buf].filetype
+              return ft ~= "neotest-summary" and
+                  ft ~= "alpha"
             end
           },
         },

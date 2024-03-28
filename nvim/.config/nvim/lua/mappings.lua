@@ -74,7 +74,7 @@ local mappings = {
     -- LSP
     ["<leader>lm"] = { "<cmd>Mason<cr>", desc = "Open LSP package manager" },
     ["<leader>li"] = { "<cmd>LspInfo<cr>", desc = "Open LSP information" },
-    ["<leader>la"] = { function() vim.lsp.buf.code_action() end, desc = "LSP code action" },
+    ["<leader>la"] = { function() require('actions-preview').code_actions() end, desc = "LSP code action" },
     ["<leader>lf"] = { function() vim.lsp.buf.format() end, desc = "LSP format buffer" },
     ["<leader>lr"] = { function() vim.lsp.buf.rename() end, desc = "LSP rename current symbol" },
     ["<leader>lh"] = { function() vim.lsp.buf.signature_help() end, desc = "LSP show signature help" },

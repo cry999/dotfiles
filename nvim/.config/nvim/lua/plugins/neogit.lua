@@ -8,5 +8,13 @@ return {
     "nvim-telescope/telescope.nvim", -- optional
     "ibhagwan/fzf-lua",              -- optional
   },
-  config = true,
+  opts = {
+    graph_style = "unicode",
+    signs = {
+      section = { "", "" },
+      item = { "", "" },
+      hunk = { "", "" },
+    },
+    integrations = { telescope = true, diffview = true, fzf_lua = true },
+  },
 }

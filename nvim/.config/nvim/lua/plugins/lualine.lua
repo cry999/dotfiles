@@ -44,7 +44,7 @@ local recording = function(icons, colors)
       local reg = vim.fn.reg_recording()
       return reg == '' and '' or icons.MacroRecording .. ' ' .. reg
     end,
-    color = { fg = colors.yellow, bold = true },
+    color = { fg = colors.yellow, gui = 'bold' },
   }
 end
 
@@ -60,6 +60,47 @@ local filename = function(icons, _)
   }
 end
 
+local path = function(_, _)
+  return {
+    'path',
+    fmt = function()
+      local path = vim.fn.expand('%:~:.:h')
+      return path == '.' and '' or path:gsub('/', '  ') .. ' '
+    end,
+    cond = function()
+      local path = vim.fn.expand('%:~:.:h')
+      return path ~= '.' and path ~= ''
+    end,
+    separator = { left = '', right = '' },
+    color = 'lualine_c_inactive',
+  }
+end
+
+local fullfilename = function(icons, _)
+  return {
+    'filename',
+    symbols = {
+      modified = icons.FileModified, -- Text to show when the file is modified.
+      readonly = icons.FileReadOnly, -- Text to show when the file is non-modifiable or readonly.
+      unnamed = icons.FileNew,       -- Text to show for unnamed buffers.
+      newfile = icons.FileNew,       -- Text to show for newly created file before first write
+    },
+    fmt = function()
+      local webicons = require("nvim-web-devicons")
+      local icon, _ = webicons.get_icon("", vim.fn.expand('%:e'))
+      icon = icon or icons.DefaultFile
+      local _filename = vim.fn.expand('%:t') or '[No Name]'
+      return icon .. ' ' .. _filename
+    end,
+    separator = { left = '', right = '' },
+    color = function()
+      local webicons = require("nvim-web-devicons")
+      local _, hl = webicons.get_icon("", vim.fn.expand('%:e'))
+      return hl or 'DevIconDefault'
+    end
+  }
+end
+
 local search = function(icons, colors)
   return {
     'search',
@@ -68,7 +109,7 @@ local search = function(icons, colors)
       local search = vim.fn.getreg('/')
       local search_count = vim.fn.searchcount()
       return search == '' and '' or
-      icons.Search .. ' ' .. search .. ' ' .. search_count.current .. '/' .. search_count.total
+          icons.Search .. ' ' .. search .. ' ' .. search_count.current .. '/' .. search_count.total
     end,
     cond = require("noice").api.status.search.has,
     color = { fg = colors.yellow, bold = true },
@@ -112,7 +153,8 @@ return {
         lualine_b = { 'branch', diff(icons, colors) },
         lualine_c = {
           { 'center', fmt = function() return '%=' end, separator = { left = '', right = '' } },
-          filename(icons, colors),
+          path(icons, colors),
+          fullfilename(icons, colors),
         },
 
         lualine_x = {

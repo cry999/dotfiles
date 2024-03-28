@@ -123,9 +123,6 @@ local mappings = {
     -- ["<leader>hw"] = { "<cmd>HopWord<cr>", desc = "Hop to word" },
     -- ["<leader>ha"] = { "<cmd>HopAnywhere<cr>", desc = "Hop to anywhere" },
 
-    -- Outline
-    ["<leader>ot"] = { "<cmd>AerialToggle!<cr>", desc = "Toggle outline panel" },
-
     -- Comment Out
     ["<leader>//"] = {
       function()
@@ -193,6 +190,9 @@ local mappings = {
 
     -- Notify
     ["cn"] = { function() require('notify').dismiss() end, desc = "Close notifications" },
+
+    -- Navbuddy
+    ["<leader>n"] = { "<cmd>NavBuddy<cr>", desc = "Open NavBuddy" },
   },
   x = {
     -- Comment out

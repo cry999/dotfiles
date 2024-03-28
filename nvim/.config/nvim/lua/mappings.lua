@@ -197,6 +197,9 @@ local mappings = {
     -- Comment out
     ["<leader>//"] = { "<plug>(comment_toggle_linewise_visual)", desc = "Toggle comment linewise" },
     ["<leader>/*"] = { "<plug>(comment_toggle_blockwise_visual)", desc = "Toggle comment blockwise" },
+    -- move lines
+    ["K"] = { ":move '<-2<CR>gv-gv", desc = "Move lines of code down" },
+    ["J"] = { ":move '>+1<CR>gv-gv", desc = "Move lines of code up" },
   },
   t = {
     ["<C-h>"] = { [[<cmd>wincmd h<cr>]], desc = "Move to left split" },

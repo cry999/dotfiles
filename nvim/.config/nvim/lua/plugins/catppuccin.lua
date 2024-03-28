@@ -17,7 +17,7 @@ return {
         illuminate = true,
         indent_blankline = {
           enabled = true,
-          -- scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+          scope_color = "lavender",
           colored_indent_levels = true,
         },
         lsp_trouble = true,

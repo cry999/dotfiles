@@ -17,6 +17,7 @@ local options = {
     foldcolumn = "0",
     foldlevelstart = 99,
     foldenable = true,
+    guicursor = "n-v-ve:block-blinkon10,i:ver30,r:hor30",
     ignorecase = true,
     infercase = true,
     laststatus = 3,

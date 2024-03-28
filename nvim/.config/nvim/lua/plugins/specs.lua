@@ -1,3 +1,0 @@
-return {
-  "edluffy/specs.nvim",
-}

@@ -16,12 +16,6 @@ return {
     },
   },
   config = function()
-    -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-    vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-    vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-    vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-    vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
-
     require("neo-tree").setup({
       close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = "rounded",
@@ -40,13 +34,27 @@ return {
         container = {
           enable_character_fade = true
         },
+        diagnostics = {
+          symbols = {
+            error =  " ",
+            warn =  " ",
+            info =  " ",
+            hint = "󰌵 ",
+          },
+          highlights = {
+            hint = "DiagnosticSignHint",
+            info = "DiagnosticSignInfo",
+            warn = "DiagnosticSignWarn",
+            error = "DiagnosticSignError",
+          },
+        },
         indent = {
           indent_size = 2,
           padding = 1, -- extra padding on left hand side
           -- indent guides
           with_markers = true,
           indent_marker = "│",
-          last_indent_marker = "└",
+          last_indent_marker = "╰",
           highlight = "NeoTreeIndentMarker",
           -- expander config, needed for nesting files
           with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
@@ -55,7 +63,7 @@ return {
           expander_highlight = "NeoTreeExpander",
         },
         modified = {
-          symbol = "[+]",
+          symbol = "",
           highlight = "NeoTreeModified",
         },
         name = {

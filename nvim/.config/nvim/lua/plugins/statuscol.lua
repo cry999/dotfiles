@@ -62,7 +62,8 @@ return {
                     and foldinfo_next.level == foldinfo.level
                   )
               then
-                foldstr = ''
+                -- foldstr = ''
+                foldstr = ' '
               end
               return hl .. foldstr .. '%#LineNr# '
             end,

@@ -15,7 +15,11 @@ return {
         gitsigns = true,
         hop = true,
         illuminate = true,
-        indent_blankline = { enabled = true },
+        indent_blankline = {
+          enabled = true,
+          -- scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+          colored_indent_levels = true,
+        },
         lsp_trouble = true,
         mason = true,
         mini = { enabled = true },

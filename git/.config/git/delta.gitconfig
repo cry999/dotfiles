@@ -1,3 +1,6 @@
+[include]
+  path = "~/.config/delta/themes/catppuccin.gitconfig"
+
 [core]
   pager = delta
 
@@ -9,7 +12,8 @@
 
 [delta]
   # `features` does not work
-  syntax-theme = "Catppuccin Frappe"
+  ; syntax-theme = "catppuccin-frappe"
+  features = "catppuccin-frappe"
   side-by-side = true
   line-numbers = true
   navigate = true

@@ -23,3 +23,11 @@ stow -R -v -d ${HERE} -t $HOME \
   zsh
 
 git config --global --add include.path "~/.config/git/delta.gitconfig"
+
+if [ ! -d ~/.config/delta/themes ]; then
+  git clone https://github.com/catppuccin/delta.git ~/.config/delta/themes
+else
+  pushd ~/.config/delta/themes
+  git pull --all -p
+  popd
+fi

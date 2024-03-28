@@ -192,7 +192,7 @@ local mappings = {
     ["cn"] = { function() require('notify').dismiss() end, desc = "Close notifications" },
 
     -- Navbuddy
-    ["<leader>n"] = { "<cmd>NavBuddy<cr>", desc = "Open NavBuddy" },
+    ["<leader>o"] = { "<cmd>Navbuddy<cr>", desc = "Open NavBuddy" },
   },
   x = {
     -- Comment out

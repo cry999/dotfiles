@@ -1,16 +1,18 @@
 return {
   "folke/todo-comments.nvim",
+  dependencies = {
+    "catppuccin/nvim",
+  },
   config = function(_, _)
     -- examples:
-    -- TODO: Hoge
+    -- TODO: hoge
     -- HACK: Hack
     -- WARN: Warn
     -- PERF: Perf
     -- NOTE: Note
-    -- TEST: Test
     -- FIX: Fix
     local todo = require("todo-comments")
-    local palette = require("catppuccin.palettes").get_palette("frappe")
+    local palette = require("catppuccin.palettes").get_palette()
     local opts = {
       signs = true,      -- show icons in the signs column
       sign_priority = 8, -- sign priority
@@ -23,11 +25,10 @@ return {
           -- signs = false, -- configure signs for some keywords individually
         },
         TODO = { icon = " ", color = "info" },
-        HACK = { icon = " ", color = "warning" },
+        HACK = { icon = "󰈸 ", color = "warning" },
         WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-        PERF = { icon = " ", color = "default", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-        TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        PERF = { icon = "󰟛 ", color = "default", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = "󰔨 ", color = "hint", alt = { "INFO" } },
       },
       gui_style = {
         fg = "NONE",         -- The gui style to use for the fg highlight group.
@@ -42,7 +43,7 @@ return {
         multiline = true,                -- enable multine todo comments
         multiline_pattern = "^.",        -- lua pattern to match the next multiline from the start of the matched keyword
         multiline_context = 10,          -- extra lines that will be re-evaluated when changing a line
-        before = "",                     -- "fg" or "bg" or empty
+        before = "fg",                   -- "fg" or "bg" or empty
         keyword = "wide",                -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
         after = "fg",                    -- "fg" or "bg" or empty
         pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)

@@ -1,3 +1,4 @@
+---@diagnostic disable-next-line: deprecated
 local get_buf_option = vim.api.nvim_buf_get_option_value or vim.api.nvim_buf_get_option
 local has_words_before = function()
   if get_buf_option(0, "buftype") == "prompt" then return false end

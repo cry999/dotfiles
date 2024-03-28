@@ -1,3 +1,5 @@
+local icons = require("icons")
+
 return {
   'akinsho/bufferline.nvim',
   version = "*",
@@ -38,15 +40,25 @@ return {
         --       -- tabnr (tabs only)   | int        | the "handle" of the tab, can be converted to its ordinal number using: `vim.api.nvim_tabpage_get_number(buf.tabnr)`
         -- end,
         max_name_length = 18,
-        max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
-        truncate_names = true,  -- whether or not tab names should be truncated
+        max_prefix_length = 15,   -- prefix used when a buffer is de-duplicated
+        truncate_names = true,    -- whether or not tab names should be truncated
         tab_size = 18,
         diagnostics = "nvim_lsp", -- false | "nvim_lsp" | "coc",
         diagnostics_update_in_insert = false,
         -- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
-        -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
-        --     return "("..count..")"
-        -- end,
+        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+          if level:match("error") then
+            return icons.DiagnosticError
+          elseif level:match("warning") then
+            return icons.DiagnosticWarn
+          elseif level:match("info") then
+            return icons.DiagnosticInfo
+          elseif level:match("hint") then
+            return icons.DiagnosticHint
+          else
+            return ""
+          end
+        end,
         -- NOTE: this will be called a lot so don't do any heavy processing here
         -- custom_filter = function(buf_number, buf_numbers)
         --     -- filter out filetypes you don't want to see
@@ -70,7 +82,7 @@ return {
         offsets = {
           {
             filetype = "neo-tree",
-            text = "",   -- "File Explorer" | function ,
+            text = "",             -- "File Explorer" | function ,
             text_align = "center", -- "left" | "center" | "right"
             separator = true,
           },
@@ -83,16 +95,16 @@ return {
           return require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
         end,
         show_buffer_icons = true, -- disable filetype icons for buffers
-        show_buffer_close_icons = true,
-        show_close_icon = true,
+        show_buffer_close_icons = false,
+        show_close_icon = false,
         show_tab_indicators = true,
-        show_duplicate_prefix = true,  -- whether to show duplicate buffer prefix
+        show_duplicate_prefix = true,    -- whether to show duplicate buffer prefix
         duplicates_across_groups = true, -- whether to consider duplicate paths in different groups as duplicates
-        persist_buffer_sort = true,    -- whether or not custom sorted buffers should persist
-        move_wraps_at_ends = false,    -- whether or not the move command "wraps" at the first or last position
+        persist_buffer_sort = true,      -- whether or not custom sorted buffers should persist
+        move_wraps_at_ends = false,      -- whether or not the move command "wraps" at the first or last position
         -- can also be a table containing 2 custom separators
         -- [focused and unfocused]. eg: { '|', '|' }
-        separator_style = "thick", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
+        separator_style = "thin", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
         enforce_regular_tabs = false,
         always_show_bufferline = true,
         hover = {

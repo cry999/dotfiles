@@ -1,3 +1,5 @@
+local icons = require("icons")
+
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -26,6 +28,11 @@ return {
     { "SmiteshP/nvim-navic" },
   },
   config = function()
+    vim.fn.sign_define("DiagnosticSignError", { text = icons.DiagnosticError, texthl = "DiagnosticError" })
+    vim.fn.sign_define("DiagnosticSignHint", { text = icons.DiagnosticHint, texthl = "DiagnosticHint" })
+    vim.fn.sign_define("DiagnosticSignInfo", { text = icons.DiagnosticHint, texthl = "DiagnosticInfo" })
+    vim.fn.sign_define("DiagnosticSignWarn", { text = icons.DiagnosticWarn, texthl = "DiagnosticWarn" })
+
     local lspconfig = require("lspconfig")
 
     lspconfig.lua_ls.setup({

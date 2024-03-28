@@ -1,3 +1,5 @@
+local icons = require("icons")
+
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
@@ -36,10 +38,10 @@ return {
         },
         diagnostics = {
           symbols = {
-            error =  " ",
-            warn =  " ",
-            info =  " ",
-            hint = "󰌵 ",
+            error = icons.DiagnosticError .. " ",
+            warn = icons.DiagnosticWarn .. " ",
+            info = icons.DiagnosticInfo .. " ",
+            hint = icons.DiagnosticHint .. " ",
           },
           highlights = {
             hint = "DiagnosticSignHint",
@@ -58,12 +60,12 @@ return {
           highlight = "NeoTreeIndentMarker",
           -- expander config, needed for nesting files
           with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-          expander_collapsed = "",
-          expander_expanded = "",
+          expander_collapsed = icons.FoldClosed,
+          expander_expanded = icons.FoldOpened,
           expander_highlight = "NeoTreeExpander",
         },
         modified = {
-          symbol = "",
+          symbol = icons.FileModified,
           highlight = "NeoTreeModified",
         },
         name = {
@@ -74,16 +76,16 @@ return {
         git_status = {
           symbols = {
             -- Change type
-            added     = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
-            modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-            deleted   = "✖", -- this can only be used in the git_status source
-            renamed   = "󰁕", -- this can only be used in the git_status source
+            added     = icons.GitAdd,     -- or "✚", but this is redundant info if you use git_status_colors on the name
+            modified  = icons.GitChange,  -- or "", but this is redundant info if you use git_status_colors on the name
+            deleted   = icons.GitDelete,  -- this can only be used in the git_status source
+            renamed   = icons.GitRenamed, -- this can only be used in the git_status source
             -- Status type
-            untracked = "",
-            ignored   = "",
-            unstaged  = "󰄱",
-            staged    = "",
-            conflict  = "",
+            untracked = icons.GitUntracked,
+            ignored   = icons.GitIgnored,
+            unstaged  = icons.GitUnstaged,
+            staged    = icons.GitStaged,
+            conflict  = icons.GitConflict,
           }
         },
       },

@@ -63,7 +63,7 @@ return {
                   )
               then
                 -- foldstr = ''
-                foldstr = ' '
+                foldstr = '_'
               end
               return hl .. foldstr .. '%#LineNr# '
             end,

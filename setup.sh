@@ -20,7 +20,8 @@ stow -R -v -d ${HERE} -t $HOME \
   nvim \
   starship \
   tmux \
-  zsh
+  zsh \
+  wezterm
 
 git config --global --add include.path "~/.config/git/delta.gitconfig"
 

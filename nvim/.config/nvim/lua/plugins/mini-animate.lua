@@ -7,7 +7,7 @@ return {
       -- Cursor path
       cursor = {
         -- Whether to enable this animation
-        enable = vim.g.neovide or false,
+        enable = true,
 
         -- Timing of animation (how steps will progress in time)
         -- timing = --<function: implements linear total 250ms animation duration>,

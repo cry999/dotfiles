@@ -21,12 +21,14 @@ return {
     },
     excluded_filetypes = {
       "neo-tree",
+      "notify",
       "alpha",
       "cmp_docs",
       "cmp_menu",
       "noice",
       "prompt",
       "TelescopePrompt",
+      "NeogitLogView",
     },
     handlers = {
       cursor = true,
@@ -38,6 +40,7 @@ return {
   },
   config = function(_, opts)
     local scrollbar = require("scrollbar")
+    ---@diagnostic disable-next-line: undefined-field
     scrollbar.setup(opts)
 
     require("scrollbar.handlers.gitsigns").setup()

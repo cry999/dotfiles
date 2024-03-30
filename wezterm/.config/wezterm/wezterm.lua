@@ -13,5 +13,7 @@ return {
   hide_tab_bar_if_only_one_tab = true,
   -- cursor
   cursor_thickness = 0.1,
-  underline_thickness = 0.1,
+  -- underline
+  underline_position = -5,
+  underline_thickness = 3,
 }

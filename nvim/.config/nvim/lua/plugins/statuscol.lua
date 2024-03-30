@@ -71,7 +71,8 @@ return {
           condition = {
             function(args)
               local filetype = vim.bo[args.buf].filetype
-              return filetype ~= "neo-tree" and
+              return
+                  filetype ~= "neo-tree" and
                   filetype ~= "neotest-summary" and
                   filetype ~= "alpha" and
                   filetype:sub(1, #"Neogit") ~= "Neogit"
@@ -94,7 +95,8 @@ return {
           condition = {
             function(args)
               local ft = vim.bo[args.buf].filetype
-              return ft ~= "neotest-summary" and
+              return vim.api.nvim_get_current_buf() == args.buf and
+                  ft ~= "neotest-summary" and
                   ft ~= "alpha"
             end
           },

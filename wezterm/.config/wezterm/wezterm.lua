@@ -1,7 +1,7 @@
 local wezterm = require('wezterm');
 
 return {
-  color_scheme = "Catppuccin Frappe",
+  color_scheme = "Catppuccin Frappé (Gogh)",
   window_background_opacity = 0.90,
   -- window_background_image = os.getenv("HOME") .. "/.config/wezterm/background.gif",
   -- font

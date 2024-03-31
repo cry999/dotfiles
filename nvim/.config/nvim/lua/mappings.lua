@@ -49,6 +49,7 @@ local mappings = {
     ["<C-j>"] = { function() require("smart-splits").move_cursor_down() end, desc = "Move to down split" },
 
     -- fuzzy finder
+    ["<C-s>"] = { "<cmd>Telescope symbols<cr>", desc = "Find Symbols (Emoji, Kaomoji, etc...)" },
 
     ["<leader>fa"] = { "<cmd>Telescope autocommands<cr>", desc = "Find autocommands" },
     ["<leader>fb"] = { "<cmd>Telescope buffers<cr>", desc = "Find buffer" },
@@ -62,9 +63,11 @@ local mappings = {
     ["<leader>fm"] = { "<cmd>Telescope marks<cr>", desc = "Find mark" },
     ["<leader>fn"] = { "<cmd>Telescope notify<cr>", desc = "Find notifications" },
     ["<leader>fr"] = { "<cmd>Telescope registers<cr>", desc = "Find register" },
+    ["<leader>fs"] = { "<cmd>Telescope symbols<cr>", desc = "Find Symbols (Emoji, Kaomoji, etc...)" },
     ["<leader>ft"] = { function() require("telescope-tabs").list_tabs() end, desc = "Find tabs" },
     ["<leader>fw"] = { "<cmd>Telescope live_grep<cr>", desc = "Find word" },
     ["<leader>fW"] = { "<cmd>Telescope current_buffer_fuzzy_find skip_empty_lines=true<cr>", desc = "Find current buffer" },
+    ["<leader>fz"] = { "<cmd>ObsidianSearch<cr>", desc = "Find Zettelkasten notes" },
     ["<leader>f/"] = { "<cmd>Telescope search_history<cr>", desc = "Find search word in history" },
     ["<leader>fli"] = { "<cmd>Telescope lsp_implementations<cr>", desc = "Find implementations" },
     ["<leader>flr"] = { "<cmd>Telescope lsp_references jump_type=vsplit<cr>", desc = "Find references" },
@@ -142,13 +145,11 @@ local mappings = {
       expr = true,
     },
 
-    -- Telekasten (Zettelkasten)
-    ["<leader>zp"] = { "<cmd>Telekasten panel<cr>", desc = "Open the Telekasten panel" },
-    ["<leader>zo"] = { "<cmd>Telekasten open_note<cr>", desc = "Open Telekasten note" },
-    ["<leader>zf"] = { "<cmd>Telekasten find_notes<cr>", desc = "Find Telekasten notes" },
-    ["<leader>zg"] = { "<cmd>Telekasten search_notes<cr>", desc = "Find Telekasten notes by word" },
-    ["<leader>zn"] = { "<cmd>Telekasten new_note<cr>", desc = "Find Telekasten notes by word" },
-    ["<leader>zd"] = { "<cmd>Telekasten new_daily_note<cr>", desc = "Find Telekasten notes by word" },
+    -- Zettelkasten
+    ["<leader>zn"] = { "<cmd>ObsidianNew<cr>", desc = "New Note" },
+    ["<leader>zf"] = { "<cmd>ObsidianNew<cr>fleeting/", desc = "New Fleeting Note" },
+    ["<leader>zp"] = { "<cmd>ObsidianNew<cr>permanent/", desc = "New Permanent Note" },
+    ["<leader>zt"] = { "<cmd>ObsidianTags<cr>", desc = "Search Tags" },
 
     -- fold
     ["zR"] = { function() require("ufo").openAllFolds() end, desc = "Open all folds" },
@@ -207,6 +208,9 @@ local mappings = {
     ["<C-k>"] = { [[<cmd>wincmd k<cr>]], desc = "Move to up split" },
     ["<C-j>"] = { [[<cmd>wincmd j<cr>]], desc = "Move to down split" },
     ["<C-\\><C-\\>"] = { [[<C-\><C-n>]], desc = "Escape" },
+  },
+  i = {
+    ["<C-s>"] = { "<cmd>Telescope symbols<cr>", desc = "Find Symbols (Emoji, Kaomoji, etc...)" },
   },
 }
 

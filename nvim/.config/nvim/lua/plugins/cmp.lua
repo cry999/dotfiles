@@ -20,6 +20,13 @@ return {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-nvim-lsp",
+    {
+      "hrsh7th/cmp-emoji",
+      opts = { option = { insert = true } },
+      config = function(_, opts)
+        require("cmp_emoji").option(_, opts)
+      end
+    },
     "onsails/lspkind.nvim",
     {
       "L3MON4D3/LuaSnip",
@@ -69,11 +76,15 @@ return {
         end, { 'i', 's' })
       },
       sources = cmp.config.sources({
-        { name = "nvim_lsp", priority = 1000 },
-        { name = "copilot",  priority = 800 },
-        { name = "luasnip",  priority = 750 },
-        { name = "buffer",   priority = 500 },
-        { name = "path",     priority = 250 },
+        { name = "nvim_lsp",      priority = 1000 },
+        { name = "copilot",       priority = 800 },
+        { name = "luasnip",       priority = 750 },
+        { name = "buffer",        priority = 500 },
+        { name = "emoji",         priority = 300 },
+        { name = "path",          priority = 250 },
+        { name = "obsidian",      priority = 200 },
+        { name = "obsidian_new",  priority = 200 },
+        { name = "obsidian_tags", priority = 200 },
       }),
       window = {
         completion = cmpwin.bordered(),

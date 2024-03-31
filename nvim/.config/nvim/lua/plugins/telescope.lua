@@ -4,6 +4,7 @@ return {
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
       { "nvim-lua/plenary.nvim" },
+      { 'nvim-telescope/telescope-symbols.nvim' },
     },
     opts = function()
       local actions = require("telescope.actions")
@@ -48,7 +49,7 @@ return {
       { "nvim-telescope/telescope.nvim" },
     },
     opts = {
-      entry_formatter = function(tab_id, _, file_names, file_paths, is_current)
+      entry_formatter = function(tab_id, _, file_names, _, is_current)
         return string.format('%s %d: %s', is_current and '*' or ' ', tab_id, table.concat(file_names, ', '))
       end,
       entry_ordinal = function(tab_id, _, _, _, is_current)

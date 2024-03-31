@@ -5,8 +5,37 @@ return {
   window_background_opacity = 0.90,
   -- window_background_image = os.getenv("HOME") .. "/.config/wezterm/background.gif",
   -- font
-  font = wezterm.font("JetBrainsMonoNL Nerd Font Mono"),
+  font = wezterm.font_with_fallback(
+    { "JetBrainsMono Nerd Font Mono", "UDEV Gothic 35NFLG" },
+    { weight = "Regular", style = "Normal", stretch = "Normal" }),
   font_size = 12.0,
+  font_rules = {
+    -- only bold
+    {
+      intensity = "Bold",
+      italic = false,
+      font = wezterm.font_with_fallback(
+        { "JetBrainsMono Nerd Font Mono", "UDEV Gothic 35NFLG" },
+        { weight = "Bold", style = "Normal", stretch = "Normal" }
+      ),
+    },
+    -- only italic
+    {
+      intensity = "Normal",
+      italic = true,
+      font = wezterm.font_with_fallback(
+        { "JetBrainsMono Nerd Font Mono", "UDEV Gothic 35NFLG" },
+        { weight = "Regular", style = "Italic", stretch = "Normal" }),
+    },
+    -- bold and italic
+    {
+      intensity = "Bold",
+      italic = true,
+      font = wezterm.font_with_fallback(
+        { "JetBrainsMono Nerd Font Mono", "UDEV Gothic 35NFLG" },
+        { weight = "Bold", style = "Italic", stretch = "Normal" }),
+    },
+  },
   -- tab bar
   use_fancy_tab_bar = true,
   enable_tab_bar = true,
@@ -17,3 +46,16 @@ return {
   underline_position = -5,
   underline_thickness = 3,
 }
+--[[
+↓ Font test text ↓
+Regular
+[1mBold[0m
+[3mItalic[0m
+[1m[3mBold Italic[0m
+[2mHalf Bright[0m
+[2m[3mHalf Bright Italic[0m
+
+[5mBlink[0m
+[6mRapid Blink[0m
+I [1mI[0m [3mI[0m [1m[3mI[0m [2mI[0m [2m[3mI[0m
+]]

@@ -69,7 +69,8 @@ local path = function(_, _)
     end,
     cond = function()
       local path = vim.fn.expand('%:~:.:h')
-      return path ~= '.' and path ~= ''
+      local ft = vim.bo[0].filetype
+      return path ~= '.' and path ~= '' and ft ~= "toggleterm" and ft ~= "help"
     end,
     separator = { left = '', right = '' },
     color = 'lualine_c_inactive',
@@ -86,6 +87,13 @@ local fullfilename = function(icons, _)
       newfile = icons.FileNew,       -- Text to show for newly created file before first write
     },
     fmt = function()
+      if vim.bo[0].filetype == 'toggleterm' then
+        return icons.Terminal .. ' terminal'
+      end
+      if vim.bo[0].filetype == 'help' then
+        return icons.Help .. ' help'
+      end
+
       local webicons = require("nvim-web-devicons")
       local icon, _ = webicons.get_icon("", vim.fn.expand('%:e'))
       icon = icon or icons.DefaultFile
@@ -94,6 +102,13 @@ local fullfilename = function(icons, _)
     end,
     separator = { left = '', right = '' },
     color = function()
+      local c = require("catppuccin.palettes").get_palette()
+      if vim.bo[0].filetype == 'toggleterm' then
+        return { fg = c.green }
+      end
+      if vim.bo[0].filetype == 'help' then
+        return { fg = c.blue }
+      end
       local webicons = require("nvim-web-devicons")
       local _, hl = webicons.get_icon("", vim.fn.expand('%:e'))
       return hl or 'DevIconDefault'

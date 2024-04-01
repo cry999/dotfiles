@@ -40,7 +40,7 @@ return {
   GitStaged = "✓",
   GitUnstaged = "✗",
   GitUntracked = "★",
-  Help = " ",
+  Help = "󰋖 ",
   Plugin = "",
   LSPLoading1 = "",
   LSPLoading2 = "󰀚",

@@ -4,11 +4,12 @@ return {
   priority = 1000,
   config = function()
     local U = require("catppuccin.utils.colors")
-    local tp = true
+    local tp = false
     require("catppuccin").setup({
       flavour = vim.env.CATPPUCCIN_FLAVOUR or "mocha",
       transparent_background = tp,
       integrations = {
+        aerial = true,
         alpha = true,
         cmp = true,
         flash = true,
@@ -57,6 +58,7 @@ return {
           WinBar = { fg = c.fg, bg = tp and c.none or c.base },
           -- for LSP
           LspInlayHint = { fg = U.blend(c.overlay0, c.surface0, 0.5), bg = c.none },
+          NormalFloat = { fg = c.text, bg = c.none },
           -- for folding (ufo)
           FoldCol0 = { fg = c.text, bg = U.blend(c.base, c.text, 0.98) },
           FoldCol1 = { fg = c.text, bg = U.blend(c.base, c.text, 0.94) },

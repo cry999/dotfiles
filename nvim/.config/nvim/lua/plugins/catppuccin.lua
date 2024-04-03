@@ -48,6 +48,7 @@ return {
         treesitter = true,
         treesitter_context = true,
         which_key = true,
+        window_picker = true,
       },
       custom_highlights = function(c)
         return {

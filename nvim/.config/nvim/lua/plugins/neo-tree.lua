@@ -12,9 +12,32 @@ return {
       name = 'window-picker',
       event = 'VeryLazy',
       version = '2.*',
-      config = function()
-        require('window-picker').setup()
-      end,
+      opts = {
+        hint = 'floating-big-letter',
+        filter_rules = {
+          autoselect_one = true,
+          include_current_win = false,
+          bo = {
+            filetype = { 'NvimTree', 'neo-tree', 'notify' },
+            buftype = { 'terminal' },
+          },
+        },
+        --- @param window_ids table<any, integer>
+        filter_func = function(window_ids, filters)
+          return vim.tbl_filter(function(win_id)
+            local bufnr = vim.api.nvim_win_get_buf(win_id)
+            if not filters.include_current_win and vim.api.nvim_get_current_win() == win_id then return false end
+            -- filter windows by filetype
+            if vim.tbl_contains(filters.bo.filetype, vim.bo[bufnr].filetype) then return false end
+            -- filter windows by buftype
+            if vim.tbl_contains(filters.bo.buftype, vim.bo[bufnr].buftype) then return false end
+            -- other than 'nofile' buffer, return true
+            if vim.bo[bufnr].buftype ~= 'nofile' then return true end
+
+            return vim.tbl_contains({ 'aerial' }, vim.bo[bufnr].filetype)
+          end, window_ids)
+        end,
+      },
     },
   },
   config = function()

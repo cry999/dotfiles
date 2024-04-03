@@ -48,6 +48,16 @@ local mappings = {
     ["<C-k>"] = { function() require("smart-splits").move_cursor_up() end, desc = "Move to up split" },
     ["<C-j>"] = { function() require("smart-splits").move_cursor_down() end, desc = "Move to down split" },
 
+    ["<C-w>p"] = {
+      function()
+        local winnr = require('window-picker'):pick_window()
+        if winnr then
+          vim.api.nvim_set_current_win(winnr)
+        end
+      end,
+      desc = "Pick any window"
+    },
+
     -- fuzzy finder
     ["<C-s>"] = { "<cmd>Telescope symbols<cr>", desc = "Find Symbols (Emoji, Kaomoji, etc...)" },
 

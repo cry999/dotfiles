@@ -27,6 +27,15 @@ return {
           return vim.bo[buf].buftype == "help"
         end,
       },
+      {
+        name = "help",
+        ft = "markdown",
+        size = { height = 20 },
+        -- only show help buffers
+        filter = function(buf)
+          return vim.bo[buf].buftype == "help"
+        end,
+      },
       { ft = "spectre_panel", size = { height = 0.4 } },
       {
         title = icons.Copilot .. " Copilot",

@@ -15,7 +15,7 @@ return {
       opts = {
         hint = 'floating-big-letter',
         filter_rules = {
-          autoselect_one = true,
+          autoselect_one = false,
           include_current_win = false,
           bo = {
             filetype = { 'NvimTree', 'neo-tree', 'notify' },

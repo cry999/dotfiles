@@ -123,6 +123,29 @@ return {
           noremap = true,
           nowait = true,
         },
+        mappings = {
+          ["Y"] = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local m = vim.fn.fnamemodify
+            local results = {
+              filepath,          -- abs
+              m(filepath, ':.'), -- rel to cwd
+              m(filepath, ':~'), -- rel to home
+              m(filepath, ':t'), -- filename only
+              m(filepath, ':r'), -- filename without extension
+              m(filepath, ':e'), -- extension only
+            }
+            vim.ui.select(results, { prompt = 'Choose to copy to clipboard' },
+              function(selected)
+                if not selected then return end
+                vim.fn.setreg('"', selected)
+                vim.fn.setreg('+', selected)
+                vim.fn.setreg('*', selected)
+                vim.notify('copied to clipboard: ' .. selected)
+              end)
+          end,
+        },
       },
       filesystem = {
         filtered_items = {

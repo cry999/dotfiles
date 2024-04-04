@@ -23,7 +23,13 @@ stow -R -v -d ${HERE} -t $HOME \
   zsh \
   wezterm
 
-git config --global --add include.path "~/.config/git/delta.gitconfig"
+function is_gitconfig_included() {
+  git config --global --get-all include.path | grep -q "$1"
+}
+
+if ! is_gitconfig_included "~/.config/git/delta.gitconfig"; then
+  git config --global --add include.path "~/.config/git/delta.gitconfig"
+fi
 
 if [ ! -d ~/.config/delta/themes ]; then
   git clone https://github.com/catppuccin/delta.git ~/.config/delta/themes

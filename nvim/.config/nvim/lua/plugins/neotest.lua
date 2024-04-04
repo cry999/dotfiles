@@ -1,3 +1,4 @@
+local icons = require('icons')
 return {
   "nvim-neotest/neotest",
   dependencies = {
@@ -22,6 +23,13 @@ return {
           return virt
         end,
       },
+      icons = {
+        -- passed = ico
+        running_animated = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+        running = icons.TestRunning,
+        passed = icons.TestPassed,
+        failed = icons.TestFailed,
+      }
     }, namespace)
     require("neotest").setup({
       adapters = {

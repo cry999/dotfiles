@@ -52,6 +52,9 @@ return {
       },
       custom_highlights = function(c)
         return {
+          -- for neotree
+          NeoTreeNormal = { fg = c.text, bg = c.base },
+          NeoTreeNormalNC = { fg = c.text, bg = c.base },
           -- for heirline
           TabLine = { fg = c.surface2, bg = tp and c.none or c.base },
           TabLineFill = { fg = c.fg, bg = tp and c.none or c.mantle },

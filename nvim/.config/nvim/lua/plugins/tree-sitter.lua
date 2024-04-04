@@ -24,7 +24,7 @@ return {
     build = ":TSUpdate",
     opts = {
       autotag = { enable = true },
-      highlight = { enable = true, disable = function(_, bufnr) return vim.b[bufnr].large_buf end },
+      highlight = { enable = true, disable = function(_, bufnr) return vim.b[bufnr].large_buf end, additional_vim_regex_highlighting = false },
       incremental_selection = { enable = true },
       indent = { enable = true },
       textobjects = {

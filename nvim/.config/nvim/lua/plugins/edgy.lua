@@ -8,6 +8,16 @@ return {
     vim.opt.splitkeep = "screen"
   end,
   opts = {
+    options = {
+      left = { size = 30 },
+      bottom = { size = 10 },
+      right = { size = 30 },
+      top = { size = 10 },
+    },
+    wo = {
+      winfixwidth = true,
+      winfixheight = true,
+    },
     bottom = {
       -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
       {
@@ -18,7 +28,7 @@ return {
           return vim.api.nvim_win_get_config(win).relative == ""
         end,
       },
-      { ft = "qf",            title = "QuickFix" },
+      { ft = "qf", title = "QuickFix" },
       {
         ft = "help",
         size = { height = 20 },
@@ -36,7 +46,6 @@ return {
           return vim.bo[buf].buftype == "help"
         end,
       },
-      { ft = "spectre_panel", size = { height = 0.4 } },
       {
         title = icons.Copilot .. " Copilot",
         ft = "markdown",
@@ -45,26 +54,23 @@ return {
         end,
         size = { height = 0.4 },
       },
-      {
-        title = icons.Test .. " Neotest - Output",
-        ft = "neotest-output-panel",
-        size = { height = 0.4 },
-      },
     },
     left = {
       -- Neo-tree filesystem always takes half the screen height
       {
         title = icons.Tree .. " Neo-Tree",
         ft = "neo-tree",
+        pinned = true,
         filter = function(buf)
           return vim.b[buf].neo_tree_source == "filesystem"
         end,
-        size = { height = 0.5 },
       },
+      { title = "Outline", ft = "aerial", pinned = true, size = { width = 40 }, },
+    },
+    right = {
       {
         title = icons.Test .. " Neotest",
         ft = "neotest-summary",
-        pinned = true,
         open = "Neotest summary",
       },
     },

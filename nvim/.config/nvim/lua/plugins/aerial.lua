@@ -18,7 +18,6 @@ return {
     layout             = {
       max_width = { 30, 0.2 },
       min_width = { 30, 0.2 },
-      default_direction = "right",
       win_opts = {
         signcolumn = "yes",
         statuscolumn = " ",
@@ -56,9 +55,6 @@ return {
         ["q"] = "actions.close",
       },
     },
-    manage_folds       = false,
-    link_folds_to_tree = true,
-    link_tree_to_folds = true,
     filter_kind        = false,
   },
 }

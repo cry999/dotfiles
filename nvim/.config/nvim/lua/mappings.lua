@@ -48,7 +48,8 @@ local mappings = {
     ["<C-k>"] = { function() require("smart-splits").move_cursor_up() end, desc = "Move to up split" },
     ["<C-j>"] = { function() require("smart-splits").move_cursor_down() end, desc = "Move to down split" },
 
-    ["<C-w>p"] = {
+    -- window management
+    ["<leader>wp"] = {
       function()
         local winnr = require('window-picker'):pick_window()
         if winnr then
@@ -57,6 +58,12 @@ local mappings = {
       end,
       desc = "Pick any window"
     },
+    ["<leader>wv"] = { "<C-w>v", desc = "Separate window vertical" },
+    ["<leader>ws"] = { "<C-w>s", desc = "Separate window horizontal" },
+    ["<leader>wq"] = { "<cmd>q<cr>", desc = "Quit current window" },
+    ["<leader>wz"] = { "<C-w>_<C-w>|", desc = "Zoom current window" },
+    ["<leader>w="] = { "<C-w>=", desc = "Equaly height and width" },
+    ["<leader>wo"] = { "<C-w>o", desc = "Close all other window" },
 
     -- fuzzy finder
     ["<C-s>"] = { "<cmd>Telescope symbols<cr>", desc = "Find Symbols (Emoji, Kaomoji, etc...)" },
@@ -162,8 +169,6 @@ local mappings = {
     -- fold
     ["zR"] = { function() require("ufo").openAllFolds() end, desc = "Open all folds" },
     ["zM"] = { function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
-    ["zr"] = { function() require("ufo").openFoldsExceptKinds() end, desc = "Fold less" },
-    ["zm"] = { function() require("ufo").closeFoldsWith() end, desc = "Fold more" },
     ["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" },
 
     -- Copilot Chat
@@ -242,6 +247,7 @@ if wk_ok then
     ["<leader>p"] = { name = icons.Package .. "  Package Manager" },
     ["<leader>s"] = { name = icons.WordFile .. "  Re-Sourcing configurations" },
     ["<leader>t"] = { name = icons.Terminal .. "  Terminal" },
+    ["<leader>w"] = { name = icons.Window .. "  Window" },
     ["<leader>z"] = { name = "󰎚  Zettelkasten" },
     ["<leader>/"] = { name = "// Comment Out" },
   })

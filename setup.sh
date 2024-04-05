@@ -13,15 +13,15 @@ check_command stow
 check_command git
 
 stow -R -v -d ${HERE} -t $HOME \
-  git \
+  git      \
   homebrew \
-  iterm2 \
-  lazygit \
-  nvim \
+  iterm2   \
+  lazygit  \
+  nvim     \
   starship \
-  tmux \
-  zsh \
-  wezterm
+  tmux     \
+  wezterm  \
+  zsh
 
 function is_gitconfig_included() {
   git config --global --get-all include.path | grep -q "$1"

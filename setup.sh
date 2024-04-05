@@ -15,7 +15,6 @@ check_command git
 stow -R -v -d ${HERE} -t $HOME \
   git      \
   homebrew \
-  iterm2   \
   lazygit  \
   nvim     \
   starship \

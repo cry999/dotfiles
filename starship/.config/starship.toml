@@ -1,49 +1,32 @@
-palette = "catppuccin_mocha"
+# palette = "catppuccin_mocha"
+palette = "catppuccin_frappe"
+
 
 format = """
-[](mauve)\
-$os\
-$username\
-[](bg:red fg:mauve)\
-${custom.pretty_pwd}\
-[](fg:red bg:peach)\
+$character\
+$directory\
+[](fg:surface1 bg:peach)\
 $git_branch\
 $git_status\
-[](fg:peach bg:sapphire)\
-$c\
-$elixir\
-$elm\
-$golang\
-$gradle\
-$haskell\
-$java\
-$julia\
-$lua\
-$nodejs\
-$nim\
-$rust\
-$scala\
-$buf\
-[](fg:sapphire bg:teal)\
-$docker_context\
-[](fg:teal)\
+[](fg:peach)\
 $fill\
-[](fg:blue)\
+[](fg:blue)\
 $time\
 [](fg:blue)
-$character
+[ 󰐊 ](fg:mauve)
 """
 
 # Disable the blank line at the start of the prompt
 # add_newline = false
 
-continuation_prompt = '[▶▶ ](fg:mauve)'
+continuation_prompt = '[ | ](fg:mauve)'
 
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol        = "[  ](green)"
-error_symbol          = "[  ](red  )"
-vimcmd_symbol         = "[  ](blue )"
+success_symbol        = "[](bg:base fg:green)[](fg:base bg:green)[](bg:surface0 fg:green)"
+error_symbol          = "[](bg:base fg:red)[](fg:base bg:red)[](bg:surface1 fg:red)"
+vimcmd_symbol         = "[](bg:base fg:blue)[](fg:base bg:blue)[](bg:surface1 fg:blue)"
+format = "[$symbol]($style)"
 
 # You can also replace your username with a neat symbol like   or disable this
 # and use the os module below
@@ -64,8 +47,8 @@ disabled = false # Disabled by default
 Macos = " "
 
 [directory]
-style = "fg:base bg:red"
-format = "[  $path ]($style)"
+style = "fg:text bg:surface1"
+format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -89,8 +72,8 @@ format = '[ $symbol ($version) ]($style)'
 
 [docker_context]
 symbol = " "
-style = "fg:base bg:teal"
-format = '[ $symbol $context ]($style)'
+style = "fg:text bg:surface1"
+format = '[ $context ]($style)'
 
 [elixir]
 symbol = " "
@@ -103,7 +86,7 @@ style = "fg:base bg:sapphire"
 format = '[ $symbol ($version) ]($style)'
 
 [git_branch]
-symbol = ""
+symbol = ""
 style = "fg:base bg:peach"
 format = '[ $symbol $branch ]($style)'
 

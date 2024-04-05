@@ -35,6 +35,9 @@ local mappings = {
     ["<C-k>"] = { function() require("smart-splits").move_cursor_up() end, desc = "Move to up split" },
     ["<C-j>"] = { function() require("smart-splits").move_cursor_down() end, desc = "Move to down split" },
 
+    ["<tab>"] = { "<cmd>tabnext<cr>", desc = "Next tab" },
+    ["<S-tab>"] = { "<cmd>tabprev<cr>", desc = "Prev tab" },
+
     -- window management
     ["<leader>wp"] = {
       function()

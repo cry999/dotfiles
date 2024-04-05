@@ -11,8 +11,6 @@
   useBuiltin = false
 
 [delta]
-  # `features` does not work
-  ; syntax-theme = "catppuccin-frappe"
   features = "catppuccin-frappe"
   side-by-side = true
   line-numbers = true

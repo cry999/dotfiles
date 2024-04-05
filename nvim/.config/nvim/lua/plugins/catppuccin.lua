@@ -97,11 +97,11 @@ return {
           FoldCol1 = { fg = c.text, bg = U.blend(c.base, c.text, 0.94) },
           FoldCol2 = { fg = c.text, bg = U.blend(c.base, c.text, 0.89) },
           FoldCol3 = { fg = c.text, bg = U.blend(c.base, c.text, 0.82) },
-          FoldCol4 = { fg = c.text, bg = U.blend(c.base, c.text, 0.76) },
-          FoldCol5 = { fg = c.text, bg = U.blend(c.base, c.text, 0.70) },
-          FoldCol6 = { fg = c.text, bg = U.blend(c.base, c.text, 0.65) },
-          FoldCol7 = { fg = c.text, bg = U.blend(c.base, c.text, 0.60) },
-          FoldCol8 = { fg = c.text, bg = U.blend(c.base, c.text, 0.55) },
+          FoldCol4 = { fg = c.text, bg = U.blend(c.base, c.text, 0.72) },
+          FoldCol5 = { fg = c.text, bg = U.blend(c.base, c.text, 0.62) },
+          FoldCol6 = { fg = c.text, bg = U.blend(c.base, c.text, 0.50) },
+          FoldCol7 = { fg = c.text, bg = U.blend(c.base, c.text, 0.40) },
+          FoldCol8 = { fg = c.text, bg = U.blend(c.base, c.text, 0.30) },
         }
       end,
       color_overrides = {

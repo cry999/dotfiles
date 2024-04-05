@@ -54,7 +54,8 @@ return {
               if foldinfo.lines ~= 0 then
                 foldstr = ''
               elseif args.lnum == foldinfo.start then
-                foldstr = ''
+                -- foldstr = ''
+                foldstr = ' '
               elseif
                   foldinfo.level > foldinfo_next.level
                   or (
@@ -63,7 +64,7 @@ return {
                   )
               then
                 -- foldstr = ''
-                foldstr = '_'
+                foldstr = ' '
               end
               return hl .. foldstr .. '%#LineNr# '
             end,

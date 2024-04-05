@@ -57,6 +57,7 @@
   "octo.nvim": { "branch": "master", "commit": "a511b52fbf040f928a24deb72e17ec465613b442" },
   "plenary.nvim": { "branch": "master", "commit": "8aad4396840be7fc42896e3011751b7609ca4119" },
   "promise-async": { "branch": "main", "commit": "93540c168c5ed2b030ec3e6c40ab8bbb85e36355" },
+  "rustaceanvim": { "branch": "master", "commit": "e2dbf91daed26d4dd7263affbecbf9a36e0096e5" },
   "smart-splits.nvim": { "branch": "master", "commit": "50f52146e4504a3fc0f0d5830c8560a16a95dd08" },
   "statuscol.nvim": { "branch": "main", "commit": "d954893262a57a92e46edd87de67e2b3fe72305e" },
   "telekasten.nvim": { "branch": "main", "commit": "a684d6ebe7026944b0a5323219d5f5364511e5b2" },

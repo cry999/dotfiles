@@ -9,6 +9,7 @@ return {
 
     -- test adapters
     "nvim-neotest/neotest-go",
+    { 'mrcjkb/rustaceanvim', version = '^4', ft = { 'rust' } },
   },
   config = function()
     local namespace = vim.api.nvim_create_namespace("neotest")
@@ -34,6 +35,7 @@ return {
     require("neotest").setup({
       adapters = {
         require("neotest-go"),
+        require('rustaceanvim.neotest'),
       },
     })
   end,

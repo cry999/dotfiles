@@ -1,16 +1,3 @@
-local lazygit = nil
-local function toggle_lazygit()
-  if not lazygit then
-    lazygit = require("toggleterm.terminal").Terminal:new({
-      cmd = "lazygit",
-      name = "lazygit",
-      hidden = true,
-      direction = "float"
-    })
-  end
-  lazygit:toggle()
-end
-
 local function copilot_chat(query_textobject)
   local function selection()
     local shared = require("nvim-treesitter.textobjects.shared")
@@ -122,7 +109,6 @@ local mappings = {
     ["<leader>pc"] = { "<cmd>LazyClose<cr>", desc = "Close Lazy" },
 
     -- Term
-    ["<leader>tl"] = { toggle_lazygit, desc = "Open lazygit terminal" },
     ["<leader>tf"] = { "<cmd>ToggleTerm direction=float<cr>", desc = "Open floating terminal" },
     ["<leader>th"] = { "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Open horizontal terminal" },
     ["<leader>tv"] = { "<cmd>ToggleTerm direction=vertical<cr>", desc = "Open vertical terminal" },

@@ -7,6 +7,11 @@ return {
     local tp = false
     require("catppuccin").setup({
       flavour = vim.env.CATPPUCCIN_FLAVOUR or "frappe",
+      dim_inactive = {
+        enabled = true,
+        shade = "dark",
+        percentage = 0.15,
+      },
       transparent_background = tp,
       integrations = {
         aerial = true,

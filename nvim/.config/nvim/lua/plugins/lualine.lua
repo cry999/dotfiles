@@ -1,6 +1,58 @@
-local diff = function(icons, colors)
-  return {
+local _icons = require('icons')
+
+local function get_palette() return require('catppuccin.palettes').get_palette() end
+
+local function bg() return get_palette().surface1 end
+
+local function tbl_join(base, ...)
+  for _, tbl in ipairs({ ... }) do
+    for _, item in ipairs(tbl) do
+      table.insert(base, item)
+    end
+  end
+  return base
+end
+
+local separator = {
+  rounded = { left = '', right = '' },
+  none = { left = '', right = '' },
+  bar = { left = '|', right = '|' },
+}
+
+local function _true() return true end
+
+---@param cond function?
+local function space(cond)
+  return { 'space', fmt = function() return ' ' end, color = 'lualine_c_inactive', cond = cond == nil and _true or cond }
+end
+
+local center = { { 'center', fmt = function() return '%=' end, separator = separator.none } }
+
+local modes = {
+  {
+    'mode',
+    separator = separator.rounded,
+    fmt = function(str) return str:sub(1, 1) end,
+    padding = 2,
+  },
+  {
+    'vim',
+    separator = separator.rounded,
+    fmt = function() return '  ' end,
+    color = { fg = get_palette().green, bg = bg() },
+  },
+  space(),
+}
+
+local git = {
+  {
+    'branch',
+    separator = separator.rounded,
+    color = { fg = get_palette().surface1, bg = get_palette().peach },
+  },
+  {
     "diff",
+    separator = separator.rounded,
     source = function()
       local gitsigns = vim.b.gitsigns_status_dict
       return gitsigns and {
@@ -10,58 +62,41 @@ local diff = function(icons, colors)
       } or {}
     end,
     symbols = {
-      added = icons.GitAdd .. " ",
-      modified = icons.GitChange .. " ",
-      removed = icons.GitDelete .. " ",
+      added = _icons.GitAdd .. " ",
+      modified = _icons.GitChange .. " ",
+      removed = _icons.GitDelete .. " ",
     },
-    padding = { left = 2, right = 1 },
+    padding = 2,
     diff_color = {
-      added = { fg = colors.green },
-      modified = { fg = colors.yellow },
-      removed = { fg = colors.red },
+      added = { fg = get_palette().green },
+      modified = { fg = get_palette().yellow },
+      removed = { fg = get_palette().red },
     },
     cond = nil,
-  }
-end
+  },
+  space(),
+}
 
-local diagnostics = function(icons, _)
-  return {
-    'diagnostics',
-    sources = { 'nvim_diagnostic' },
-    symbols = {
-      error = icons.DiagnosticError .. ' ',
-      hint = icons.DiagnosticHint .. ' ',
-      info = icons.DiagnosticInfo .. ' ',
-      warn = icons.DiagnosticWarn .. ' ',
-    },
-  }
-end
-
-local recording = function(icons, colors)
-  return {
+local recording = {
+  {
+    'recording-icon',
+    separator = separator.rounded,
+    fmt = function() return _icons.MacroRecording end,
+    padding = { right = 1 },
+    cond = function() return vim.fn.reg_recording() ~= '' end,
+    color = { fg = bg(), bg = get_palette().yellow },
+  },
+  {
     'macro-recording',
-    fmt = function()
-      local reg = vim.fn.reg_recording()
-      return reg == '' and '' or icons.MacroRecording .. ' ' .. reg
-    end,
-    color = { fg = colors.yellow, gui = 'bold' },
-  }
-end
+    separator = separator.rounded,
+    fmt = function() return vim.fn.reg_recording() end,
+    color = { fg = get_palette().yellow },
+  },
+  space(function() return vim.fn.reg_recording() ~= '' end),
+}
 
-local filename = function(icons, _)
-  return {
-    'filename',
-    symbols = {
-      modified = icons.FileModified, -- Text to show when the file is modified.
-      readonly = icons.FileReadOnly, -- Text to show when the file is non-modifiable or readonly.
-      unnamed = icons.FileNew,       -- Text to show for unnamed buffers.
-      newfile = icons.FileNew,       -- Text to show for newly created file before first write
-    },
-  }
-end
-
-local path = function(_, _)
-  return {
+local filepath = {
+  {
     'path',
     fmt = function()
       local path = vim.fn.expand('%:~:.:h')
@@ -70,72 +105,134 @@ local path = function(_, _)
     cond = function()
       local path = vim.fn.expand('%:~:.:h')
       local ft = vim.bo[0].filetype
-      return path ~= '.' and path ~= '' and ft ~= "toggleterm" and ft ~= "help"
+      local bt = vim.bo[0].buftype
+      return path ~= '.' and path ~= '' and ft ~= "toggleterm" and bt ~= "help"
     end,
-    separator = { left = '', right = '' },
+    separator = separator.none,
     color = 'lualine_c_inactive',
-  }
-end
-
-local fullfilename = function(icons, _)
-  return {
-    'filename',
-    symbols = {
-      modified = icons.FileModified, -- Text to show when the file is modified.
-      readonly = icons.FileReadOnly, -- Text to show when the file is non-modifiable or readonly.
-      unnamed = icons.FileNew,       -- Text to show for unnamed buffers.
-      newfile = icons.FileNew,       -- Text to show for newly created file before first write
-    },
+  },
+  {
+    'fileicon',
+    separator = separator.none,
     fmt = function()
-      if vim.bo[0].filetype == 'toggleterm' then
-        return icons.Terminal .. ' terminal'
-      end
-      if vim.bo[0].filetype == 'help' then
-        return icons.Help .. ' help'
-      end
+      if vim.bo[0].filetype == 'toggleterm' then return _icons.Terminal end
+      if vim.bo[0].buftype == 'help' then return _icons.Help end
 
       local webicons = require("nvim-web-devicons")
-      local icon, _ = webicons.get_icon("", vim.fn.expand('%:e'))
-      icon = icon or icons.DefaultFile
-      local _filename = vim.fn.expand('%:t') or '[No Name]'
-      return icon .. ' ' .. _filename
+      local icon, _ = webicons.get_icon_color(vim.fn.expand('%:t'), vim.fn.expand('%:e'))
+      return icon or _icons.DefaultFile
     end,
-    separator = { left = '', right = '' },
     color = function()
-      local c = require("catppuccin.palettes").get_palette()
-      if vim.bo[0].filetype == 'toggleterm' then
-        return { fg = c.green }
-      end
-      if vim.bo[0].filetype == 'help' then
-        return { fg = c.blue }
-      end
-      local webicons = require("nvim-web-devicons")
-      local _, hl = webicons.get_icon("", vim.fn.expand('%:e'))
-      return hl or 'DevIconDefault'
-    end
-  }
-end
+      if vim.bo[0].filetype == 'toggleterm' then return { fg = get_palette().green } end
+      if vim.bo[0].buftype == 'help' then return { fg = get_palette().blue } end
 
-local search = function(icons, colors)
-  return {
-    'search',
+      local webicons = require("nvim-web-devicons")
+      local _, c = webicons.get_icon_color("", vim.fn.expand('%:e'))
+      return { fg = c or get_palette().text }
+    end,
+  },
+  {
+    'filename',
     fmt = function()
-      -- local search = require("noice").api.status.search.get()
+      if vim.bo[0].filetype == 'toggleterm' then return 'terminal' end
+      if vim.bo[0].buftype == 'help' then return vim.fn.expand('%:t:r') or 'help' end
+
+      return vim.fn.expand('%:t') or '[No Name]'
+    end,
+    separator = separator.none,
+  },
+  space(),
+}
+
+local search = {
+  {
+    'search-icon',
+    separator = separator.rounded,
+    fmt = function() return _icons.Search end,
+    cond = function() return require("noice").api.status.search.has() end,
+    color = { fg = bg(), bg = get_palette().yellow },
+  },
+  {
+    'search',
+    separator = separator.rounded,
+    fmt = function()
       local search = vim.fn.getreg('/')
       local search_count = vim.fn.searchcount()
-      return search == '' and '' or
-          icons.Search .. ' ' .. search .. ' ' .. search_count.current .. '/' .. search_count.total
+      return search == '' and '' or search .. ' ' .. search_count.current .. '/' .. search_count.total
     end,
-    cond = require("noice").api.status.search.has,
-    color = { fg = colors.yellow, bold = true },
-  }
-end
+    cond = function() return require("noice").api.status.search.has() end,
+    color = { fg = get_palette().yellow },
+  },
+  space(),
+}
 
-local enable_fileinfo = function()
-  return vim.bo[0].buftype ~= 'nofile' and
-      vim.bo[0].buftype ~= 'help' and
-      vim.bo[0].filetype ~= 'toggleterm'
-end
+local lsp = {
+  {
+    'diagnostics',
+    separator = separator.rounded,
+    sources = { 'nvim_diagnostic' },
+    symbols = {
+      error = _icons.DiagnosticError .. ' ',
+      hint = _icons.DiagnosticHint .. ' ',
+      info = _icons.DiagnosticInfo .. ' ',
+      warn = _icons.DiagnosticWarn .. ' ',
+    },
+  },
+  {
+    'lsp',
+    separator = separator.rounded,
+    fmt = function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local clients = vim.lsp.get_clients({ bufnr = bufnr })
+      if not clients or #clients == 0 then
+        return nil
+      end
+      local msg = {}
+      for _, client in ipairs(clients) do
+        ---@diagnostic disable-next-line: undefined-field
+        local fts = client.config.filetypes
+        local icon
+        if fts and #fts > 0 then
+          icon, _ = require("nvim-web-devicons").get_icon("", fts[1])
+        end
+        if client.name == 'copilot' then
+          icon = _icons.Copilot
+        end
+        table.insert(msg, (icon or '') .. ' ' .. client.name)
+      end
+      return table.concat(msg, ' | ')
+    end,
+    color = { fg = get_palette().surface0, bg = get_palette().red },
+  },
+}
+
+local buffers = {
+  {
+    'buffers',
+    separator = separator.rounded,
+    symbols = {
+      alternate_file = '',
+    },
+    buffers_color = {
+      inactive = { fg = get_palette().surface1, bg = get_palette().base, gui = 'italic' },
+    },
+  },
+}
+
+local tabs = {
+  {
+    'tabs',
+    mode = 1,
+    separator = separator.bar,
+    tabs_color = {
+      active = { fg = get_palette().red, bg = bg() },
+      inactive = { fg = get_palette().surface1, bg = get_palette().base, gui = 'italic' },
+    },
+    symbols = {
+      modified = _icons.FileModified,
+    },
+  },
+}
 
 return {
   'nvim-lualine/lualine.nvim',
@@ -144,65 +241,36 @@ return {
     'catppuccin/nvim',
   },
   config = function()
-    local colors = require('catppuccin.palettes').get_palette()
-    local icons = require('icons')
     require('lualine').setup({
       options = {
         theme = 'catppuccin',
-        section_separators = { left = '', right = '' },
-        component_separators = { left = '│', right = '│' },
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
         disabled_filetypes = {
           statusline = { 'alpha' },
           winbar = { 'alpha', 'aerial', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
         },
       },
       sections = {
-        lualine_a = {
-          {
-            'mode',
-            separator = { left = '', right = '' },
-            right_padding = 2,
-            fmt = function(str) return str:sub(1, 1) end,
-          },
-        },
-        lualine_b = { 'branch', diff(icons, colors) },
-        lualine_c = {
-          { 'center', fmt = function() return '%=' end, separator = { left = '', right = '' } },
-          path(icons, colors),
-          fullfilename(icons, colors),
-        },
+        lualine_a = tbl_join(modes),
+        lualine_b = tbl_join(git),
+        lualine_c = tbl_join(center, filepath),
 
-        lualine_x = {
-          recording(icons, colors),
-          search(icons, colors),
-          diagnostics(icons, colors),
-          { 'filetype', cond = enable_fileinfo },
-        },
-        lualine_y = { 'progress' },
-        lualine_z = {
-          {
-            'location',
-            separator = { left = '', right = '' },
-            left_padding = 2,
-          },
-        },
-      },
-      winbar = {
-        lualine_a = {},
-        lualine_b = { filename(icons, colors) },
-        lualine_c = { 'navic' },
 
         lualine_x = {},
-        lualine_y = {},
+        lualine_y = tbl_join(
+          recording,
+          search,
+          lsp
+        ),
         lualine_z = {},
       },
-      inactive_winbar = {
-        lualine_a = {},
-        lualine_b = { filename(icons, colors) },
+      tabline = {
+        lualine_a = tbl_join(buffers),
+        lualine_b = {},
         lualine_c = {},
-
         lualine_x = {},
-        lualine_y = {},
+        lualine_y = tbl_join(tabs),
         lualine_z = {},
       },
     })

@@ -17,6 +17,7 @@ local separator = {
   rounded = { left = '', right = '' },
   none = { left = '', right = '' },
   bar = { left = '|', right = '|' },
+  inverse = function(sep) return { left = sep.right, right = sep.left } end,
 }
 
 local function _true() return true end
@@ -214,7 +215,7 @@ local buffers = {
       alternate_file = '',
     },
     buffers_color = {
-      inactive = { fg = get_palette().surface1, bg = get_palette().base, gui = 'italic' },
+      inactive = { fg = get_palette().surface2, bg = get_palette().surface0, gui = 'italic' },
     },
   },
 }
@@ -244,8 +245,8 @@ return {
     require('lualine').setup({
       options = {
         theme = 'catppuccin',
-        section_separators = { left = '', right = '' },
-        component_separators = { left = '', right = '' },
+        section_separators = separator.inverse(separator.rounded),
+        component_separators = separator.bar,
         disabled_filetypes = {
           statusline = { 'alpha' },
           winbar = { 'alpha', 'aerial', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },

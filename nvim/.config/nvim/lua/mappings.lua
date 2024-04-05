@@ -222,6 +222,7 @@ local mappings = {
     ["<C-k>"] = { [[<cmd>wincmd k<cr>]], desc = "Move to up split" },
     ["<C-j>"] = { [[<cmd>wincmd j<cr>]], desc = "Move to down split" },
     ["<C-\\><C-\\>"] = { [[<C-\><C-n>]], desc = "Escape" },
+    ["<C-\\>q"] = { [[<C-\><C-n><C-w>q]], desc = "Escape and quite" },
   },
   i = {
     ["<C-s>"] = { "<cmd>Telescope symbols<cr>", desc = "Find Symbols (Emoji, Kaomoji, etc...)" },

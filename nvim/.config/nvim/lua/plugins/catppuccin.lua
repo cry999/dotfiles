@@ -6,7 +6,7 @@ return {
     local U = require("catppuccin.utils.colors")
     local tp = false
     require("catppuccin").setup({
-      flavour = "mocha",
+      flavour = vim.env.CATPPUCCIN_FLAVOUR or "frappe",
       transparent_background = tp,
       integrations = {
         aerial = true,

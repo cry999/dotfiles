@@ -1,10 +1,12 @@
 ---@diagnostic disable-next-line: deprecated
 local get_buf_option = vim.api.nvim_buf_get_option_value or vim.api.nvim_buf_get_option
+
 local has_words_before = function()
   if get_buf_option(0, "buftype") == "prompt" then return false end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
+
 local has_copilot = function()
   if get_buf_option(0, "buftype") == "prompt" then
     return false
@@ -43,7 +45,6 @@ return {
   opts = function()
     local luasnip = require("luasnip")
     local cmp = require("cmp")
-    local cmpwin = require('cmp.config.window')
     return {
       mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
@@ -87,17 +88,29 @@ return {
         { name = "obsidian_tags", priority = 200 },
       }),
       window = {
-        completion = cmpwin.bordered(),
-        documentation = cmpwin.bordered(),
+        completion = cmp.config.window.bordered({
+          winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+          col_offset = -3,
+          side_padding = 0,
+        }),
+        documentation = cmp.config.window.bordered({
+          winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+        }),
       },
       formatting = {
-        format = require("lspkind").cmp_format({
-          mode = "symbol",
-          maxwidth = 50,
-          preset = 'codicons',
-          ellipsis_char = "...",
-          symbol_map = { Copilot = '' },
-        }),
+        fields = { "kind", "abbr" },
+        format = function(entry, vim_item)
+          local kind = require("lspkind").cmp_format({
+            mode = "symbol_text",
+            maxwidth = 50,
+            preset = 'codicons',
+            ellipsis_char = "...",
+            symbol_map = { Copilot = '' },
+          })(entry, vim_item)
+          local strings = vim.split(kind.kind, "%s", { trimempty = true })
+          kind.kind = " " .. (strings[1] or "") .. " "
+          return kind
+        end,
       },
       snippet = {
         expand = function(args)

@@ -60,11 +60,6 @@ return {
           -- for neotree
           NeoTreeNormal = { fg = c.text, bg = c.base },
           NeoTreeNormalNC = { fg = c.text, bg = c.base },
-          -- for heirline
-          TabLine = { fg = c.surface2, bg = tp and c.none or c.base },
-          TabLineFill = { fg = c.fg, bg = tp and c.none or c.mantle },
-          TabLineSel = { fg = c.fg, bg = tp and c.none or c.base, italic = true },
-          WinBar = { fg = c.fg, bg = tp and c.none or c.base },
           -- for LSP
           LspInlayHint = { fg = U.blend(c.overlay0, c.surface0, 0.5), bg = c.none },
           NormalFloat = { fg = c.text, bg = c.none },

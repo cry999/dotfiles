@@ -13,15 +13,15 @@ check_command stow
 check_command git
 
 stow -R -v -d ${HERE} -t $HOME \
-  git      \
-  homebrew \
-  lazygit  \
-  nvim     \
-  skhd     \
-  starship \
-  tmux     \
-  wezterm  \
-  yabai    \
+  git       \
+  homebrew  \
+  lazygit   \
+  nvim      \
+  skhd      \
+  starship  \
+  tmux      \
+  wezterm   \
+  yabai     \
   zsh
 
 function is_gitconfig_included() {

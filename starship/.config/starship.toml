@@ -23,9 +23,9 @@ continuation_prompt = '[ | ](fg:mauve)'
 
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol        = "[](bg:base fg:green)[ I ](fg:base bg:green bold)[](bg:surface0 fg:green)"
-error_symbol          = "[](bg:base fg:red)[ I ](fg:base bg:red bold)[](bg:surface1 fg:red)"
-vimcmd_symbol         = "[](bg:base fg:blue)[ N ](fg:base bg:blue bold)[](bg:surface1 fg:blue)"
+success_symbol        = "[](bg:base fg:green)[  I  ](fg:base bg:green bold)[](bg:surface0 fg:green)"
+error_symbol          = "[](bg:base fg:red)[  I  ](fg:base bg:red bold)[](bg:surface1 fg:red)"
+vimcmd_symbol         = "[](bg:base fg:blue)[  N  ](fg:base bg:blue bold)[](bg:surface1 fg:blue)"
 format = "[$symbol]($style)"
 
 # You can also replace your username with a neat symbol like   or disable this

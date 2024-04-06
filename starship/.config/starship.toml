@@ -1,18 +1,14 @@
-# palette = "catppuccin_mocha"
-palette = "catppuccin_frappe"
+palette = "catppuccin_macchiato"
 
 
 format = """
 $character\
-$directory\
+${custom.pretty_pwd}\
 [](fg:surface1 bg:peach)\
 $git_branch\
 $git_status\
 [](fg:peach)\
-$fill\
-[](fg:blue)\
-$time\
-[](fg:blue)
+$fill
 [ 󰐊 ](fg:mauve)
 """
 
@@ -23,28 +19,10 @@ continuation_prompt = '[ | ](fg:mauve)'
 
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol        = "[](bg:base fg:green)[  I  ](fg:base bg:green bold)[](bg:surface0 fg:green)"
-error_symbol          = "[](bg:base fg:red)[  I  ](fg:base bg:red bold)[](bg:surface1 fg:red)"
-vimcmd_symbol         = "[](bg:base fg:blue)[  N  ](fg:base bg:blue bold)[](bg:surface1 fg:blue)"
+success_symbol        = "[](bg:base fg:green)[  I  ](fg:surface1 bg:green bold)[](bg:surface0 fg:green)"
+error_symbol          = "[](bg:base fg:red)[  I  ](fg:surface1 bg:red bold)[](bg:surface1 fg:red)"
+vimcmd_symbol         = "[](bg:base fg:blue)[  N  ](fg:surface1 bg:blue bold)[](bg:surface1 fg:blue)"
 format = "[$symbol]($style)"
-
-# You can also replace your username with a neat symbol like   or disable this
-# and use the os module below
-[username]
-show_always = true
-style_user = "fg:base bg:mauve"
-style_root = "fg:base bg:mauve"
-format = '[$user ]($style)'
-disabled = false
-
-# An alternative to the username module which displays a symbol that
-# represents the current operating system
-[os]
-style = "fg:base bg:mauve"
-disabled = false # Disabled by default
-
-[os.symbols]
-Macos = " "
 
 [directory]
 style = "fg:text bg:surface1"
@@ -52,107 +30,25 @@ format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
-# Here is how you can shorten some long paths by text replacement
-# similar to mapped_locations in Oh My Posh:
-[directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
-# Keep in mind that the order matters. For example:
-# "Important Documents" = " 󰈙 "
-# will not be replaced, because "Documents" was already substituted before.
-# So either put "Important Documents" before "Documents" or use the substituted version:
-# "Important 󰈙 " = " 󰈙 "
-
-[c]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
 [docker_context]
 symbol = " "
 style = "fg:text bg:surface1"
 format = '[ $context ]($style)'
 
-[elixir]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[elm]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
 [git_branch]
 symbol = ""
-style = "fg:base bg:peach"
+style = "fg:surface1 bg:peach"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "fg:base bg:peach"
+style = "fg:surface1 bg:peach"
 format = '[$all_status$ahead_behind ]($style)'
-
-[golang]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[gradle]
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[haskell]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[java]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[julia]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[lua]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[nodejs]
-symbol = ""
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[nim]
-symbol = "󰆥 "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[rust]
-symbol = ""
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[scala]
-symbol = " "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
-
-[buf]
-symbol = "󰴗 "
-style = "fg:base bg:sapphire"
-format = '[ $symbol ($version) ]($style)'
 
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "fg:base bg:blue"
-format = '[ ♥ $time ]($style)'
+format = '[   $time ]($style)'
 
 [custom.pretty_pwd]
 disabled = false
@@ -160,7 +56,8 @@ when = "command -v pretty_pwd >/dev/null"
 command = "pretty_pwd"
 description = "Pretty PWD"
 shell = "zsh"
-style = "fg:base bg:red"
+# style = "fg:base bg:red"
+style = "fg:text bg:surface1"
 format = "[ $output ]($style)"
 
 [palettes.catppuccin_latte]

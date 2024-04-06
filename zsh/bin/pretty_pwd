@@ -4,6 +4,8 @@ function _in_git_repo() {
   git rev-parse --is-inside-work-tree &>/dev/null
 }
 
+sep=" 󰐊"
+
 function _pretty_pwd(){
   temp_pwd=$PWD
 
@@ -16,13 +18,12 @@ function _pretty_pwd(){
   fi
 
   temp_pwd=${temp_pwd/$HOME/}
-  # temp_pwd=""
 
   paths=(${(s:/:)temp_pwd})
   if [[ $#paths -gt 3 ]]; then
-    temp_pwd="$paths[1]  ...  $paths[-1]"
+    temp_pwd="$paths[1] $sep ... $sep $paths[-1]"
   else
-    temp_pwd=$(echo "$paths[@]" | sed 's/ /  /g')
+    temp_pwd=$(echo "$paths[@]" | sed "s/ / $sep /g")
   fi
   
   if [[ "$temp_pwd[1]" != "" ]]; then

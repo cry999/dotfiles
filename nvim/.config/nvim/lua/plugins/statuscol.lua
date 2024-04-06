@@ -10,17 +10,6 @@ return {
     require("statuscol").setup({
       relculright = true,
       segments = {
-        -- gitsigns
-        {
-          sign = {
-            namespace = { "gitsigns" },
-            name      = { '.*' },
-            maxwidth  = 1,
-            colwidth  = 1,
-            auto      = false,
-          },
-          -- condition = { function(args) return args.sclnu end },
-        },
         -- diagnostics
         {
           sign = {
@@ -105,6 +94,17 @@ return {
         -- line number
         {
           text = { builtin.lnumfunc, " " },
+        },
+        -- gitsigns
+        {
+          sign = {
+            namespace = { "gitsigns" },
+            name      = { '.*' },
+            maxwidth  = 1,
+            colwidth  = 1,
+            auto      = false,
+          },
+          -- condition = { function(args) return args.sclnu end },
         },
       },
     })

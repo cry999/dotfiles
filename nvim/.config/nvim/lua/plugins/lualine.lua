@@ -1,4 +1,4 @@
-local _icons = require('icons')
+local icons = require('icons')
 
 local function get_palette() return require('catppuccin.palettes').get_palette() end
 
@@ -63,9 +63,9 @@ local git = {
       } or {}
     end,
     symbols = {
-      added = _icons.GitAdd .. " ",
-      modified = _icons.GitChange .. " ",
-      removed = _icons.GitDelete .. " ",
+      added = icons.GitAdd .. " ",
+      modified = icons.GitChange .. " ",
+      removed = icons.GitDelete .. " ",
     },
     padding = 2,
     diff_color = {
@@ -82,7 +82,7 @@ local recording = {
   {
     'recording-icon',
     separator = separator.rounded,
-    fmt = function() return _icons.MacroRecording end,
+    fmt = function() return icons.MacroRecording end,
     padding = { right = 1 },
     cond = function() return vim.fn.reg_recording() ~= '' end,
     color = { fg = bg(), bg = get_palette().yellow },
@@ -116,12 +116,12 @@ local filepath = {
     'fileicon',
     separator = separator.none,
     fmt = function()
-      if vim.bo[0].filetype == 'toggleterm' then return _icons.Terminal end
-      if vim.bo[0].buftype == 'help' then return _icons.Help end
+      if vim.bo[0].filetype == 'toggleterm' then return icons.Terminal end
+      if vim.bo[0].buftype == 'help' then return icons.Help end
 
       local webicons = require("nvim-web-devicons")
       local icon, _ = webicons.get_icon_color(vim.fn.expand('%:t'), vim.fn.expand('%:e'))
-      return icon or _icons.DefaultFile
+      return icon or icons.DefaultFile
     end,
     color = function()
       if vim.bo[0].filetype == 'toggleterm' then return { fg = get_palette().green } end
@@ -149,7 +149,7 @@ local search = {
   {
     'search-icon',
     separator = separator.rounded,
-    fmt = function() return _icons.Search end,
+    fmt = function() return icons.Search end,
     cond = function() return require("noice").api.status.search.has() end,
     color = { fg = bg(), bg = get_palette().yellow },
   },
@@ -173,10 +173,10 @@ local lsp = {
     separator = separator.rounded,
     sources = { 'nvim_diagnostic' },
     symbols = {
-      error = _icons.DiagnosticError .. ' ',
-      hint = _icons.DiagnosticHint .. ' ',
-      info = _icons.DiagnosticInfo .. ' ',
-      warn = _icons.DiagnosticWarn .. ' ',
+      error = icons.DiagnosticError .. ' ',
+      hint = icons.DiagnosticHint .. ' ',
+      info = icons.DiagnosticInfo .. ' ',
+      warn = icons.DiagnosticWarn .. ' ',
     },
   },
   {
@@ -197,7 +197,7 @@ local lsp = {
           icon, _ = require("nvim-web-devicons").get_icon("", fts[1])
         end
         if client.name == 'copilot' then
-          icon = _icons.Copilot
+          icon = icons.Copilot
         end
         table.insert(msg, (icon or '') .. ' ' .. client.name)
       end
@@ -207,15 +207,20 @@ local lsp = {
   },
 }
 
-local buffers = {
+local windows = {
   {
-    'buffers',
+    'windows',
     separator = separator.rounded,
+    section_separators = separator.inverse(separator.rounded),
+    icons_enabled = false,
     symbols = {
       alternate_file = '',
     },
-    buffers_color = {
-      inactive = { fg = get_palette().surface2, bg = get_palette().surface0, gui = 'italic' },
+    disabled_filetypes = { 'toggleterm', 'help', 'alpha', 'TelescopePrompt', 'neo-tree' },
+    disabled_buftypes = { 'terminal', 'nofile', 'help' },
+    windows_color = {
+      active = { bg = get_palette().blue, fg = bg() },
+      inactive = { fg = get_palette().overlay0, bg = bg(), gui = 'italic' },
     },
   },
 }
@@ -223,15 +228,14 @@ local buffers = {
 local tabs = {
   {
     'tabs',
-    mode = 1,
-    separator = separator.bar,
+    mode = 0,
+    separator = separator.rounded,
+    section_separators = separator.inverse(separator.rounded),
     tabs_color = {
-      active = { fg = get_palette().red, bg = bg() },
-      inactive = { fg = get_palette().surface1, bg = get_palette().base, gui = 'italic' },
+      active = { bg = get_palette().red, fg = bg() },
+      inactive = { fg = get_palette().surface0, bg = bg(), gui = 'italic' },
     },
-    symbols = {
-      modified = _icons.FileModified,
-    },
+    show_modified_status = false,
   },
 }
 
@@ -245,7 +249,8 @@ return {
     require('lualine').setup({
       options = {
         theme = 'catppuccin',
-        section_separators = separator.inverse(separator.rounded),
+        -- section_separators = separator.inverse(separator.rounded),
+        section_separators = separator.none,
         component_separators = separator.bar,
         disabled_filetypes = {
           statusline = { 'alpha' },
@@ -259,15 +264,11 @@ return {
 
 
         lualine_x = {},
-        lualine_y = tbl_join(
-          recording,
-          search,
-          lsp
-        ),
+        lualine_y = tbl_join(recording, search, lsp),
         lualine_z = {},
       },
       tabline = {
-        lualine_a = tbl_join(buffers),
+        lualine_a = tbl_join(windows),
         lualine_b = {},
         lualine_c = {},
         lualine_x = {},

@@ -17,9 +17,11 @@ stow -R -v -d ${HERE} -t $HOME \
   homebrew \
   lazygit  \
   nvim     \
+  skhd     \
   starship \
   tmux     \
   wezterm  \
+  yabai    \
   zsh
 
 function is_gitconfig_included() {

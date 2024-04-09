@@ -19,7 +19,8 @@ end)
 return {
   color_scheme = "Catppuccin Frappe",
   window_decorations = "RESIZE",
-  -- window_background_opacity = 0.90,
+  -- window_background_image = os.getenv("HOME") .. "/.config/wezterm/background.jpeg",
+  -- window_background_opacity = 0.70,
   -- font
   font = wezterm.font_with_fallback(
     { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG" },

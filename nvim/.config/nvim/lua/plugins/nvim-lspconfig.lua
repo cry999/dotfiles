@@ -1,4 +1,6 @@
 local icons = require("icons")
+local gopls = require("lsp.gopls")
+local lua_ls = require("lsp.lua_ls")
 
 return {
   "neovim/nvim-lspconfig",
@@ -35,55 +37,8 @@ return {
 
     local lspconfig = require("lspconfig")
 
-    lspconfig.lua_ls.setup({
-      settings = {
-        Lua = {
-          runtime = {
-            version = "LuaJIT",
-          },
-          diagnostics = {
-            globals = { "vim" },
-          },
-          workspace = {
-            checkThirdParty = false,
-            library = vim.api.nvim_get_runtime_file("", true),
-          },
-          telemetry = {
-            enable = false,
-          },
-          hint = {
-            enable = true,
-          },
-        },
-      },
-    })
-    -- local inlay_hints = vim.lsp.handlers["textDocument/inlayHint"]
-    lspconfig.gopls.setup({
-      settings = {
-        gopls = {
-          analyses = {
-            unusedparams = true,
-          },
-          staticcheck = true,
-          gofumpt = true,
-          hints = {
-            assignVariableTypes = true,
-            compositeLiteralFields = true,
-            compositeLiteralTypes = false,
-            constantValues = false,
-            functionTypeParameters = true,
-            parameterNames = true,
-            rangeVariableTypes = true,
-          },
-        },
-      },
-    })
-
-    local function set_handler_opts_if_not_set(name, handler, opts)
-      if debug.getinfo(vim.lsp.handlers[name], "S").source:find(vim.env.VIMRUNTIME, 1, true) then
-        vim.lsp.handlers[name] = vim.lsp.with(handler, opts)
-      end
-    end
+    lspconfig.lua_ls.setup(lua_ls)
+    lspconfig.gopls.setup(gopls)
 
     -- Enable rounded borders in :LspInfo window.
     require("lspconfig.ui.windows").default_options.border = "rounded"

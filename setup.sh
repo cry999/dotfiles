@@ -28,9 +28,16 @@ function is_gitconfig_included() {
   git config --global --get-all include.path | grep -q "$1"
 }
 
-if ! is_gitconfig_included "~/.config/git/delta.gitconfig"; then
-  git config --global --add include.path "~/.config/git/delta.gitconfig"
-fi
+git_config_extensions=(
+  "~/.config/git/delta.gitconfig"
+  "~/.config/git/alias.gitconfig"
+)
+
+for extension in "${git_config_extensions[@]}"; do
+  if ! is_gitconfig_included "$extension"; then
+    git config --global --add include.path "$extension"
+  fi
+done
 
 if [ ! -d ~/.config/delta/themes ]; then
   git clone https://github.com/catppuccin/delta.git ~/.config/delta/themes

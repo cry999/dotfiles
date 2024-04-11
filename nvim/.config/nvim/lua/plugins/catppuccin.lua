@@ -1,18 +1,19 @@
+local ui_options = require("ui.options")
+
 return {
   "catppuccin/nvim",
   name = "catppuccin",
   priority = 1000,
   config = function()
     local U = require("catppuccin.utils.colors")
-    local tp = false
     require("catppuccin").setup({
       flavour = vim.env.CATPPUCCIN_FLAVOUR or "frappe",
       dim_inactive = {
-        enabled = true,
+        enabled = not ui_options.transparent,
         shade = "dark",
         percentage = 0.15,
       },
-      transparent_background = tp,
+      transparent_background = ui_options.transparent,
       integrations = {
         aerial = true,
         alpha = true,
@@ -58,13 +59,13 @@ return {
       custom_highlights = function(c)
         return {
           -- for neotree
-          NeoTreeNormal = { fg = c.text, bg = c.base },
-          NeoTreeNormalNC = { fg = c.text, bg = c.base },
+          NeoTreeNormal = { fg = c.text, bg = ui_options.transparent and c.none or c.base },
+          NeoTreeNormalNC = { fg = c.text, bg = ui_options.transparent and c.none or c.base },
           -- for LSP
           LspInlayHint = { fg = U.blend(c.overlay0, c.surface0, 0.5), bg = c.none },
           NormalFloat = { fg = c.text, bg = c.none },
 
-          CmpItemKind = { fg = c.base, bg = c.blue },
+          CmpItemKind = { fg = c.base, bg = c.blue, blend = ui_options.transparent and 50 or nil },
           CmpItemKindSnippet = { fg = c.base, bg = c.mauve },
           CmpItemKindKeyword = { fg = c.base, bg = c.red },
           CmpItemKindText = { fg = c.base, bg = c.teal },

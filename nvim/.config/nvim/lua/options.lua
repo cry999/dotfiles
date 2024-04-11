@@ -1,3 +1,5 @@
+local ui_options = require("ui.options")
+
 vim.opt.backspace:append { "nostop" }
 vim.opt.diffopt:append "linematch:60"
 
@@ -25,7 +27,7 @@ local options = {
     mouse = "",
     number = true,
     preserveindent = true,
-    pumblend = 10,
+    pumblend = not ui_options.transparent and 10 or 0,
     pumheight = 10,
     shiftwidth = 2,
     showtabline = 2,
@@ -41,7 +43,7 @@ local options = {
     undofile = true,
     updatetime = 300,
     virtualedit = "block",
-    winblend = 10,
+    winblend = not ui_options.transparent and 10 or 0,
     wrap = false,
     writebackup = false,
   },

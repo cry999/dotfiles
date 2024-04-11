@@ -10,6 +10,7 @@ return {
       local actions = require("telescope.actions")
       return {
         defaults = {
+          layout_strategy = "vertical",
           vimgrep_arguments = {
             "rg",
             "--no-heading",

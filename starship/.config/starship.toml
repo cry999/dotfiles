@@ -19,7 +19,7 @@ continuation_prompt = '[ | ](fg:mauve)'
 
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol        = "[](bg:base fg:green)[  I  ](fg:surface1 bg:green bold)[](bg:surface0 fg:green)"
+success_symbol        = "[](bg:base fg:green)[  I  ](fg:surface1 bg:green bold)[](bg:surface1 fg:green)"
 error_symbol          = "[](bg:base fg:red)[  I  ](fg:surface1 bg:red bold)[](bg:surface1 fg:red)"
 vimcmd_symbol         = "[](bg:base fg:blue)[  N  ](fg:surface1 bg:blue bold)[](bg:surface1 fg:blue)"
 format = "[$symbol]($style)"

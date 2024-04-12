@@ -18,5 +18,12 @@ return {
       },
       border = "rounded",
     },
+    -- NOTE: rust-analyzer is managed by rustaceanvim
+    ensure_installed = {
+      "lua_ls",
+      "gopls",
+      "pylsp",
+      "tsserver",
+    },
   },
 }

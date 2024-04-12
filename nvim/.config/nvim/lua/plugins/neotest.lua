@@ -9,7 +9,7 @@ return {
 
     -- test adapters
     "nvim-neotest/neotest-go",
-    { 'mrcjkb/rustaceanvim', version = '^4', ft = { 'rust' } },
+    'mrcjkb/rustaceanvim',
   },
   config = function()
     local namespace = vim.api.nvim_create_namespace("neotest")

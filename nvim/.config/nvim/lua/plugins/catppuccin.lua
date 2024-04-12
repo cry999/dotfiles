@@ -7,7 +7,7 @@ return {
   config = function()
     local U = require("catppuccin.utils.colors")
     require("catppuccin").setup({
-      flavour = vim.env.CATPPUCCIN_FLAVOUR or "frappe",
+      flavour = ui_options.flavour or vim.env.CATPPUCCIN_FLAVOUR or "frappe",
       dim_inactive = {
         enabled = not ui_options.transparent,
         shade = "dark",
@@ -46,6 +46,7 @@ return {
         notify = true,
         neotree = true,
         octo = true,
+        rainbow_delimiters = true,
         semantic_tokens = true,
         telekasten = true,
         telescope = {

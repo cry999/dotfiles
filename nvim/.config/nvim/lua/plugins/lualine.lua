@@ -194,7 +194,7 @@ local lsp = {
         local fts = client.config.filetypes
         local icon
         if fts and #fts > 0 then
-          icon, _ = require("nvim-web-devicons").get_icon("", fts[1])
+          icon, _ = require("nvim-web-devicons").get_icon_by_filetype(fts[1])
         end
         if client.name == 'copilot' then
           icon = icons.Copilot

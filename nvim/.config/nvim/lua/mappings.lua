@@ -50,11 +50,17 @@ local mappings = {
     },
     ["<leader>wv"] = { "<C-w>v", desc = "Separate window vertical" },
     ["<leader>ws"] = { "<C-w>s", desc = "Separate window horizontal" },
+    ["<leader>ww"] = { "<cmd>w<cr>", desc = "Save current window" },
+    ["<leader>wW"] = { "<cmd>wa<cr>", desc = "Save all windows" },
     ["<leader>wq"] = { "<cmd>wq<cr>", desc = "Save and quit current window" },
-    ["<leader>wQ"] = { "<cmd>q!<cr>", desc = "Force quit current window" },
+    ["<leader>wQ"] = { "<cmd>wq<cr>", desc = "Save and quit all windows" },
     ["<leader>wz"] = { "<C-w>_<C-w>|", desc = "Zoom current window" },
     ["<leader>w="] = { "<C-w>=", desc = "Equaly height and width" },
     ["<leader>wo"] = { "<C-w>o", desc = "Close all other window" },
+
+    ["<leader>qq"] = { "<cmd>q<cr>", desc = "Close current window" },
+    ["<leader>qQ"] = { "<cmd>qa<cr>", desc = "Quit editor" },
+    ["<leader>q<c-Q>"] = { "<cmd>q!<cr>", desc = "Force quit current window" },
 
     -- fuzzy finder
     ["<C-s>"] = { "<cmd>Telescope symbols<cr>", desc = "Find Symbols (Emoji, Kaomoji, etc...)" },

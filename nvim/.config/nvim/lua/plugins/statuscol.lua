@@ -10,13 +10,13 @@ return {
     require("statuscol").setup({
       relculright = true,
       segments = {
-        -- diagnostics
+        -- gitsigns and diagnostic
         {
           sign = {
-            namespace = { "diagnostic" },
-            name      = { "error", "warn", "info", "hint" },
+            namespace = { "gitsigns", "diagnostic" },
+            name      = { '.*' },
             maxwidth  = 1,
-            colwidth  = 1,
+            colwidth  = 2,
             auto      = false,
           },
           -- condition = { function(args) return args.sclnu end },
@@ -87,24 +87,14 @@ return {
               local ft = vim.bo[args.buf].filetype
               return vim.api.nvim_get_current_buf() == args.buf and
                   ft ~= "neotest-summary" and
-                  ft ~= "alpha"
+                  ft ~= "alpha" and
+                  ft:sub(1, #"Neogit") ~= "Neogit"
             end
           },
         },
         -- line number
         {
           text = { builtin.lnumfunc, " " },
-        },
-        -- gitsigns
-        {
-          sign = {
-            namespace = { "gitsigns" },
-            name      = { '.*' },
-            maxwidth  = 1,
-            colwidth  = 1,
-            auto      = false,
-          },
-          -- condition = { function(args) return args.sclnu end },
         },
       },
     })

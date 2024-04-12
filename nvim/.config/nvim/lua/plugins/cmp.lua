@@ -93,10 +93,12 @@ return {
           col_offset = -3,
           side_padding = 0,
           zindex = 1001,
+          max_width = 50,
         }),
         documentation = cmp.config.window.bordered({
           winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
           zindex = 1000,
+          max_width = 50,
         }),
       },
       formatting = {
@@ -138,6 +140,10 @@ return {
           })(entry, vim_item)
           local strings = vim.split(kind.kind, "%s", { trimempty = true })
           kind.kind = " " .. (strings[1] or "") .. " "
+          if #kind.abbr > 50 then
+            kind.abbr = kind.abbr:sub(1, 50) .. "..."
+          end
+          kind.menu = ""
           return kind
         end,
       },

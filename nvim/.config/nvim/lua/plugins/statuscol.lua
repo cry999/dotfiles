@@ -84,8 +84,10 @@ return {
           },
           condition = {
             function(args)
+              local win = vim.api.nvim_get_current_win()
+              local buf = vim.api.nvim_get_current_buf()
               local ft = vim.bo[args.buf].filetype
-              return vim.api.nvim_get_current_buf() == args.buf and
+              return win == args.win and buf == args.buf and
                   ft ~= "neotest-summary" and
                   ft ~= "alpha" and
                   ft:sub(1, #"Neogit") ~= "Neogit"

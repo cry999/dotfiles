@@ -9,7 +9,7 @@ return {
     require('hlchunk').setup({
       chunk = {
         chars = {
-          right_arrow = '→',
+          right_arrow = '─',
         },
         style = {
           { fg = C.green },

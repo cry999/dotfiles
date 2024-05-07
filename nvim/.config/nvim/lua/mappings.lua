@@ -132,6 +132,9 @@ local mappings = {
     ["<leader>gg"] = { "<cmd>Neogit<cr>", desc = "Open Neogit" },
     ["<leader>gb"] = { function() require("gitsigns").toggle_current_line_blame() end, desc = "View git blame" },
     ["<leader>gd"] = { function() require("gitsigns").diffthis() end, desc = "View git diff" },
+    ["<leader>g]"] = { function() require("gitsigns").nav_hunk("next", { preview = true }) end, desc = "Next git hunk" },
+    ["<leader>g["] = { function() require("gitsigns").nav_hunk("prev", { preview = true }) end, desc = "Previous git hunk" },
+    ["<leader>gK"] = { function() require("gitsigns").preview_hunk() end, desc = "Preview current line's git diff" },
 
     -- Hop
     ["<leader>h"] = { "<cmd>HopChar1<cr>", desc = "Hop to char 1" },

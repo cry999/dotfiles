@@ -4,5 +4,5 @@ return {
     "nvim-treesitter/nvim-treesitter",
   },
   event = "BufRead",
-  opts = {},
+  config = function() end,
 }

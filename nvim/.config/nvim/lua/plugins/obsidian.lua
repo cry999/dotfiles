@@ -67,5 +67,9 @@ return {
       local path = spec.dir / tostring(spec.id)
       return path:with_suffix(".md")
     end,
+
+    ui = {
+      enable = false,
+    },
   },
 }

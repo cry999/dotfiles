@@ -38,6 +38,12 @@ local mappings = {
     ["<tab>"] = { "<cmd>tabnext<cr>", desc = "Next tab" },
     ["<S-tab>"] = { "<cmd>tabprev<cr>", desc = "Prev tab" },
 
+    -- dial.nvim
+    ["<C-a>"] = { function() require("dial.map").manipulate("increment", "normal") end, desc = "Increment number under cursor" },
+    ["<C-x>"] = { function() require("dial.map").manipulate("decrement", "normal") end, desc = "Decrement number under cursor" },
+    ["g<C-a>"] = { function() require("dial.map").manipulate("increment", "gnormal") end, desc = "Increment number under cursor" },
+    ["g<C-x>"] = { function() require("dial.map").manipulate("decrement", "gnormal") end, desc = "Decrement number under cursor" },
+
     -- window management
     ["<leader>wp"] = {
       function()
@@ -214,6 +220,11 @@ local mappings = {
     -- move lines
     ["K"] = { ":move '<-2<CR>gv-gv", desc = "Move lines of code down" },
     ["J"] = { ":move '>+1<CR>gv-gv", desc = "Move lines of code up" },
+
+    ["<C-a>"] = { function() require("dial.map").manipulate("increment", "visual") end, desc = "Increment number under cursor" },
+    ["<C-x>"] = { function() require("dial.map").manipulate("decrement", "visual") end, desc = "Decrement number under cursor" },
+    ["g<C-a>"] = { function() require("dial.map").manipulate("increment", "gvisual") end, desc = "Increment number under cursor" },
+    ["g<C-x>"] = { function() require("dial.map").manipulate("decrement", "gvisual") end, desc = "Decrement number under cursor" },
   },
   t = {
     ["<C-h>"] = { [[<cmd>wincmd h<cr>]], desc = "Move to left split" },

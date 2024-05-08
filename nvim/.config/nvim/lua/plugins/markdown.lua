@@ -4,5 +4,8 @@ return {
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
   },
-  opts = {},
+  opts = {
+    file_types = { "markdown", 'copilot-chat' },
+    log_level = 'debug',
+  },
 }

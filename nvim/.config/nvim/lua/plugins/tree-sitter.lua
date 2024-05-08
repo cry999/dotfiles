@@ -93,6 +93,9 @@ return {
         languages = {},
         config = {},
       })
+
+      -- associate copilot-chat with markdown
+      vim.treesitter.language.register('markdown', { 'copilot-chat' })
     end,
   },
   {

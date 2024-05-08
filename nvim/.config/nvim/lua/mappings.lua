@@ -221,10 +221,14 @@ local mappings = {
     ["K"] = { ":move '<-2<CR>gv-gv", desc = "Move lines of code down" },
     ["J"] = { ":move '>+1<CR>gv-gv", desc = "Move lines of code up" },
 
+    -- increment/decrement
     ["<C-a>"] = { function() require("dial.map").manipulate("increment", "visual") end, desc = "Increment number under cursor" },
     ["<C-x>"] = { function() require("dial.map").manipulate("decrement", "visual") end, desc = "Decrement number under cursor" },
     ["g<C-a>"] = { function() require("dial.map").manipulate("increment", "gvisual") end, desc = "Increment number under cursor" },
     ["g<C-x>"] = { function() require("dial.map").manipulate("decrement", "gvisual") end, desc = "Decrement number under cursor" },
+
+    -- copilot chat
+    ["<leader>c"] = { [[:CopilotChat]], desc = "CopilotChat - Chat about selected contents" },
   },
   t = {
     ["<C-h>"] = { [[<cmd>wincmd h<cr>]], desc = "Move to left split" },

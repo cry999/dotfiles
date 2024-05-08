@@ -1,4 +1,4 @@
 return {
-  flavour = 'mocha',
-  transparent = true,
+  flavour = 'frappe',
+  transparent = false,
 }

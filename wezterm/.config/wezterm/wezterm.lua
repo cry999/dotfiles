@@ -19,17 +19,18 @@ end)
 return {
   color_scheme = "Catppuccin Frappe",
   window_decorations = "RESIZE",
-  background = {
-    {
-      source = { File = os.getenv("HOME") .. "/.config/wezterm/wallhaven-mp92kk.jpg" },
-      hsb = {
-        brightness = 0.2,
-        saturation = 0.7,
-      },
-      horizontal_align = "Center",
-      vertical_align = "Middle",
-    },
-  },
+  -- background = {
+  --   {
+  --     -- source = { File = os.getenv("HOME") .. "/.config/wezterm/wallhaven-mp92kk.jpg" },
+  --     source = { File = os.getenv("HOME") .. "/.config/wezterm/archive/frieren.jpeg" },
+  --     hsb = {
+  --       brightness = 0.1,
+  --       saturation = 0.7,
+  --     },
+  --     horizontal_align = "Center",
+  --     vertical_align = "Middle",
+  --   },
+  -- },
   -- font
   font = wezterm.font_with_fallback(
     { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG" },

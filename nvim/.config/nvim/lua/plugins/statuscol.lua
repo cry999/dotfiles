@@ -76,7 +76,7 @@ return {
               local pos = vim.fn.getpos('.')
               local lnum = pos[2]
               if args.lnum == lnum then
-                return "%#CursorLineNr#"
+                return "%#CursorLineNr#"
               else
                 return " "
               end

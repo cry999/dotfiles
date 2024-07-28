@@ -27,7 +27,7 @@ local function space(cond)
   return { 'space', fmt = function() return ' ' end, color = 'lualine_c_inactive', cond = cond == nil and _true or cond }
 end
 
-local center = { { 'center', fmt = function() return '%=' end, separator = separator.none } }
+local function center() return { { 'center', fmt = function() return '%=' end, separator = separator.none } } end
 
 local modes = {
   {
@@ -207,49 +207,17 @@ local lsp = {
   },
 }
 
-local windows = {
-  {
-    'windows',
-    separator = separator.rounded,
-    section_separators = separator.inverse(separator.rounded),
-    icons_enabled = false,
-    symbols = {
-      alternate_file = '',
-    },
-    disabled_filetypes = { 'toggleterm', 'help', 'alpha', 'TelescopePrompt', 'neo-tree' },
-    disabled_buftypes = { 'terminal', 'nofile', 'help' },
-    windows_color = {
-      active = { bg = get_palette().blue, fg = bg() },
-      inactive = { fg = get_palette().overlay0, bg = bg(), gui = 'italic' },
-    },
-  },
-}
-
-local tabs = {
-  {
-    'tabs',
-    mode = 0,
-    separator = separator.rounded,
-    section_separators = separator.inverse(separator.rounded),
-    tabs_color = {
-      active = { bg = get_palette().red, fg = bg() },
-      inactive = { fg = get_palette().surface0, bg = bg(), gui = 'italic' },
-    },
-    show_modified_status = false,
-  },
-}
-
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = {
     'nvim-tree/nvim-web-devicons',
     'catppuccin/nvim',
+    'SmiteshP/nvim-navic',
   },
   config = function()
     require('lualine').setup({
       options = {
         theme = 'catppuccin',
-        -- section_separators = separator.inverse(separator.rounded),
         section_separators = separator.none,
         component_separators = separator.bar,
         disabled_filetypes = {
@@ -260,7 +228,7 @@ return {
       sections = {
         lualine_a = tbl_join(modes),
         lualine_b = tbl_join(git),
-        lualine_c = tbl_join(center, filepath),
+        lualine_c = tbl_join(center(), filepath),
 
 
         lualine_x = {},
@@ -268,11 +236,56 @@ return {
         lualine_z = {},
       },
       tabline = {
-        lualine_a = tbl_join(windows),
+        lualine_a = {},
         lualine_b = {},
         lualine_c = {},
         lualine_x = {},
-        lualine_y = tbl_join(tabs),
+        lualine_y = {},
+        lualine_z = {},
+      },
+      winbar = {
+        lualine_a = {
+          {
+            'fileicon',
+            fmt = function()
+              if vim.bo[0].filetype == 'toggleterm' then return icons.Terminal end
+              if vim.bo[0].buftype == 'help' then return icons.Help end
+
+              local webicons = require("nvim-web-devicons")
+              local icon, _ = webicons.get_icon_color(vim.fn.expand('%:t'), vim.fn.expand('%:e'))
+              return icon or icons.DefaultFile
+            end,
+            separator = separator.rounded
+          },
+        },
+        lualine_b = {
+          { 'filename', separator = separator.rounded },
+        },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
+      inactive_winbar = {
+        lualine_a = {
+          {
+            'fileicon',
+            fmt = function()
+              if vim.bo[0].filetype == 'toggleterm' then return icons.Terminal end
+              if vim.bo[0].buftype == 'help' then return icons.Help end
+
+              local webicons = require("nvim-web-devicons")
+              local icon, _ = webicons.get_icon_color(vim.fn.expand('%:t'), vim.fn.expand('%:e'))
+              return icon or icons.DefaultFile
+            end,
+            separator = separator.rounded,
+            color = { fg = get_palette().surface0, bg = get_palette().surface2 },
+          },
+        },
+        lualine_b = { { 'filename', separator = separator.rounded, color = { fg = get_palette().surface2, bg = get_palette().surface0 } } },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
         lualine_z = {},
       },
     })

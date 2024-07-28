@@ -10,17 +10,6 @@ return {
     require("statuscol").setup({
       relculright = true,
       segments = {
-        -- gitsigns and diagnostic
-        {
-          sign = {
-            namespace = { "gitsigns", "diagnostic" },
-            name      = { '.*' },
-            maxwidth  = 1,
-            colwidth  = 2,
-            auto      = false,
-          },
-          -- condition = { function(args) return args.sclnu end },
-        },
         -- fold
         {
           text = {
@@ -68,6 +57,17 @@ return {
                   filetype:sub(1, #"Neogit") ~= "Neogit"
             end
           },
+        },
+        -- gitsigns and diagnostic
+        {
+          sign = {
+            namespace = { "gitsigns", "diagnostic" },
+            name      = { '.*' },
+            maxwidth  = 1,
+            colwidth  = 2,
+            auto      = false,
+          },
+          -- condition = { function(args) return args.sclnu end },
         },
         -- select line number
         {

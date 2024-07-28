@@ -169,6 +169,7 @@ local mappings = {
     ["<leader>zn"] = { "<cmd>ObsidianNew<cr>", desc = "New Note" },
     ["<leader>zf"] = { "<cmd>ObsidianNew<cr>fleeting/", desc = "New Fleeting Note" },
     ["<leader>zp"] = { "<cmd>ObsidianNew<cr>permanent/", desc = "New Permanent Note" },
+    ["<leader>zl"] = { "<cmd>ObsidianNew<cr>literature/", desc = "New Permanent Note" },
     ["<leader>zt"] = { "<cmd>ObsidianTags<cr>", desc = "Search Tags" },
 
     -- fold

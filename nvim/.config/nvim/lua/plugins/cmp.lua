@@ -77,7 +77,15 @@ return {
         end, { 'i', 's' })
       },
       sources = cmp.config.sources({
-        { name = "nvim_lsp",      priority = 1000 },
+        {
+          name = "nvim_lsp",
+          priority = 1000,
+          option = {
+            markdown_oxide = {
+              keyword_pattern = [[\(\k\| \|\/\|#\)\+]],
+            },
+          },
+        },
         { name = "copilot",       priority = 800 },
         { name = "luasnip",       priority = 750 },
         { name = "buffer",        priority = 500 },

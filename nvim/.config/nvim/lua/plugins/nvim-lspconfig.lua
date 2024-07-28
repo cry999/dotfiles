@@ -36,9 +36,19 @@ return {
     vim.fn.sign_define("DiagnosticSignWarn", { text = icons.DiagnosticWarn, texthl = "DiagnosticWarn" })
 
     local lspconfig = require("lspconfig")
+    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities.workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    }
 
     lspconfig.lua_ls.setup(lua_ls)
     lspconfig.gopls.setup(gopls)
+    lspconfig.markdown_oxide.setup({
+      capabilities = capabilities,
+    })
 
     -- Enable rounded borders in :LspInfo window.
     require("lspconfig.ui.windows").default_options.border = "rounded"

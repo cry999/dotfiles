@@ -222,7 +222,7 @@ return {
         component_separators = separator.bar,
         disabled_filetypes = {
           statusline = { 'alpha' },
-          winbar = { 'alpha', 'aerial', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
+          winbar = { 'alpha', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
         },
       },
       sections = {

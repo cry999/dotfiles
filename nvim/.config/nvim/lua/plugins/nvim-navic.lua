@@ -63,7 +63,7 @@ return {
       },
       window = {
         border = "rounded",
-        size = { width = '60%', height = '80%' },
+        size = { width = '90%', height = '60%' },
       },
       use_default_mappings = false,
       source_buffer = {

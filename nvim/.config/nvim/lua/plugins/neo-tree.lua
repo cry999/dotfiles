@@ -34,7 +34,7 @@ return {
             -- other than 'nofile' buffer, return true
             if vim.bo[bufnr].buftype ~= 'nofile' then return true end
 
-            return vim.tbl_contains({ 'aerial' }, vim.bo[bufnr].filetype)
+            return vim.tbl_contains({}, vim.bo[bufnr].filetype)
           end, window_ids)
         end,
       },

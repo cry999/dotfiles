@@ -15,7 +15,6 @@ return {
       },
       transparent_background = ui_options.transparent,
       integrations = {
-        aerial = true,
         alpha = true,
         cmp = true,
         flash = true,

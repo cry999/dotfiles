@@ -211,8 +211,7 @@ local mappings = {
     ["cn"] = { function() require('notify').dismiss() end, desc = "Close notifications" },
 
     -- Navbuddy
-    ["<leader>o"] = { "<cmd>AerialNavToggle<cr>", desc = "Open aerial navigation" },
-    ["<leader>O"] = { "<cmd>AerialToggle<cr>", desc = "Open aerial" },
+    ["<leader>o"] = { "<cmd>Navbuddy<cr>", desc = "Open outline navigation" },
   },
   x = {
     -- Comment out

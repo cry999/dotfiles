@@ -108,14 +108,14 @@ local mappings = {
     ["[d"] = {
       function()
         ---@diagnostic disable-next-line: missing-fields
-        vim.diagnostic.goto_prev({ float = { border = "rounded" } })
+        vim.diagnostic.jump({ count = -1, float = { border = "rounded" } })
       end,
       desc = "LSP Previous diagnostic"
     },
     ["]d"] = {
       function()
         ---@diagnostic disable-next-line: missing-fields
-        vim.diagnostic.goto_next({ float = { border = "rounded" } })
+        vim.diagnostic.jump({ count = 1, float = { border = "rounded" } })
       end,
       desc = "LSP Next diagnostic"
     },

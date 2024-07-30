@@ -248,23 +248,21 @@ local mappings = {
 local wk_ok, wk = pcall(require, "which-key")
 if wk_ok then
   local icons = require("icons")
-  wk.register({
-    ["<leader>c"] = { name = icons.Copilot .. "  Copilot Chat" },
-    ["<leader>ci"] = { name = icons.Copilot .. "  Copilot Chat - inner text objects" },
-    ["<leader>ca"] = { name = icons.Copilot .. "  Copilot Chat - outer text objects" },
-    ["<leader>f"] = { name = icons.Search .. "  Fuzzy Finder" },
-    ["<leader>fl"] = { name = icons.Search .. "  LSP" },
-    ["<leader>g"] = { name = icons.Git .. "  Git" },
-    ["<leader>h"] = { name = "󰑣  Hop" },
-    ["<leader>l"] = { name = icons.ActiveLSP .. "  LSP" },
-    ["<leader>n"] = { name = icons.Test .. "  Neotest" },
-    ["<leader>o"] = { name = "  Outline" },
-    ["<leader>p"] = { name = icons.Package .. "  Package Manager" },
-    ["<leader>s"] = { name = icons.WordFile .. "  Re-Sourcing configurations" },
-    ["<leader>t"] = { name = icons.Terminal .. "  Terminal" },
-    ["<leader>w"] = { name = icons.Window .. "  Window" },
-    ["<leader>z"] = { name = "󰎚  Zettelkasten" },
-    ["<leader>/"] = { name = "// Comment Out" },
+  wk.add({
+    { "<leader>c", group = "Copilot Chat", icon = icons.Copilot },
+    { "<leader>f", group = "Fuzzy Finder" },
+    { "<leader>fl", group = "LSP", icon = icons.Search },
+    { "<leader>g", group = "Git" },
+    { "<leader>h", group = "Hop", icon = "󰑣" },
+    { "<leader>l", group = "LSP", icon = icons.Search },
+    { "<leader>n", group = "Neotest" },
+    { "<leader>o", group = "Outline", icon = "" },
+    { "<leader>p", group = "Package Manager", icon = icons.Package },
+    { "<leader>s", group = "Resourcing configurations", icon = "󰑓" },
+    { "<leader>t", group = "Terminal" },
+    { "<leader>w", group = "Window" },
+    { "<leader>z", group = "Zettelkasten", icon = "󰎚" },
+    { "<leader>/", group = "Comment Out", icon = "" },
   })
 end
 

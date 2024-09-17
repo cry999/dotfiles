@@ -171,13 +171,17 @@ local mappings = {
     ["<leader>zp"] = { "<cmd>ObsidianNew<cr>permanent/", desc = "New Permanent Note" },
     ["<leader>zl"] = { "<cmd>ObsidianNew<cr>literature/", desc = "New Permanent Note" },
     ["<leader>zt"] = { "<cmd>ObsidianTags<cr>", desc = "Search Tags" },
+    ["<leader>zd"] = { "o<cr>---<cr><cr><esc>", desc = "Insert Divider" },
 
     -- fold
     ["zR"] = { function() require("ufo").openAllFolds() end, desc = "Open all folds" },
     ["zM"] = { function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
     ["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" },
+    ["zw"] = { function() vim.wo.wrap = not vim.wo.wrap end, desc = "Toggle wrap" },
 
     -- Copilot Chat
+    ["<leader>cc"] = { "<cmd>CopilotChat<cr>", desc = "Open CopilotChat" },
+    ["<leader>ct"] = { "<cmd>CopilotChatToggle<cr>", desc = "Toggle Copilot Chat Window" },
     ["<leader>cB"] = {
       function()
         local input = vim.fn.input("CopilotChat: ")
@@ -258,6 +262,7 @@ if wk_ok then
     { "<leader>n", group = "Neotest" },
     { "<leader>o", group = "Outline", icon = "" },
     { "<leader>p", group = "Package Manager", icon = icons.Package },
+    { "<leader>q", group = "Quit", icon = icons.Window },
     { "<leader>s", group = "Resourcing configurations", icon = "󰑓" },
     { "<leader>t", group = "Terminal" },
     { "<leader>w", group = "Window" },

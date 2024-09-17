@@ -259,7 +259,7 @@ return {
           },
         },
         lualine_b = {
-          { 'filename', separator = separator.rounded },
+          { 'filename', separator = separator.rounded, symbols = { modified = icons.FileModified, readonly = icons.FileReadOnly } },
         },
         lualine_c = {},
         lualine_x = {},

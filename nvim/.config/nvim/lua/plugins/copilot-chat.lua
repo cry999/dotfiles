@@ -7,13 +7,19 @@ return {
       { "nvim-lua/plenary.nvim" },
     },
     opts = {
-      model = 'gpt-4',
+      model = 'gpt-4o',
       temperature = 0.1,
       show_user_selection = true,
       show_system_prompt = true,
       show_folds = true,
       name = 'CopilotChat',
       separator = '\n━━━━━\n',
+      window = {
+        layout = 'float',
+        width = 0.9,
+        height = 0.7,
+        border = 'rounded',
+      },
     },
     build = function()
     end,

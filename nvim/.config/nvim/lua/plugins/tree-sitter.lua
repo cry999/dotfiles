@@ -4,7 +4,7 @@ return {
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
-      { "windwp/nvim-ts-autotag", opts = { autotag = { enable_close_on_slash = false } } },
+      "windwp/nvim-ts-autotag",
     },
     cmd = {
       "TSBufDisable",
@@ -23,7 +23,6 @@ return {
     },
     build = ":TSUpdate",
     opts = {
-      autotag = { enable = true },
       highlight = { enable = true, disable = function(_, bufnr) return vim.b[bufnr].large_buf end, additional_vim_regex_highlighting = false },
       incremental_selection = { enable = true },
       indent = { enable = true },
@@ -87,6 +86,13 @@ return {
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
+      require("nvim-ts-autotag").setup({
+        opts = {
+          enable_close = true,          -- Auto close tags
+          enable_rename = true,         -- Auto rename pairs of tags
+          enable_close_on_slash = false -- Auto close on trailing </
+        },
+      })
       require("ts_context_commentstring").setup({
         enable_autocmd = true,
         commentary_integration = {},

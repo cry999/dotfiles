@@ -13,6 +13,8 @@ check_command stow
 check_command git
 
 stow -R -v -d ${HERE} -t $HOME \
+  aerospace \
+  bat       \
   git       \
   homebrew  \
   lazygit   \

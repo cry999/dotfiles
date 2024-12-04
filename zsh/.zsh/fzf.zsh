@@ -32,16 +32,16 @@ export FZF_DEFAULT_OPTS='--info=inline --border --preview="bat -r 1:20 --color=a
 
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
-  PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+if [[ ! "$PATH" == *$(brew --prefix)/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}$(brew --prefix)/opt/fzf/bin"
 fi
 
 # Auto-completion
 # ---------------
 if [[ $- == *i* ]]; then
-  source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+  source "$(brew --prefix)/opt/fzf/shell/completion.zsh" 2> /dev/null
 fi
 
 # Key bindings
 # ------------
-source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"

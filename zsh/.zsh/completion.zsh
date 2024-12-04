@@ -1,6 +1,6 @@
 fpath+=~/.zfunc
 fpath+=/usr/local/share/zsh-completions
-fpath+=/opt/homebrew/share/zsh/site-functions
+fpath+=$(brew --prefix)/share/zsh/site-functions
 autoload -Uz compinit
 compinit
 

@@ -4,7 +4,7 @@ function set_win_title(){
 function output_separator(){
   # repeat $(($COLUMNS-2)) echo -n "🚀"
   echo -n "  Output 🚀 "
-  repeat $(($COLUMNS-13)) echo -n ""
+  repeat $(($COLUMNS-13)) echo -n "."
   echo
   echo
 }

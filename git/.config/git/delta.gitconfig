@@ -11,7 +11,7 @@
   useBuiltin = false
 
 [delta]
-  features = "catppuccin-frappe"
+  features = "catppuccin-macchiato"
   side-by-side = true
   line-numbers = true
   navigate = true

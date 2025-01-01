@@ -17,7 +17,7 @@ wezterm.on('gui-startup', function(cmd)
 end)
 
 return {
-  color_scheme = "Catppuccin Frappe",
+  color_scheme = "Catppuccin Macchiato",
   window_decorations = "RESIZE",
   -- background = {
   --   {

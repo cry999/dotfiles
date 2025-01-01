@@ -12,9 +12,12 @@ function check_command() {
 check_command stow
 check_command git
 
+envsubst <./btop/.config/btop/_btop.conf >~/.config/btop/btop.conf
+
 stow -R -v -d ${HERE} -t $HOME \
   aerospace \
   bat       \
+  btop      \
   git       \
   homebrew  \
   lazygit   \

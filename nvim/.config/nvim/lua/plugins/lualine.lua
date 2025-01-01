@@ -221,9 +221,10 @@ return {
         section_separators = separator.none,
         component_separators = separator.bar,
         disabled_filetypes = {
-          statusline = { 'alpha' },
-          winbar = { 'alpha', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output' },
+          statusline = { 'alpha', 'NeogitStatus' },
+          winbar = { 'alpha', 'help', 'toggleterm', 'neo-tree', 'neotest-summary', 'neotest-output', 'NeogitStatus' },
         },
+        always_show_tabline = false,
       },
       sections = {
         lualine_a = tbl_join(modes),
@@ -259,9 +260,9 @@ return {
           },
         },
         lualine_b = {
-          { 'filename', separator = separator.rounded, symbols = { modified = icons.FileModified, readonly = icons.FileReadOnly } },
+          { 'filename', separator = separator.rounded, symbols = { modified = icons.FileModified, readonly = icons.FileReadOnly }, color = { bg = get_palette().surface1 } },
         },
-        lualine_c = {},
+        lualine_c = { { 'empty', fmt = function() return ' ' end, color = { bg = get_palette().base } }, },
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},

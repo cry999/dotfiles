@@ -6,7 +6,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   opts = {
-    file_types = { "markdown", 'copilot-chat' },
+    file_types = { "markdown", 'copilot-chat', 'Avante' },
     log_level = 'debug',
     render_modes = { 'n', 'v', 'c' },
     anti_conceal = {
@@ -23,4 +23,5 @@ return {
       },
     },
   },
+  ft = { 'markdown', 'copilot-chat', 'Avante' },
 }

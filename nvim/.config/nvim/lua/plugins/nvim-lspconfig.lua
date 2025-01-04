@@ -30,10 +30,16 @@ return {
     { "SmiteshP/nvim-navic" },
   },
   config = function()
-    vim.fn.sign_define("DiagnosticSignError", { text = icons.DiagnosticError, texthl = "DiagnosticError" })
-    vim.fn.sign_define("DiagnosticSignHint", { text = icons.DiagnosticHint, texthl = "DiagnosticHint" })
-    vim.fn.sign_define("DiagnosticSignInfo", { text = icons.DiagnosticHint, texthl = "DiagnosticInfo" })
-    vim.fn.sign_define("DiagnosticSignWarn", { text = icons.DiagnosticWarn, texthl = "DiagnosticWarn" })
+    vim.diagnostic.config({
+      signs = {
+        text = {
+          ["DiagnosticSignError"] = icons.DiagnosticError,
+          ["DiagnosticSignHint"] = icons.DiagnosticHint,
+          ["DiagnosticSignInfo"] = icons.DiagnosticHint,
+          ["DiagnosticSignWarn"] = icons.DiagnosticWarn,
+        },
+      },
+    })
 
     local lspconfig = require("lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")

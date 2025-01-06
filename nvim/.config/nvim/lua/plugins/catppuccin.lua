@@ -8,11 +8,11 @@ return {
     local U = require("catppuccin.utils.colors")
     require("catppuccin").setup({
       flavour = ui_options.flavour or vim.env.CATPPUCCIN_FLAVOUR or "frappe",
-      dim_inactive = {
-        enabled = not ui_options.transparent,
-        shade = "dark",
-        percentage = 0.15,
-      },
+      -- dim_inactive = {
+      --   enabled = not ui_options.transparent,
+      --   shade = "dark",
+      --   percentage = 0.15,
+      -- },
       transparent_background = ui_options.transparent,
       integrations = {
         alpha = true,

@@ -284,7 +284,7 @@ return {
           },
         },
         lualine_b = { { 'filename', separator = separator.rounded, color = { fg = get_palette().surface2, bg = get_palette().surface0 } } },
-        lualine_c = {},
+        lualine_c = { { 'empty', fmt = function() return ' ' end, color = { bg = get_palette().base } }, },
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},

@@ -216,6 +216,8 @@ local mappings = {
 
     -- Navbuddy
     ["<leader>o"] = { "<cmd>Navbuddy<cr>", desc = "Open outline navigation" },
+
+    ["Z"] = { "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },
   },
   x = {
     -- Comment out

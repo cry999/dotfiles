@@ -33,10 +33,10 @@ return {
     vim.diagnostic.config({
       signs = {
         text = {
-          ["DiagnosticSignError"] = icons.DiagnosticError,
-          ["DiagnosticSignHint"] = icons.DiagnosticHint,
-          ["DiagnosticSignInfo"] = icons.DiagnosticHint,
-          ["DiagnosticSignWarn"] = icons.DiagnosticWarn,
+          [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
+          [vim.diagnostic.severity.INFO] = icons.DiagnosticHint,
+          [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
+          [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
         },
       },
     })

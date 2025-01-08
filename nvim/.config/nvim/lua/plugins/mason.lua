@@ -20,10 +20,21 @@ return {
     },
     -- NOTE: rust-analyzer is managed by rustaceanvim
     ensure_installed = {
+      -- shell
+      "bashls",
+      -- lua
       "lua_ls",
+      -- go
       "gopls",
+      -- python
       "pylsp",
-      "tsserver",
+      "black",
+      -- typescript
+      "ts_ls",
+      "prettier",
+      -- markdown
+      "markdownlint",
+      "markdown_oxide",
     },
   },
 }

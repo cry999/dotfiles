@@ -20,14 +20,6 @@ return {
     },
     bottom = {
       -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
-      {
-        ft = "toggleterm",
-        size = { height = 0.4 },
-        -- exclude floating windows
-        filter = function(_, win)
-          return vim.api.nvim_win_get_config(win).relative == ""
-        end,
-      },
       { ft = "qf", title = "QuickFix" },
       {
         ft = "help",
@@ -46,21 +38,7 @@ return {
           return vim.bo[buf].buftype == "help"
         end,
       },
-      {
-        title = icons.Copilot .. " Copilot",
-        ft = "markdown",
-        filter = function(buf)
-          return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t") == "copilot-chat"
-        end,
-        size = { height = 0.4 },
-      },
     },
-    right = {
-      {
-        title = icons.Test .. " Neotest",
-        ft = "neotest-summary",
-        open = "Neotest summary",
-      },
-    },
+    right = {},
   },
 }

@@ -31,6 +31,7 @@ return {
   --     vertical_align = "Middle",
   --   },
   -- },
+  line_height = 1.5,
   -- font
   font = wezterm.font_with_fallback(
     { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG" },

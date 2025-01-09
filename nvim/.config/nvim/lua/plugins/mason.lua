@@ -11,6 +11,7 @@ return {
   },
   opts = {
     ui = {
+      height = 0.8,
       icons = {
         package_installed = "✓",
         package_uninstalled = "✗",

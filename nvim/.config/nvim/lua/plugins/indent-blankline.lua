@@ -3,5 +3,13 @@ return {
   main = "ibl",
   ---@module "ibl"
   ---@type ibl.config
-  opts = {},
+  opts = {
+    scope = {
+      include = { node_type = { ["*"] = { "*" } } },
+    },
+    indent = {
+      char = '┋',
+    },
+    exclude = { filetypes = { "help", "packer", "NvimTree", "Outline", "dashboard" } },
+  },
 }

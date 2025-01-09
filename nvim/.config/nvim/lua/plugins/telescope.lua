@@ -44,24 +44,4 @@ return {
       }
     end,
   },
-  {
-    "LukasPietzschmann/telescope-tabs",
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-    },
-    opts = {
-      entry_formatter = function(tab_id, _, file_names, _, is_current)
-        return string.format('%s %d: %s', is_current and '*' or ' ', tab_id, table.concat(file_names, ', '))
-      end,
-      entry_ordinal = function(tab_id, _, _, _, is_current)
-        return is_current and 0 or tab_id
-      end,
-    },
-  },
-  {
-    "nvim-telescope/telescope-media-files.nvim",
-    config = function()
-      require("telescope").load_extension("media_files")
-    end,
-  },
 }

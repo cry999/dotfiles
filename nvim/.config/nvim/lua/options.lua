@@ -49,7 +49,7 @@ local options = {
   },
   g = {
     mapleader = " ",
-    maplocallaeder = ",",
+    maplocallaeder = "\\",
     autoformat_enabled = true,
     autopairs_enabled = true,
     cmp_enabled = true,

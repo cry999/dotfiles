@@ -24,6 +24,7 @@ return {
     build = ":TSUpdate",
     opts = {
       highlight = { enable = true, disable = function(_, bufnr) return vim.b[bufnr].large_buf end, additional_vim_regex_highlighting = false },
+      ignore_install = { 'org' },
       incremental_selection = { enable = true },
       indent = { enable = true },
       textobjects = {

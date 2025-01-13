@@ -165,14 +165,6 @@ local mappings = {
       expr = true,
     },
 
-    -- Zettelkasten
-    ["<leader>zn"] = { "<cmd>ObsidianNew<cr>", desc = "New Note" },
-    ["<leader>zf"] = { "<cmd>ObsidianNew<cr>fleeting/", desc = "New Fleeting Note" },
-    ["<leader>zp"] = { "<cmd>ObsidianNew<cr>permanent/", desc = "New Permanent Note" },
-    ["<leader>zl"] = { "<cmd>ObsidianNew<cr>literature/", desc = "New Permanent Note" },
-    ["<leader>zt"] = { "<cmd>ObsidianTags<cr>", desc = "Search Tags" },
-    ["<leader>zd"] = { "o<cr>---<cr><cr><esc>", desc = "Insert Divider" },
-
     -- fold
     ["zR"] = { function() require("ufo").openAllFolds() end, desc = "Open all folds" },
     ["zM"] = { function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
@@ -205,11 +197,6 @@ local mappings = {
       end,
       desc = "CopilotChat - Prompt actions",
     },
-
-    -- Neotest
-    ["<leader>nr"] = { "<cmd>Neotest run<cr>", desc = "Run tests" },
-    ["<leader>no"] = { "<cmd>Neotest output-panel<cr>", desc = "View tests outputs" },
-    ["<leader>nt"] = { "<cmd>Neotest summary<cr>", desc = "View test tree" },
 
     -- Notify
     ["cn"] = { function() require('notify').dismiss() end, desc = "Close notifications" },

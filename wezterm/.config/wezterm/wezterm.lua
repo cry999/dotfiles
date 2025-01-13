@@ -19,22 +19,20 @@ end)
 return {
   color_scheme = "Catppuccin Macchiato",
   window_decorations = "RESIZE",
-  -- background = {
-  --   {
-  --     -- source = { File = os.getenv("HOME") .. "/.config/wezterm/wallhaven-mp92kk.jpg" },
-  --     source = { File = os.getenv("HOME") .. "/.config/wezterm/archive/frieren.jpeg" },
-  --     hsb = {
-  --       brightness = 0.1,
-  --       saturation = 0.7,
-  --     },
-  --     horizontal_align = "Center",
-  --     vertical_align = "Middle",
-  --   },
-  -- },
+  background = {
+    {
+      -- source = { File = os.getenv("HOME") .. "/.config/wezterm/color.jpg" },
+      -- source = { File = os.getenv("HOME") .. "/.config/wezterm/leaf.jpg" },
+      source = { File = os.getenv("HOME") .. "/.config/wezterm/fish.gif" },
+      hsb = { brightness = 0.1, saturation = 0.6 },
+      horizontal_align = "Center",
+      vertical_align = "Middle",
+    },
+  },
   line_height = 1.3,
   -- font
   font = wezterm.font_with_fallback(
-    { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG" },
+    { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG", "Symbols Nerd Font Mono" },
     { weight = "Regular", style = "Normal", stretch = "Normal" }),
   font_size = 12.0,
   font_rules = {
@@ -43,7 +41,7 @@ return {
       intensity = "Bold",
       italic = false,
       font = wezterm.font_with_fallback(
-        { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG" },
+        { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG", "Symbols Nerd Font Mono" },
         { weight = "Bold", style = "Normal", stretch = "Normal" }
       ),
     },
@@ -52,7 +50,7 @@ return {
       intensity = "Normal",
       italic = true,
       font = wezterm.font_with_fallback(
-        { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG" },
+        { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG", "Symbols Nerd Font Mono" },
         { weight = "Regular", style = "Italic", stretch = "Normal" }),
     },
     -- bold and italic
@@ -60,7 +58,7 @@ return {
       intensity = "Bold",
       italic = true,
       font = wezterm.font_with_fallback(
-        { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG" },
+        { "JetBrainsMono Nerd Font Propo", "UDEV Gothic 35NFLG", "Symbols Nerd Font Mono" },
         { weight = "Bold", style = "Italic", stretch = "Normal" }),
     },
   },

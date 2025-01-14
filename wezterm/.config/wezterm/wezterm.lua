@@ -20,14 +20,14 @@ return {
   color_scheme = "Catppuccin Macchiato",
   window_decorations = "RESIZE",
   background = {
-    {
-      -- source = { File = os.getenv("HOME") .. "/.config/wezterm/color.jpg" },
-      -- source = { File = os.getenv("HOME") .. "/.config/wezterm/leaf.jpg" },
-      source = { File = os.getenv("HOME") .. "/.config/wezterm/fish.gif" },
-      hsb = { brightness = 0.1, saturation = 0.6 },
-      horizontal_align = "Center",
-      vertical_align = "Middle",
-    },
+    -- {
+    --   -- source = { File = os.getenv("HOME") .. "/.config/wezterm/color.jpg" },
+    --   -- source = { File = os.getenv("HOME") .. "/.config/wezterm/leaf.jpg" },
+    --   source = { File = os.getenv("HOME") .. "/.config/wezterm/fish.gif" },
+    --   hsb = { brightness = 0.1, saturation = 0.6 },
+    --   horizontal_align = "Center",
+    --   vertical_align = "Middle",
+    -- },
   },
   line_height = 1.3,
   -- font

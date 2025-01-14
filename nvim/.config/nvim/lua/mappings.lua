@@ -204,7 +204,11 @@ local mappings = {
     -- Navbuddy
     ["<leader>o"] = { "<cmd>Navbuddy<cr>", desc = "Open outline navigation" },
 
+    -- Zen mode
     ["Z"] = { "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },
+
+    -- treesj
+    ["<C-m>"] = { function() require('treesj').toggle() end, desc = "Toggle treesj" },
   },
   x = {
     -- Comment out

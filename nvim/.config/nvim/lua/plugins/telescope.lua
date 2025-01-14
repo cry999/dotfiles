@@ -10,7 +10,23 @@ return {
       local actions = require("telescope.actions")
       return {
         defaults = {
-          layout_strategy = "vertical",
+          prompt_prefix = "❯ ",
+          selection_caret = "❯ ",
+          multi_icon = "❯ ",
+          layout_strategy = "horizontal",
+          sorting_strategy = "ascending",
+          layout_config = {
+            horizontal = {
+              prompt_position = "top",
+              preview_width = 0.65,
+            },
+            vertical = {
+              mirror = false,
+            },
+            width = 0.87,
+            height = 0.80,
+            preview_cutoff = 120,
+          },
           vimgrep_arguments = {
             "rg",
             "--no-heading",

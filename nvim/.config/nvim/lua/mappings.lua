@@ -210,6 +210,28 @@ local mappings = {
 
     -- treesj
     ["<C-m>"] = { function() require('treesj').toggle() end, desc = "Toggle treesj" },
+
+    -- Notes
+    --
+    -- Spec:
+    -- Root directory: ~/.notes/
+    -- Task file: ~/.notes/tasks.md
+    -- TODO: Should tasks.md be split into daily, weekly, monthly, etc...?
+    -- TODO: Or should it be split into personal, work, etc...?
+    ["<leader><leader>"] = {
+      function()
+        local note_dir = os.getenv('HOME') .. '/.notes/'
+        local task_file = note_dir .. 'tasks.md'
+        if not os.execute('mkdir -p ' .. note_dir) then
+          vim.notify('Failed to create notes directory', vim.log.levels.ERROR, {})
+        end
+        if not os.execute('touch ' .. task_file) then
+          vim.notify('Failed to create tasks.md', vim.log.levels.ERROR, {})
+        end
+        vim.cmd('new ' .. task_file)
+      end,
+      desc = "Open task notes"
+    },
   },
   x = {
     -- Comment out
@@ -260,7 +282,8 @@ if wk_ok then
     { "<leader>s", group = "Resourcing configurations", icon = "󰑓" },
     { "<leader>t", group = "Terminal" },
     { "<leader>w", group = "Window" },
-    { "<leader>z", group = "Zettelkasten", icon = "󰎚" },
+    { "<leader>z", group = "Notes", icon = "󱞁" },
+    { "<leader><leader>", group = "Notes", icon = "󱞁" },
     { "<leader>/", group = "Comment Out", icon = "" },
   })
 end

@@ -60,4 +60,33 @@ return {
       }
     end,
   },
+  {
+    "AckslD/nvim-neoclip.lua",
+    dependencies = {
+      { 'nvim-telescope/telescope.nvim' },
+    },
+    opts = {
+      default_register = '*',
+      keys = {
+        telescope = {
+          i = {
+            select = '<cr>',
+            paste = '<C-y>',
+            paste_behind = {},
+            replay = {},
+            delete = {},
+            edit = {},
+          },
+          n = {
+            select = '<cr>',
+            paste = '<C-y>',
+            paste_behind = {},
+            replay = {},
+            delete = {},
+            edit = 'e',
+          },
+        },
+      },
+    },
+  },
 }

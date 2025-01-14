@@ -91,6 +91,7 @@ local mappings = {
     ["<leader>f/"] = { "<cmd>Telescope search_history<cr>", desc = "Find search word in history" },
     ["<leader>fli"] = { "<cmd>Telescope lsp_implementations<cr>", desc = "Find implementations" },
     ["<leader>flr"] = { "<cmd>Telescope lsp_references jump_type=vsplit<cr>", desc = "Find references" },
+    ["<leader>fy"] = { "<cmd> Telescope neoclip<cr>", desc = "Find yank history" },
 
     ["<leader>e"] = { "<cmd>Neotree<cr>", desc = "Toggle NeoTree" },
 

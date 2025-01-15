@@ -103,6 +103,9 @@ return {
           FoldCol6 = { fg = c.text, bg = U.blend(c.base, c.text, 0.50) },
           FoldCol7 = { fg = c.text, bg = U.blend(c.base, c.text, 0.40) },
           FoldCol8 = { fg = c.text, bg = U.blend(c.base, c.text, 0.30) },
+
+          -- for render-markdown
+          RenderMarkdownFocused = { fg = c.red, underline = true },
         }
       end,
       color_overrides = {

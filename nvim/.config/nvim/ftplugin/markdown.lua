@@ -27,7 +27,7 @@ end
 
 local mappings = {
   n = {
-    ['<localleader><localleader>'] = {
+    ['<localleader>t'] = {
       function()
         local line = vim.fn.getline('.')
         if is_task_line(line) then

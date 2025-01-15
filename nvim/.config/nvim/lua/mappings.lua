@@ -218,7 +218,7 @@ local mappings = {
     -- Task file: ~/.notes/tasks.md
     -- TODO: Should tasks.md be split into daily, weekly, monthly, etc...?
     -- TODO: Or should it be split into personal, work, etc...?
-    ["<leader><leader>"] = {
+    ["<localleader><localleader>"] = {
       function()
         local note_dir = os.getenv('HOME') .. '/.notes/'
         local task_file = note_dir .. 'tasks.md'

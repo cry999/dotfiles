@@ -5,7 +5,7 @@ vim.opt_local.wrap = true
 ---@param line string
 ---@return boolean
 local function is_task_line(line)
-  return line:find('^%s*%- %[.-%]')
+  return not not line:find('^%s*%- %[.-%]')
 end
 
 ---toggle_checkbox toggles the checkbox in the current line

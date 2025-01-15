@@ -222,6 +222,12 @@ local mappings = {
       function()
         local note_dir = os.getenv('HOME') .. '/.notes/'
         local task_file = note_dir .. 'tasks.md'
+        -- if current buffer is tasks.md, close it
+        if vim.fn.expand('%:p') == task_file then
+          vim.cmd('q')
+          return
+        end
+        -- open tasks.md
         if not os.execute('mkdir -p ' .. note_dir) then
           vim.notify('Failed to create notes directory', vim.log.levels.ERROR, {})
         end

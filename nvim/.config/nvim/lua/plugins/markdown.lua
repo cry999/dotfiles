@@ -20,7 +20,7 @@ return {
     },
     checkbox = {
       enabled = true,
-      checked = { icon = '✅ ', highlight = 'RenderMarkdownChecked', scope_highlight = nil },
+      checked = { icon = '✅ ', highlight = 'RenderMarkdownChecked', scope_highlight = 'RenderMarkdownUnchecked' },
       custom = {
         cancel = { raw = '[-]', rendered = '🚫 ', highlight = 'RenderMarkdownUnchecked', scope_highlight = 'RenderMarkdownUnchecked' },
         focus = { raw = '[f]', rendered = '👉 ', highlight = nil, scope_highlight = 'RenderMarkdownFocused' },

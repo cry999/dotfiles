@@ -1,6 +1,13 @@
 vim.opt_local.conceallevel = 3
 vim.opt_local.wrap = true
 
+---is_task_line
+---@param line string
+---@return boolean
+local function is_task_line(line)
+  return line:find('^%s*%- %[.-%]')
+end
+
 ---toggle_checkbox toggles the checkbox in the current line
 ---@param check_char string
 ---@param togglable? boolean
@@ -20,6 +27,21 @@ end
 
 local mappings = {
   n = {
+    ['<localleader><localleader>'] = {
+      function()
+        local line = vim.fn.getline('.')
+        if is_task_line(line) then
+          local new_line = line:gsub('^(%s*)%- %[.%]%s*', '%1')
+          ---@diagnostic disable-next-line: param-type-mismatch
+          vim.fn.setline('.', new_line)
+        else
+          local new_line = line:gsub('^(%s*)', '%1- [ ] ')
+          ---@diagnostic disable-next-line: param-type-mismatch
+          vim.fn.setline('.', new_line)
+        end
+      end,
+      desc = 'Toggle current line task'
+    },
     ['<localleader>x'] = {
       function() toggle_checkbox('x', true) end,
       desc = 'Toggle task done',

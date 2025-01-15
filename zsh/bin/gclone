@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# gclone
+# A utitlity tool to clone git repositories
+
+GCLONE_HOME=${GCLONE_HOME:-$HOME}
+if [ $# -eq 0 ]; then
+  echo "Usage: gclone [<options>] [--] <git-repo-url>"
+  echo "See git clone --help for more options"
+  exit 1
+fi
+
+# REPO="${@[$(($#-1))]}"
+REPO="${@: -1:1}"
+OPTIONS="${@:1:$(($#-1))}"
+
+# REPO から https:// を削除
+REPONAME=$(echo $REPO | sed -e 's/https:\/\///g')
+REPONAME=$(echo $REPONAME | sed -e 's/\.git//g')
+
+REPODIR=$GCLONE_HOME/$REPONAME
+
+if [ -e $REPODIR ] ; then
+  echo "$REPODIR already exists"
+  exit 1
+fi
+
+git clone $OPTIONS $REPO $REPODIR

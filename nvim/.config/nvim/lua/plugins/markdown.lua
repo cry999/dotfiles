@@ -20,10 +20,10 @@ return {
     },
     checkbox = {
       enabled = true,
-      checked = { icon = '✅ ', highlight = 'RenderMarkdownChecked', scope_highlight = 'RenderMarkdownUnchecked' },
+      checked = { icon = '󰄲 ', highlight = 'RenderMarkdownChecked', scope_highlight = 'RenderMarkdownUnchecked' },
       custom = {
-        cancel = { raw = '[-]', rendered = '🚫 ', highlight = 'RenderMarkdownUnchecked', scope_highlight = 'RenderMarkdownUnchecked' },
-        focus = { raw = '[f]', rendered = '👉 ', highlight = nil, scope_highlight = 'RenderMarkdownFocused' },
+        todo = { raw = '[-]', rendered = ' ', highlight = 'RenderMarkdownTodo', scope_highlight = 'RenderMarkdownUnchecked' },
+        focus = { raw = '[f]', rendered = '󰼀 ', highlight = 'RenderMarkdownFocused', scope_highlight = 'RenderMarkdownFocused' },
       },
     },
     win_options = {
@@ -33,7 +33,7 @@ return {
       },
       concealcursor = {
         default = vim.api.nvim_get_option_value('concealcursor', {}),
-        concealcursor = 'nvc',
+        concealcursor = 'niv',
       },
     },
   },

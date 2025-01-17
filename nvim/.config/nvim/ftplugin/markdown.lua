@@ -1,5 +1,4 @@
 vim.opt_local.conceallevel = 3
-vim.opt_local.wrap = true
 
 ---is_task_line
 ---@param line string

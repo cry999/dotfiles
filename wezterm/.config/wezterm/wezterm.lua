@@ -23,8 +23,8 @@ return {
     -- {
     --   -- source = { File = os.getenv("HOME") .. "/.config/wezterm/color.jpg" },
     --   -- source = { File = os.getenv("HOME") .. "/.config/wezterm/leaf.jpg" },
-    --   source = { File = os.getenv("HOME") .. "/.config/wezterm/fish.gif" },
-    --   hsb = { brightness = 0.1, saturation = 0.6 },
+    --   source = { File = os.getenv("HOME") .. "/.config/wezterm/peach_unicat.png" },
+    --   hsb = { brightness = 0.1 },
     --   horizontal_align = "Center",
     --   vertical_align = "Middle",
     -- },

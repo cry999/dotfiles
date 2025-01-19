@@ -27,10 +27,10 @@ return {
         native_lsp = {
           enabled = true,
           underlines = {
-            errors = { "undercurl" },
-            hints = { "undercurl" },
-            warnings = { "undercurl" },
-            information = { "undercurl" },
+            errors = { "underline" },
+            hints = { "underline" },
+            warnings = { "underline" },
+            information = { "underline" },
           },
         },
         navic = { enabled = true },
@@ -101,6 +101,7 @@ return {
 
           -- for render-markdown
           RenderMarkdownFocused = { fg = c.red, underline = true },
+          RenderMarkdownNotToDo = { fg = c.overlay0, strikethrough = true },
         }
       end,
       color_overrides = {

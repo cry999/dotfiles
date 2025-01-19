@@ -20,9 +20,9 @@ return {
     },
     checkbox = {
       enabled = true,
-      checked = { icon = '󰄲 ', highlight = 'RenderMarkdownChecked', scope_highlight = 'RenderMarkdownUnchecked' },
+      checked = { icon = '󰄲 ', highlight = 'RenderMarkdownChecked', scope_highlight = 'RenderMarkdownNotTodo' },
       custom = {
-        todo = { raw = '[-]', rendered = ' ', highlight = 'RenderMarkdownTodo', scope_highlight = 'RenderMarkdownUnchecked' },
+        todo = { raw = '[-]', rendered = ' ', highlight = 'RenderMarkdownTodo', scope_highlight = 'RenderMarkdownNotTodo' },
         focus = { raw = '[f]', rendered = '󰼀 ', highlight = 'RenderMarkdownFocused', scope_highlight = 'RenderMarkdownFocused' },
       },
     },

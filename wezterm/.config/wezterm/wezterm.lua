@@ -322,25 +322,43 @@ local direction_keys = {
   l = 'Right',
 }
 
----split_nav
+---navigate_or_send_key
 ---@param key string
----@param is_resize? boolean
 ---@return table
-local function split_nav(key, is_resize)
-  local mods = is_resize and 'LEADER|SHIFT' or 'CTRL'
+local function navigate_or_send_key(key)
   return {
     key = key,
-    mods = mods,
+    mods = 'CTRL',
     action = wezterm.action_callback(function(window, pane)
       if is_vim(pane) then
-        window:perform_action({ SendKey = { key = key, mods = mods } }, pane)
-      elseif is_resize then
-        window:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+        window:perform_action({ SendKey = { key = key, mods = 'CTRL' } }, pane)
       else
         window:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
       end
-    end),
+    end)
   }
+end
+
+---action_navigate_or_send_key
+---@param key string
+---@return table
+local function action_navigate_or_send_key(key)
+  return wezterm.action_callback(function(window, pane)
+    if is_vim(pane) then
+      window:perform_action({ SendKey = { key = key, mods = 'CTRL' } }, pane)
+    else
+      window:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
+    end
+  end)
+end
+
+---resize_pane
+---@param key string
+---@return table
+local function resize_pane(key)
+  return wezterm.action_callback(function(window, pane)
+    window:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+  end)
 end
 
 local leader = { key = 't', mods = 'CTRL', timeout_milliseconds = 1000 }
@@ -371,40 +389,32 @@ local keys = {
   { key = '-', mods = 'LEADER', action = wezterm.action.SplitVertical },
   { key = 'z', mods = 'LEADER', action = wezterm.action.TogglePaneZoomState },
   -- move
-  split_nav('h'),
-  split_nav('j'),
-  split_nav('k'),
-  split_nav('l'),
+  navigate_or_send_key('h'),
+  navigate_or_send_key('j'),
+  navigate_or_send_key('k'),
+  navigate_or_send_key('l'),
   -- resize
-  split_nav('h', true),
-  split_nav('j', true),
-  split_nav('k', true),
-  split_nav('l', true),
+  --
+  -- enter resize mode
   {
-    key = 'w',
+    key = 'R',
     mods = 'LEADER',
-    action = wezterm.action.PromptInputLine {
-      description = wezterm.format {
-        { Attribute = { Intensity = 'Bold' } },
-        { Foreground = { AnsiColor = 'Fuchsia' } },
-        { Text = 'Enter name for new workspace' },
-      },
-      action = wezterm.action_callback(function(window, pane, line)
-        -- line will be `nil` if they hit escape without entering anything
-        -- An empty string if they just hit enter
-        -- Or the actual line of text they wrote
-        if line then
-          window:perform_action(
-            wezterm.action.SwitchToWorkspace {
-              name = line,
-            },
-            pane
-          )
-        end
-      end),
+    action = wezterm.action.ActivateKeyTable {
+      name = 'resize_pane',
+      timeout_milliseconds = 1000,
+      one_shot = false,
     },
   },
   { key = ' ', mods = 'LEADER', action = wezterm.action.QuickSelect },
+}
+
+local key_tables = {
+  resize_pane = {
+    { key = 'h', action = resize_pane('h') },
+    { key = 'j', action = resize_pane('j') },
+    { key = 'k', action = resize_pane('k') },
+    { key = 'l', action = resize_pane('l') },
+  },
 }
 
 return {
@@ -479,6 +489,7 @@ return {
   -- keys
   leader = leader,
   keys = keys,
+  key_tables = key_tables,
 
   quick_select_patterns = { [[\w\S*]] },
   inactive_pane_hsb = {

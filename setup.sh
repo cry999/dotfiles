@@ -14,6 +14,12 @@ check_command git
 
 envsubst <./btop/.config/btop/_btop.conf >~/.config/btop/btop.conf
 
+# build starship toml
+for theme in "latte" "frappe" "macchiato" "mocha"; do
+  echo "palette = 'catppuccin_$theme'" >./starship/.config/starship/starship.$theme.toml
+  cat ./starship/.config/starship/starship.toml >>./starship/.config/starship/starship.$theme.toml
+done
+
 stow -R -v -d ${HERE} -t $HOME \
   aerospace \
   bat       \
@@ -25,6 +31,7 @@ stow -R -v -d ${HERE} -t $HOME \
   starship  \
   tmux      \
   wezterm   \
+  yazi      \
   zsh
 
 function is_gitconfig_included() {

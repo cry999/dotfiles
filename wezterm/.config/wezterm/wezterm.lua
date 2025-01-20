@@ -2,8 +2,10 @@ local wezterm = require('wezterm');
 local mux = wezterm.mux
 local tabline = wezterm.plugin.require('https://github.com/michaelbrusegard/tabline.wez')
 
-local opacity = 0.55
+-- local opacity = 0.55
+local opacity = 1
 local color_scheme_name = 'Catppuccin Macchiato'
+-- local color_scheme_name = 'Catppuccin Latte'
 -- See: https://github.com/catppuccin/wezterm/blob/main/plugin/init.lua
 local colors = {
   ['Catppuccin Latte'] = {
@@ -216,24 +218,29 @@ end)
 wezterm.on('update-status', function(window, pane)
   -- TODO: centerieze tab title
   --
-  -- local tabs = window:mux_window():tabs()
-  -- local mid_width = 0
-  -- for idx, tab in ipairs(tabs) do
-  --   local title = tab:get_title()
-  --   mid_width = mid_width + math.floor(math.log(idx, 10)) + 1
-  --   mid_width = mid_width + 2 + #title + 1
-  -- end
-  -- local tab_width = window:active_tab():get_size().cols
-  -- local max_left = (tab_width - mid_width) / 2
-  --
-  -- window:set_left_status(wezterm.format({
-  --   { Background = { Color = opacity_color(color_palette.base, opacity) } },
-  --   { Text = wezterm.pad_left(' ', max_left) },
-  -- }))
-  -- window:set_right_status(wezterm.format({
-  --   { Background = { Color = opacity_color(color_palette.base, opacity) } },
-  --   { Text = wezterm.pad_right(' ', max_left) },
-  -- }))
+  local tabs = window:mux_window():tabs()
+  local mid_width = 0
+  local total_title = ''
+  for idx, tab in ipairs(tabs) do
+    local title = tab:get_title()
+    total_title = total_title .. title
+    mid_width = mid_width
+        + 1 + math.floor(math.log(idx, 10)) + 1 -- space + index + space
+        + 6 + #title + 2                        -- title
+        + 2                                     -- tail
+        + 2                                     -- space
+  end
+  local tab_width = window:active_tab():get_size().cols
+  local max_left = tab_width / 2 - mid_width / 2
+
+  window:set_left_status(wezterm.format({
+    { Background = { Color = opacity_color(color_palette.base, opacity) } },
+    { Text = wezterm.pad_left(' ', max_left) },
+  }))
+  window:set_right_status(wezterm.format({
+    { Background = { Color = opacity_color(color_palette.base, opacity) } },
+    { Text = wezterm.pad_right(' ', max_left) },
+  }))
 end)
 
 ---basename
@@ -260,28 +267,44 @@ end
 ---@param tab TabInformation
 ---@param fg string
 ---@param bg string
+---@param is_last? boolean
 ---@return table
-local function decorate_tab(tab, fg, bg)
-  local title = tab.tab_title
-  if not title or #title == 0 then
-    local pane = tab.active_pane
-    ---@diagnostic disable-next-line: undefined-field
-    local proc = pane.foreground_process_name
-    title = proc_icon(basename(proc)) .. ' ' .. tab.active_pane.title
+local function decorate_tab(tab, fg, bg, is_last)
+  local pane = tab.active_pane
+  ---@diagnostic disable-next-line: undefined-field
+  local proc = pane.foreground_process_name
+  local function trim_pane_title(pane_title)
+    return string.gsub(pane_title, 'Copy mode:%s*(%w)', '%1')
   end
+  local title = proc_icon(basename(proc)) .. '  ' .. trim_pane_title(pane.title)
 
-  return {
+  local index = {
     { Foreground = { Color = fg } },
-    { Background = { Color = bg } },
-    { Text = wezterm.nerdfonts.ple_left_half_circle_thick },
+    { Background = { Color = 'none' } },
+    { Text = wezterm.nerdfonts.ple_lower_right_triangle },
     { Foreground = { Color = bg } },
     { Background = { Color = fg } },
-    { Text = ' ' .. (tab.tab_index + 1) .. ' ' },
+    { Text = '' .. (tab.tab_index + 1) .. '' },
     { Foreground = { Color = fg } },
     { Background = { Color = bg } },
-    { Text = wezterm.nerdfonts.ple_right_half_circle_thick },
-    { Text = ' ' .. title },
+    { Text = wezterm.nerdfonts.ple_upper_left_triangle },
   }
+  local title_attrs = {
+    { Text = ' ' .. title .. ' ' },
+    { Foreground = { Color = bg } },
+  }
+
+  local attributes = {}
+  for _, attr in ipairs(index) do
+    table.insert(attributes, attr)
+  end
+  for _, attr in ipairs(title_attrs) do
+    table.insert(attributes, attr)
+  end
+  table.insert(attributes, { Background = { Color = 'none' } })
+  table.insert(attributes, { Foreground = { Color = bg } })
+  table.insert(attributes, { Text = wezterm.nerdfonts.ple_upper_left_triangle .. ' ' })
+  return attributes
 end
 
 wezterm.on('format-tab-title',
@@ -294,12 +317,13 @@ wezterm.on('format-tab-title',
   ---@return table
   ---@diagnostic disable-next-line: unused-local
   function(tab, _tabs, _panes, _config, _hover, _max_width)
-    local bg = opacity_color(color_palette.base, opacity)
+    local bg = opacity_color(color_palette.surface0, opacity)
+    local is_last = _tabs[#_tabs].tab_id == tab.tab_id
     if tab.is_active then
-      return decorate_tab(tab, color_palette.peach, bg)
+      return decorate_tab(tab, color_palette.blue, bg, is_last)
     end
 
-    return decorate_tab(tab, color_palette.surface2, bg)
+    return decorate_tab(tab, color_palette.surface2, bg, is_last)
   end)
 
 ---activate_tab
@@ -413,16 +437,16 @@ return {
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
-  background = {
-    {
-      -- source = { File = os.getenv('HOME') .. '/.config/wezterm/color.jpg' },
-      -- source = { File = os.getenv('HOME') .. '/.config/wezterm/leaf.jpg' },
-      source = { File = os.getenv('HOME') .. '/.config/wezterm/fish.gif' },
-      hsb = { brightness = 0.1 },
-      horizontal_align = 'Center',
-      vertical_align = 'Middle',
-    },
-  },
+  -- background = {
+  --   {
+  --     -- source = { File = os.getenv('HOME') .. '/.config/wezterm/color.jpg' },
+  --     -- source = { File = os.getenv('HOME') .. '/.config/wezterm/leaf.jpg' },
+  --     source = { File = os.getenv('HOME') .. '/.config/wezterm/fish.gif' },
+  --     hsb = { brightness = 0.1 },
+  --     horizontal_align = 'Center',
+  --     vertical_align = 'Middle',
+  --   },
+  -- },
   line_height = 1.3,
   -- font
   font = wezterm.font_with_fallback(

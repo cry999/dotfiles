@@ -1,54 +1,56 @@
 palette = "catppuccin_macchiato"
-
-
-format = """
-$character\
-${custom.pretty_pwd}\
-[](fg:surface1 bg:peach)\
-$git_branch\
-$git_status\
-[](fg:peach)\
-$fill
-[ 󰐊 ](fg:mauve)
-"""
-
-# Disable the blank line at the start of the prompt
-# add_newline = false
+# palette = "catppuccin_latte"
+add_newline = false
 
 continuation_prompt = '[ | ](fg:mauve)'
 
+format = """
+[╭](fg:mauve)\
+$status\
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+$time\
+$line_break\
+[╰](fg:mauve)\
+$character\
+"""
+
 [character]
-# Note the use of Catppuccin color 'maroon'
-success_symbol        = "[](bg:base fg:green)[  I  ](fg:surface1 bg:green bold)[](bg:surface1 fg:green)"
-error_symbol          = "[](bg:base fg:red)[  I  ](fg:surface1 bg:red bold)[](bg:surface1 fg:red)"
-vimcmd_symbol         = "[](bg:base fg:blue)[  N  ](fg:surface1 bg:blue bold)[](bg:surface1 fg:blue)"
-format = "[$symbol]($style)"
+success_symbol = "[ INS ❯](fg:green)"
+error_symbol = "[ INS ❯](fg:red)"
+vimcmd_symbol = "[ NOR ❯](fg:blue)"
+
+[status]
+format = "[─](fg:mauve)[](fg:red)[](fg:mantle bg:red)[](fg:red bg:surface0)[ $status](bg:surface0)[](fg:surface0)"
+pipestatus = true
+pipestatus_separator = "-"
+pipestatus_segment_format = "$status"
+pipestatus_format = "[─](fg:mauve)[](fg:red)[](fg:mantle bg:red)[](fg:red bg:surface0)[ $pipestatus](bg:surface0)[](fg:surface0)"
+disabled = false
 
 [directory]
-style = "fg:text bg:surface1"
-format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
+format = "[─](fg:mauve)[](fg:mauve)[ ](fg:mantle bg:mauve)[](fg:mauve bg:surface0)[ $path](bg:surface0)[](fg:surface0)"
+truncate_to_repo = false
+truncation_length = 0
 
-[docker_context]
-symbol = " "
-style = "fg:text bg:surface1"
-format = '[ $context ]($style)'
+[directory.substitutions]
+"Documents" = "󰈙"
+"Downloads" = ""
+"Music" = "󰝚"
+"Pictures" = ""
+"Repos" = "󰲋"
 
 [git_branch]
-symbol = ""
-style = "fg:surface1 bg:peach"
-format = '[ $symbol $branch ]($style)'
+format = "[─](fg:mauve)[](fg:peach)[](fg:mantle bg:peach)[](fg:peach bg:surface0)[ $branch](bg:surface0)"
 
 [git_status]
-style = "fg:surface1 bg:peach"
-format = '[$all_status$ahead_behind ]($style)'
+format = "[](fg:surface0 bg:peach)[$all_status$ahead_behind](fg:mantle bg:peach)[](fg:peach)"
 
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "fg:base bg:blue"
-format = '[   $time ]($style)'
+[cmd_duration]
+format = "[─](fg:mauve)[](fg:green)[󱐋](fg:mantle bg:green)[](fg:green bg:surface0)[ $duration](bg:surface0)[](fg:surface0)"
+min_time = 0
 
 [custom.pretty_pwd]
 disabled = false

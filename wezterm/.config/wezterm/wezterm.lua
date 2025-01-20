@@ -220,8 +220,24 @@ local function proc_icon(proc)
     return wezterm.nerdfonts.custom_neovim
   elseif proc:match('.*sh') then
     return wezterm.nerdfonts.oct_terminal
+  elseif proc == 'yazi' then
+    return wezterm.nerdfonts.md_duck
   end
   return proc
+end
+
+---tidy_pane_title
+---@param pane_title string
+local function tidy_pane_title(pane_title)
+  local max_width = 20
+  if pane_title:match('Copy mode:%s*(%w)') then
+    return string.gsub(pane_title, 'Copy mode:%s*(%w)', '%1')
+  end
+  if pane_title:match('Yazi:%s*(.)') then
+    local fullpath = string.gsub(pane_title, 'Yazi:%s*(.)', '%1')
+    return basename(fullpath)
+  end
+  return pane_title:sub(1, max_width)
 end
 
 ---decorate_tab_title
@@ -230,13 +246,11 @@ end
 ---@param bg string
 ---@return table
 local function decorate_tab(tab, fg, bg)
+  -- TODO: get max_width from config
   local pane = tab.active_pane
   ---@diagnostic disable-next-line: undefined-field
   local proc = pane.foreground_process_name
-  local function trim_pane_title(pane_title)
-    return string.gsub(pane_title, 'Copy mode:%s*(%w)', '%1')
-  end
-  local title = proc_icon(basename(proc)) .. '  ' .. trim_pane_title(pane.title)
+  local title = proc_icon(basename(proc)) .. '  ' .. tidy_pane_title(pane.title)
 
   local index = {
     { Foreground = { Color = fg } },
@@ -330,8 +344,8 @@ end
 local leader = { key = 't', mods = 'CTRL', timeout_milliseconds = 1000 }
 local keys = {
   { key = ':', mods = 'LEADER', action = wezterm.action.ActivateCommandPalette },
-  -- { key = 'UpArrow',   mods = 'SHIFT',  action = wezterm.action.ScrollToPrompt(-1) },
-  -- { key = 'DownArrow', mods = 'SHIFT',  action = wezterm.action.ScrollToPrompt(1) },
+  { key = '[', mods = 'LEADER', action = wezterm.action.ScrollToPrompt(-1) },
+  { key = ']', mods = 'LEADER', action = wezterm.action.ScrollToPrompt(1) },
   --
   -- tab operation
   --

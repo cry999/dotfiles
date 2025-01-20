@@ -214,16 +214,16 @@ end
 
 ---proc icon
 ---@param proc string
----@return string
+---@return string, string
 local function proc_icon(proc)
   if proc == 'nvim' then
-    return wezterm.nerdfonts.custom_neovim
+    return wezterm.nerdfonts.custom_neovim, ''
   elseif proc:match('.*sh') then
-    return wezterm.nerdfonts.oct_terminal
+    return wezterm.nerdfonts.oct_terminal, ''
   elseif proc == 'yazi' then
-    return wezterm.nerdfonts.md_duck
+    return wezterm.nerdfonts.md_duck, ''
   end
-  return proc
+  return '', proc
 end
 
 ---tidy_pane_title
@@ -250,18 +250,19 @@ local function decorate_tab(tab, fg, bg)
   local pane = tab.active_pane
   ---@diagnostic disable-next-line: undefined-field
   local proc = pane.foreground_process_name
-  local title = proc_icon(basename(proc)) .. '  ' .. tidy_pane_title(pane.title)
+  local icon, procname = proc_icon(basename(proc))
+  local title = procname .. '  ' .. tidy_pane_title(pane.title)
 
   local index = {
     { Foreground = { Color = fg } },
     { Background = { Color = 'none' } },
-    { Text = wezterm.nerdfonts.ple_lower_right_triangle },
+    { Text = wezterm.nerdfonts.ple_left_half_circle_thick },
     { Foreground = { Color = bg } },
     { Background = { Color = fg } },
-    { Text = '' .. (tab.tab_index + 1) .. '' },
+    { Text = icon .. ' ' .. (tab.tab_index + 1) .. '' },
     { Foreground = { Color = fg } },
     { Background = { Color = bg } },
-    { Text = wezterm.nerdfonts.ple_upper_left_triangle },
+    { Text = wezterm.nerdfonts.ple_right_half_circle_thick },
   }
   local title_attrs = {
     { Text = ' ' .. title .. ' ' },
@@ -277,7 +278,8 @@ local function decorate_tab(tab, fg, bg)
   end
   table.insert(attributes, { Background = { Color = 'none' } })
   table.insert(attributes, { Foreground = { Color = bg } })
-  table.insert(attributes, { Text = wezterm.nerdfonts.ple_upper_left_triangle .. ' ' })
+  table.insert(attributes, { Text = wezterm.nerdfonts.ple_right_half_circle_thick .. ' ' })
+  -- table.insert(attributes, { Text = ' ' })
   return attributes
 end
 
@@ -325,7 +327,7 @@ local direction_keys = {
 ---@param is_resize? boolean
 ---@return table
 local function split_nav(key, is_resize)
-  local mods = is_resize and 'META' or 'CTRL'
+  local mods = is_resize and 'LEADER|SHIFT' or 'CTRL'
   return {
     key = key,
     mods = mods,

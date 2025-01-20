@@ -1,6 +1,5 @@
 local wezterm = require('wezterm');
 local mux = wezterm.mux
-local tabline = wezterm.plugin.require('https://github.com/michaelbrusegard/tabline.wez')
 
 -- local opacity = 0.55
 local opacity = 1

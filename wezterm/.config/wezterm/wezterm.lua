@@ -3,7 +3,9 @@ local mux = wezterm.mux
 
 -- local opacity = 0.55
 local opacity = 1
-local color_scheme_name = require('theme')
+local ok, color_scheme_name = pcall(require, 'theme')
+if not ok then color_scheme_name = 'Catppuccin Macchiato' end
+
 -- See: https://github.com/catppuccin/wezterm/blob/main/plugin/init.lua
 local colors = {
   ['Catppuccin Latte'] = {

@@ -19,7 +19,16 @@ alias mv='mv -i'
 
 alias mkdir='mkdir -p'
 
+function _nvim() {
+  if [ ! -z "$1" ] && [ -d "$1" ]; then
+    nvim --cmd "cd $1"
+  else
+    nvim $1
+  fi
+}
+
 alias vim='nvim'
+alias nvim='_nvim'
 
 # on alias also after sudo
 alias sudo='sudo '

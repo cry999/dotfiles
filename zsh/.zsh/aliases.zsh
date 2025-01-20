@@ -4,9 +4,6 @@ if which uname >/dev/null 2>&1; then
 		*)      alias ls='ls --color=auto' ;;
 	esac
 fi
-if [ "$(which vim 2>/dev/null)" = "/usr/bin/vim" ]; then
-	alias vim='/usr/local/bin/vim'
-fi
 alias eza='eza --icons=always --git-ignore --sort type'
 alias ls='eza --icons=never'
 alias la='eza -a'
@@ -27,6 +24,8 @@ function _nvim() {
   fi
 }
 
+alias v='vi'
+alias vi='vim'
 alias vim='nvim'
 alias nvim='_nvim'
 

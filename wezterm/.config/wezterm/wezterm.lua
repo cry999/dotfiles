@@ -435,7 +435,7 @@ return {
   line_height = 1.3,
   -- font
   font = wezterm.font_with_fallback(
-    { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro Text' },
+    { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
     { weight = 'Regular', style = 'Normal', stretch = 'Normal' }),
   font_size = 12.0,
   font_rules = {
@@ -444,7 +444,7 @@ return {
       intensity = 'Bold',
       italic = false,
       font = wezterm.font_with_fallback(
-        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro Text' },
+        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
         { weight = 'Bold', style = 'Normal', stretch = 'Normal' }
       ),
     },
@@ -453,7 +453,7 @@ return {
       intensity = 'Normal',
       italic = true,
       font = wezterm.font_with_fallback(
-        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro Text' },
+        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
         { weight = 'Regular', style = 'Italic', stretch = 'Normal' }),
     },
     -- bold and italic
@@ -461,7 +461,7 @@ return {
       intensity = 'Bold',
       italic = true,
       font = wezterm.font_with_fallback(
-        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro Text' },
+        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
         { weight = 'Bold', style = 'Italic', stretch = 'Normal' }),
     },
   },

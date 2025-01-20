@@ -1,8 +1,6 @@
-palette = "catppuccin_macchiato"
-# palette = "catppuccin_latte"
 add_newline = false
 
-continuation_prompt = '[ | ](fg:mauve)'
+continuation_prompt = '[ │ ](fg:mauve)'
 
 format = """
 [╭](fg:mauve)\
@@ -31,7 +29,7 @@ pipestatus_format = "[─](fg:mauve)[](fg:red)[](fg:mantle bg:red)[](fg
 disabled = false
 
 [directory]
-format = "[─](fg:mauve)[](fg:mauve)[ ](fg:mantle bg:mauve)[](fg:mauve bg:surface0)[ $path](bg:surface0)[](fg:surface0)"
+format = "[─](fg:mauve)[](fg:mauve)[ ](fg:mantle bg:mauve)[](fg:mauve bg:surface0)[ $path ](bg:surface0)[](fg:surface0)"
 truncate_to_repo = false
 truncation_length = 0
 

@@ -2,8 +2,7 @@ add_newline = false
 
 continuation_prompt = '[ │ ](fg:mauve)'
 
-format = """
-[╭](fg:mauve)\
+right_format = """
 $status\
 $directory\
 $git_branch\
@@ -11,14 +10,16 @@ $git_status\
 $cmd_duration\
 $time\
 $line_break\
-[╰](fg:mauve)\
+"""
+
+format="""
 $character\
 """
 
 [character]
-success_symbol = "[ INS ❯](fg:green)"
-error_symbol = "[ INS ❯](fg:red)"
-vimcmd_symbol = "[ NOR ❯](fg:blue)"
+success_symbol = "[❮ INS ❯](fg:green)"
+error_symbol = "[❮ INS ❯](fg:red)"
+vimcmd_symbol = "[❮ NOR ❯](fg:blue)"
 
 [status]
 format = "[─](fg:mauve)[](fg:red)[](fg:mantle bg:red)[](fg:red bg:surface0)[ $status](bg:surface0)[](fg:surface0)"

@@ -10,16 +10,9 @@ if [ -x /usr/libexec/path_helper ]; then
   eval `/usr/libexec/path_helper -s`
 fi
 
-function capitalize() {
-  echo $1 | awk '{print toupper(substr($0, 1, 1)) tolower(substr($0, 2))}'
-}
-
 # --- LazyGit ---
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 
-export CATPPUCCIN_FLAVOUR="frappe"
-
-export BAT_THEME="Catppuccin $(capitalize ${CATPPUCCIN_FLAVOUR})"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export GIT_EDITR=nvim

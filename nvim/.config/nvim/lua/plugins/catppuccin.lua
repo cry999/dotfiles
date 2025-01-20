@@ -7,7 +7,7 @@ return {
   config = function()
     local U = require("catppuccin.utils.colors")
     require("catppuccin").setup({
-      flavour = ui_options.flavour or vim.env.CATPPUCCIN_FLAVOUR or "frappe",
+      flavour = vim.env.CATPPUCCIN_FLAVOUR or 'macchiato',
       transparent_background = ui_options.transparent,
       integrations = {
         alpha = true,

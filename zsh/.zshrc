@@ -28,21 +28,39 @@ source ${ZSH_CONFIG_DIR}/starship.zsh
 source ${ZSH_CONFIG_DIR}/zsh-highlight.zsh
 source ${ZSH_CONFIG_DIR}/zoxide.zsh
 
-# auto launch tmux
+function capitalize() {
+  echo $1 | awk '{print toupper(substr($0, 1, 1)) tolower(substr($0, 2))}'
+}
 
-# if [[ ! -n $TMUX ]]; then
-#   # get the IDs
-#   ID="`tmux list-sessions`"
-#   if [[ -z "$ID" ]]; then
-#     tmux new-session
-#   fi
-#   create_new_session="Create New Session"
-#   ID="$ID\n${create_new_session}:"
-#   ID="`echo $ID | $PERCOL | cut -d: -f1`"
-#   if [[ "$ID" = "${create_new_session}" ]]; then
-#     tmux new-session
-#   fi
-#   tmux attach-session -t "$ID"
-# fi
-#
+function flavour-switch() {
+  if [ -z "$1" ]; then
+    echo "usage: flavour-switch <catppuccin flavour>"
+    return 1
+  fi
+  # validate flavour
+  case "$1" in
+    latte) 
+      wezterm_color_scheme="Catppuccin Latte"
+      ;;
+    frappe) 
+      wezterm_color_scheme="Catppuccin Frappe"
+      ;;
+    macchiato) 
+      wezterm_color_scheme="Catppuccin Macchiato"
+      ;;
+    mocha) 
+      wezterm_color_scheme="Catppuccin Mocha"
+      ;;
+    *)
+      echo "invalid flavour: $1"
+      return 1
+  esac
+  export CATPPUCCIN_FLAVOUR="$1"
+  export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.$1.toml"
+  export BAT_THEME="Catppuccin $(capitalize ${CATPPUCCIN_FLAVOUR})"
+  echo "return '$wezterm_color_scheme'" >$XDG_CONFIG_HOME/wezterm/theme.lua
+}
+
+flavour-switch 'macchiato'
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"

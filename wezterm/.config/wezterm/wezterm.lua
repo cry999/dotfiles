@@ -3,8 +3,7 @@ local mux = wezterm.mux
 
 -- local opacity = 0.55
 local opacity = 1
-local color_scheme_name = 'Catppuccin Macchiato'
--- local color_scheme_name = 'Catppuccin Latte'
+local color_scheme_name = require('theme')
 -- See: https://github.com/catppuccin/wezterm/blob/main/plugin/init.lua
 local colors = {
   ['Catppuccin Latte'] = {
@@ -122,50 +121,11 @@ local colors = {
 }
 local color_palette = colors[color_scheme_name]
 
-local function opacity_color(color, opacity)
+local function opacity_color(color, opa)
   local c = wezterm.color.parse(color)
-  local h, s, l, a = c:hsla()
-  return wezterm.color.from_hsla(h, s, l, opacity)
+  local h, s, l, _ = c:hsla()
+  return wezterm.color.from_hsla(h, s, l, opa)
 end
-
--- TODO: DIY tabline
--- tabline.setup({
---   options = {
---     icons_enabled = true,
---     theme = color_scheme_name,
---     tabs_enabled = true,
---     theme_overrides = {},
---     section_separators = {
---       left = wezterm.nerdfonts.ple_right_half_circle_thick,
---       right = wezterm.nerdfonts.ple_left_half_circle_thick,
---     },
---     component_separators = {
---       left = wezterm.nerdfonts.ple_right_half_circle_thin,
---       right = wezterm.nerdfonts.ple_left_half_circle_thin,
---     },
---     tab_separators = {
---       left = wezterm.nerdfonts.ple_right_half_circle_thick,
---       right = wezterm.nerdfonts.ple_left_half_circle_thick,
---     },
---   },
---   sections = {
---     tabline_a = { 'mode' },
---     tabline_b = { 'workspace' },
---     tabline_c = { ' ' },
---     tab_active = {
---       'index',
---       { 'process', padding = 0 },
---       ' 󰁥 ',
---       { 'cwd',     padding = { left = 0, right = 1 } },
---       { 'zoomed',  padding = 0 },
---     },
---     tab_inactive = { 'index', { 'process', padding = { left = 0, right = 1 } } },
---     tabline_x = { 'ram', 'cpu' },
---     tabline_y = { 'datetime', 'battery' },
---     tabline_z = { 'domain' },
---   },
---   extensions = {},
--- })
 
 ---@class TabInformation
 ---The TabInformation struct describes a tab.
@@ -214,7 +174,7 @@ wezterm.on('gui-startup', function(cmd)
   window:gui_window():maximize()
 end)
 
-wezterm.on('update-status', function(window, pane)
+wezterm.on('update-status', function(window, _)
   -- TODO: centerieze tab title
   --
   local tabs = window:mux_window():tabs()
@@ -266,9 +226,8 @@ end
 ---@param tab TabInformation
 ---@param fg string
 ---@param bg string
----@param is_last? boolean
 ---@return table
-local function decorate_tab(tab, fg, bg, is_last)
+local function decorate_tab(tab, fg, bg)
   local pane = tab.active_pane
   ---@diagnostic disable-next-line: undefined-field
   local proc = pane.foreground_process_name
@@ -317,12 +276,11 @@ wezterm.on('format-tab-title',
   ---@diagnostic disable-next-line: unused-local
   function(tab, _tabs, _panes, _config, _hover, _max_width)
     local bg = opacity_color(color_palette.surface0, opacity)
-    local is_last = _tabs[#_tabs].tab_id == tab.tab_id
     if tab.is_active then
-      return decorate_tab(tab, color_palette.blue, bg, is_last)
+      return decorate_tab(tab, color_palette.blue, bg)
     end
 
-    return decorate_tab(tab, color_palette.surface2, bg, is_last)
+    return decorate_tab(tab, color_palette.surface2, bg)
   end)
 
 ---activate_tab

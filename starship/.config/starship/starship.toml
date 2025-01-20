@@ -29,16 +29,18 @@ pipestatus_format = "[─](fg:mauve)[](fg:red)[](fg:mantle bg:red)[](fg
 disabled = false
 
 [directory]
-format = "[─](fg:mauve)[](fg:mauve)[ ](fg:mantle bg:mauve)[](fg:mauve bg:surface0)[ $path ](bg:surface0)[](fg:surface0)"
-truncate_to_repo = false
+format = "[─](fg:mauve)[](fg:mauve)[ ](fg:mantle bg:mauve)[](fg:mauve bg:surface0)[ $path](bg:surface0)[](fg:surface0)"
+truncate_to_repo = true
 truncation_length = 0
 
 [directory.substitutions]
-"Documents" = "󰈙"
-"Downloads" = ""
-"Music" = "󰝚"
-"Pictures" = ""
-"Repos" = "󰲋"
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Repos" = "󰲋 "
+"dotfiles" = " "
+"github.com" = " "
 
 [git_branch]
 format = "[─](fg:mauve)[](fg:peach)[](fg:mantle bg:peach)[](fg:peach bg:surface0)[ $branch](bg:surface0)"

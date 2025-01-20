@@ -1,0 +1,6 @@
+[manager]
+prepend_keymap = [
+  { on = [ 'g', 'd' ], run = 'cd ~/github.com/cry999/dotfiles/', desc = 'Go to dotfiles' },
+  { on = [ 'g', 'D' ], run = 'cd ~/Downloads', desc = 'Go to ~/Downloads' },
+  { on = [ 'g', 'h' ], run = 'cd ~', desc = 'Go to HOME' },
+]

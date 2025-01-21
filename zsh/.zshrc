@@ -78,7 +78,7 @@ function flavour-switch() {
 
   source ${ZSH_CONFIG_DIR}/zsh-highlight.zsh
 
-  echo "return '$wezterm_color_scheme'" >$XDG_CONFIG_HOME/wezterm/theme.lua
+  echo "return '$wezterm_color_scheme'" >$XDG_CONFIG_HOME/wezterm/ui/theme.lua
   echo "export CATPPUCCIN_FLAVOUR='$1'" >$ZSH_CONFIG_DIR/_theme.zsh
 }
 

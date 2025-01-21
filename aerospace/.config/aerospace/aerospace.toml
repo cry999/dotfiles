@@ -43,7 +43,12 @@ key-mapping.preset = 'qwerty'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-
+# See https://nikitabobko.github.io/AeroSpace/guide#exec-on-workspace-change-callback
+exec-on-workspace-change = [
+    '/bin/bash',
+    '-c',
+    '/opt/homebrew/opt/sketchybar/bin/sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
+]
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
 # - Constant:     gaps.outer.top = 8
@@ -56,7 +61,7 @@ inner.horizontal = 20
 inner.vertical =   20
 outer.left =       10
 outer.bottom =     10
-outer.top =        10
+outer.top =        20
 outer.right =      10
 
 # 'main' binding mode declaration

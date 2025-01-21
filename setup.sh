@@ -21,17 +21,18 @@ for theme in "latte" "frappe" "macchiato" "mocha"; do
 done
 
 stow -R -v -d ${HERE} -t $HOME \
-  aerospace \
-  bat       \
-  btop      \
-  git       \
-  homebrew  \
-  lazygit   \
-  nvim      \
-  starship  \
-  tmux      \
-  wezterm   \
-  yazi      \
+  aerospace  \
+  bat        \
+  btop       \
+  git        \
+  homebrew   \
+  lazygit    \
+  nvim       \
+  starship   \
+  sketchybar \
+  tmux       \
+  wezterm    \
+  yazi       \
   zsh
 
 function is_gitconfig_included() {

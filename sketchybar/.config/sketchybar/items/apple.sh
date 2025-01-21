@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 
+. "$CONFIG_DIR/constants.sh"
+
 POPUP_OFF='sketchybar --set apple.logo popup.drawing=off'
 
 logo=(
-  icon=$ICON_APPLE
-  icon.font="$FONT:Black:16.0"
+  icon=":desktop:"
+  icon.font="sketchybar-app-font:Regular:16.0"
   icon.color=$RED
-  padding_right=15
+  icon.padding_right=$ICON_PADDING
+  icon.padding_left=$ICON_PADDING
+  icon.drawing=on
+  background.color=$BASE
+  background.border_color=$RED
+  background.padding_right=15
   label.drawing=off
   click_script='sketchybar --set $NAME popup.drawing=toggle'
   popup.height=35

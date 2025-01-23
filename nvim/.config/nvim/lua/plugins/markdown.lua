@@ -15,8 +15,8 @@ return {
     heading = {
       enabled = true,
       signs = { '󰫎 ' },
-      border = true,
-      border_virtual = true,
+      border = false,
+      border_virtual = false,
     },
     checkbox = {
       enabled = true,

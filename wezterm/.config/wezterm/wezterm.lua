@@ -362,6 +362,23 @@ local function resize_pane(key)
   end)
 end
 
+---enter_mode
+---@param key string
+---@param mode string
+---@param mods? string
+---@return table
+local function enter_mode(key, mode, mods)
+  return {
+    key = key,
+    mods = mods or 'LEADER',
+    action = wezterm.action.ActivateKeyTable {
+      name = mode,
+      timeout_milliseconds = 1000,
+      one_shot = false,
+    },
+  }
+end
+
 local leader = { key = 't', mods = 'CTRL', timeout_milliseconds = 1000 }
 local keys = {
   { key = ':', mods = 'LEADER', action = wezterm.action.ActivateCommandPalette },
@@ -397,24 +414,20 @@ local keys = {
   -- resize
   --
   -- enter resize mode
-  {
-    key = 'R',
-    mods = 'LEADER',
-    action = wezterm.action.ActivateKeyTable {
-      name = 'resize_pane',
-      timeout_milliseconds = 1000,
-      one_shot = false,
-    },
-  },
+  --
+  enter_mode('H', 'resize_pane'),
+  enter_mode('J', 'resize_pane'),
+  enter_mode('K', 'resize_pane'),
+  enter_mode('L', 'resize_pane'),
   { key = ' ', mods = 'LEADER', action = wezterm.action.QuickSelect },
 }
 
 local key_tables = {
   resize_pane = {
-    { key = 'h', action = resize_pane('h') },
-    { key = 'j', action = resize_pane('j') },
-    { key = 'k', action = resize_pane('k') },
-    { key = 'l', action = resize_pane('l') },
+    { key = 'H', action = resize_pane('h') },
+    { key = 'J', action = resize_pane('j') },
+    { key = 'K', action = resize_pane('k') },
+    { key = 'L', action = resize_pane('l') },
   },
 }
 

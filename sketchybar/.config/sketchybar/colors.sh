@@ -3,9 +3,6 @@
 DEBUG_FILE=~/.colors.log
 
 ### Catppuccin
-export BLACK=0xff181926
-export WHITE=0xffcad3f5
-
 THEME="${THEME:-macchiato}"
 case "${THEME,,}" in
   latte)
@@ -135,6 +132,8 @@ for key in "${!colors[@]}"; do
   color="${color/##/0xff}"
   export "${key}"="${color}"
 done
+
+export TRANSPARENT=0x00000000
 
 export BATTERY_1=$GREEN
 export BATTERY_2=$YELLOW

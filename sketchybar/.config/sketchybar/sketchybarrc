@@ -6,13 +6,21 @@
 # https://github.com/FelixKratz/dotfiles
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
-ITEMS_DIR="$CONFIG_DIR/items"
+# ITEMS_DIR="$CONFIG_DIR/items"
 
 FONT="SF Pro"
 THEME="macchiato"
 
+LOG_FILE="/tmp/sketchybar.log"
+
 . "$CONFIG_DIR/colors.sh"
-. "$CONFIG_DIR/icons.sh"
+. "$CONFIG_DIR/constants.sh"
+
+__logging() {
+  echo "sketchybarrc: $@" >> $LOG_FILE
+}
+
+sketchybar --add event aerospace_workspace_change
 
 ##### Bar Appearance #####
 # Configuring the general appearance of the bar.
@@ -23,69 +31,71 @@ THEME="macchiato"
 
 bar=(
   height=45
-  color=0xaa8aadf4
-  border_width=2
-  border_color=$BAR_BORDER_COLOR
-  shadow=off
-  position=top
-  sticky=ona
-  padding_right=10
-  padding_left=10
-  y_offset=-5
-  margin=-2
   topmost=window
-  # color=0x00000000
-  # border_color=0x00000000
+  color=0x00000000
 )
 sketchybar --bar "${bar[@]}"
 
-##### Changing Defaults #####
-# We now change some default values, which are applied to all further items.
-# For a full list of all available item properties see:
-# https://felixkratz.github.io/SketchyBar/config/items
+PADDING=5
+ICON_FONT="sketchybar-app-font:Regular:16.0"
 
-PADDINGS=3
-
-default=(
-  updates=when_shown
-  icon.font="Hack Nerd Font:Bold:17.0"
-  icon.color=$ICON_COLOR
-  icon.padding_left=$PADDINGS
-  icon.padding_right=$PADDINGS
-  label.font="$FONT:Bold:14.0"
-  label.padding_left=$PADDINGS
-  label.padding_right=$PADDINGS
-  label.shadow.drawing=on
-  label.shadow.distance=2
-  label.shadow.color=0xff000000
-  padding_left=$PADDINGS
-  padding_right=$PADDINGS
-  background.height=26
-  background.corner_radius=9
-  background.border_width=2
-  popup.background.corner_radius=9
-  popup.background.border_width=2
-  popup.background.border_color=$POPUP_BORDER_COLOR
-  popup.background.color=$POPUP_BACKGROUND_COLOR
-  popup.blur_radius=20
-  popup.background.shadow.drawing=on
-  scroll_texts=on
+left_container=(
+  background.color=${SURFACE2/0xff/0x88}
+  background.border_color=$TEXT
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$BACKGROUND_HEIGHT
 )
-sketchybar --default "${default[@]}"
 
-##### Adding Mission Control Space Indicators #####
-# Let's add some mission control spaces:
-# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
-# to indicate active and available mission control spaces.
+# most left icon
+apple_icon=(
+  icon=""
+  icon.color=$TEXT
+  icon.font="JetBrainsMono Nerd Font:Bold:16.0"
+  icon.padding_left=20
+  icon.padding_right=20
+  background.color=$MAUVE
+  background.border_width=$BORDER_WIDTH
+  background.border_color=$TRANSPARENT
+  background.padding_left=$((BORDER_WIDTH / 2))
+  background.padding_right=$((BORDER_WIDTH / 2))
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH/2))
+  background.corner_radius=$BORDER_RADIUS
+)
 
-. $ITEMS_DIR/apple.sh
-. $ITEMS_DIR/space_indicators.sh
+sketchybar \
+  --add item apple left \
+  --set apple  "${apple_icon[@]}"
+
+focused_workspace_id=$(aerospace list-workspaces --focused --format '%{workspace}')
+__logging focused_workspace_id: $focused_workspace_id
+AEROSPACE_FOCUSED_WORKSPACE=$focused_workspace_id SENDER=init $PLUGIN_DIR/space.sh
+
+spaces=(
+  margin=20
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$BACKGROUND_HEIGHT
+  script="$PLUGIN_DIR/space.sh"
+)
+
+sketchybar \
+  --add bracket spaces '/space\..*/' \
+  --set spaces "${spaces[@]}"
+
+sketchybar \
+  --add bracket left_container apple spaces \
+  --set left_container "${left_container[@]}"
+
+sketchybar \
+  --add bracket spaces2 '/space\..*/' \
+  --set spaces2 "${spaces[@]}" \
+  --subscribe spaces2 aerospace_workspace_change space_windows_change
 
 ##### Adding Left Items #####
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
-. $ITEMS_DIR/front_app.sh
+# . $ITEMS_DIR/front_app.sh
 
 ##### Adding Right Items #####
 # In the same way as the left items we can add items to the right side.
@@ -98,14 +108,15 @@ sketchybar --default "${default[@]}"
 # volume is registered. More info about the event system can be found here:
 # https://felixkratz.github.io/SketchyBar/config/events
 
-sketchybar --add item clock right \
-           --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
-           --add item volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
-           --subscribe volume volume_change \
-           --add item battery right \
-           --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-           --subscribe battery system_woke power_source_change
+# sketchybar --add item clock right \
+#            --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
+#            --add item volume right \
+#            --set volume script="$PLUGIN_DIR/volume.sh" \
+#            --subscribe volume volume_change \
+#            --add item battery right \
+#            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+#            --subscribe battery system_woke power_source_change
 
 ##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --hotload on
 sketchybar --update

@@ -2,7 +2,7 @@ add_newline = false
 
 continuation_prompt = '[ │ ](fg:mauve)'
 
-right_format = """
+format = """
 $status\
 $directory\
 $git_branch\
@@ -10,9 +10,6 @@ $git_status\
 $cmd_duration\
 $time\
 $line_break\
-"""
-
-format="""
 $character\
 """
 

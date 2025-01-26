@@ -1,4 +1,4 @@
-ZSH_CONFIG_DIR=${ZSH_CONFIG_DIR:-~/.zsh}
+export ZSH_CONFIG_DIR=${ZSH_CONFIG_DIR:-~/.zsh}
 
 # load env at first
 source ${ZSH_CONFIG_DIR}/env.zsh
@@ -92,3 +92,5 @@ reload-theme
 add-zsh-hook precmd reload-theme
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"
+
+ # ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=accept-line

@@ -50,6 +50,10 @@ exec-on-workspace-change = [
     '-c',
     '/opt/homebrew/opt/sketchybar/bin/sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
 ]
+
+[exec.env-vars]
+PATH = '/opt/hombrew/bin:$PATH'
+
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
 # - Constant:     gaps.outer.top = 8
@@ -117,21 +121,21 @@ alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
-alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
-alt-0 = 'workspace 10' # In your config, you can drop workspace bindings that you don't need
-alt-shift-1 = 'workspace 11'
-alt-shift-2 = 'workspace 12'
-alt-shift-3 = 'workspace 13'
-alt-shift-4 = 'workspace 14'
-alt-shift-5 = 'workspace 15'
-alt-shift-6 = 'workspace 16'
-alt-shift-7 = 'workspace 17'
-alt-shift-8 = 'workspace 18'
-alt-shift-9 = 'workspace 19'
-alt-shift-0 = 'workspace 20' # In your config, you can drop workspace bindings that you don't need
+# alt-shift-1 = 'workspace s1'
+# alt-shift-2 = 'workspace s2'
+# alt-shift-3 = 'workspace s3'
+# alt-shift-4 = 'workspace s4'
+# alt-shift-5 = 'workspace s5' # In your config, you can drop workspace bindings that you don't need
+# alt-shift-1 = 'workspace 11'
+# alt-shift-2 = 'workspace 12'
+# alt-shift-3 = 'workspace 13'
+# alt-shift-4 = 'workspace 14'
+# alt-shift-5 = 'workspace 15'
+# alt-shift-6 = 'workspace 16'
+# alt-shift-7 = 'workspace 17'
+# alt-shift-8 = 'workspace 18'
+# alt-shift-9 = 'workspace 19'
+# alt-shift-0 = 'workspace 20' # In your config, you can drop workspace bindings that you don't need
 # alt-b = 'workspace B'
 # alt-c = 'workspace C'
 # alt-d = 'workspace D'
@@ -160,21 +164,21 @@ alt-ctrl-2 = 'move-node-to-workspace 2'
 alt-ctrl-3 = 'move-node-to-workspace 3'
 alt-ctrl-4 = 'move-node-to-workspace 4'
 alt-ctrl-5 = 'move-node-to-workspace 5'
-alt-ctrl-6 = 'move-node-to-workspace 6'
-alt-ctrl-7 = 'move-node-to-workspace 7'
-alt-ctrl-8 = 'move-node-to-workspace 8'
-alt-ctrl-9 = 'move-node-to-workspace 9'
-alt-ctrl-a = 'move-node-to-workspace 10'
-alt-shift-ctrl-1 = 'move-node-to-workspace 11'
-alt-shift-ctrl-2 = 'move-node-to-workspace 12'
-alt-shift-ctrl-3 = 'move-node-to-workspace 13'
-alt-shift-ctrl-4 = 'move-node-to-workspace 14'
-alt-shift-ctrl-5 = 'move-node-to-workspace 15'
-alt-shift-ctrl-6 = 'move-node-to-workspace 16'
-alt-shift-ctrl-7 = 'move-node-to-workspace 17'
-alt-shift-ctrl-8 = 'move-node-to-workspace 18'
-alt-shift-ctrl-9 = 'move-node-to-workspace 19'
-alt-shift-ctrl-0 = 'move-node-to-workspace 20' # In your config, you can drop workspace bindings that you don't need
+# alt-ctrl-shift-1 = 'move-node-to-workspace s1'
+# alt-ctrl-shift-2 = 'move-node-to-workspace s2'
+# alt-ctrl-shift-3 = 'move-node-to-workspace s3'
+# alt-ctrl-shift-4 = 'move-node-to-workspace s4'
+# alt-ctrl-shift-5 = 'move-node-to-workspace s5'
+# alt-shift-ctrl-1 = 'move-node-to-workspace 11'
+# alt-shift-ctrl-2 = 'move-node-to-workspace 12'
+# alt-shift-ctrl-3 = 'move-node-to-workspace 13'
+# alt-shift-ctrl-4 = 'move-node-to-workspace 14'
+# alt-shift-ctrl-5 = 'move-node-to-workspace 15'
+# alt-shift-ctrl-6 = 'move-node-to-workspace 16'
+# alt-shift-ctrl-7 = 'move-node-to-workspace 17'
+# alt-shift-ctrl-8 = 'move-node-to-workspace 18'
+# alt-shift-ctrl-9 = 'move-node-to-workspace 19'
+# alt-shift-ctrl-0 = 'move-node-to-workspace 20' # In your config, you can drop workspace bindings that you don't need
 # alt-shift-b = 'move-node-to-workspace B'
 # alt-shift-c = 'move-node-to-workspace C'
 # alt-shift-d = 'move-node-to-workspace D'
@@ -239,3 +243,10 @@ k = [ 'focus-monitor up', 'mode main' ]
 l = [ 'focus-monitor right', 'mode main' ]
 enter = 'mode main'
 esc = 'mode main'
+
+[workspace-to-monitor-force-assignment]
+# s1 = 'secondary'
+# s2 = 'secondary'
+# s3 = 'secondary'
+# s4 = 'secondary'
+# s5 = 'secondary'

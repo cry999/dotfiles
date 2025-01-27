@@ -162,6 +162,32 @@ local PaneInformation = {}
 ---@return string
 function PaneInformation.get_foreground_process_name() return '' end
 
+wezterm.on('user-var-changed', function(window, pane, name, value)
+  local overrides = window:get_config_overrides() or {}
+  if name == "ZEN_MODE" then
+    local incremental = value:find("+")
+    local number_value = tonumber(value)
+    if incremental ~= nil then
+      window:perform_action(wezterm.action.SetPaneZoomState(true), pane)
+      while (number_value > 0) do
+        window:perform_action(wezterm.action.IncreaseFontSize, pane)
+        number_value = number_value - 1
+      end
+      overrides.enable_tab_bar = false
+    elseif number_value < 0 then
+      window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
+      window:perform_action(wezterm.action.ResetFontSize, pane)
+      overrides.font_size = nil
+      overrides.enable_tab_bar = true
+    else
+      window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
+      overrides.font_size = number_value
+      overrides.enable_tab_bar = false
+    end
+  end
+  window:set_config_overrides(overrides)
+end)
+
 wezterm.on('gui-attached', function()
   -- maximize all displayed windows on startup
   local workspace = mux.get_active_workspace()
@@ -338,19 +364,6 @@ local function navigate_or_send_key(key)
       end
     end)
   }
-end
-
----action_navigate_or_send_key
----@param key string
----@return table
-local function action_navigate_or_send_key(key)
-  return wezterm.action_callback(function(window, pane)
-    if is_vim(pane) then
-      window:perform_action({ SendKey = { key = key, mods = 'CTRL' } }, pane)
-    else
-      window:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
-    end
-  end)
 end
 
 ---resize_pane

@@ -7,6 +7,7 @@ return {
     plugins = {
       twilight = { enabled = true },
       tmux = { enabled = true },
+      wezterm = { enabled = true, font = '+0' },
     },
   },
 }

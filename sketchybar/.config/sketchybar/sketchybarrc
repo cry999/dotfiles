@@ -20,7 +20,24 @@ __logging() {
   echo "sketchybarrc: $@" >> $LOG_FILE
 }
 
+#####################
+### CUSTOM EVENTS ###
+#####################
+
 sketchybar --add event aerospace_workspace_change
+
+######################
+### DEFAULT CONFIG ###
+######################
+local __default=(
+  icon.shadow.drawing=on
+  icon.shadow.angle=45
+  icon.shadow.distance=2
+  label.shadow.drawing=on
+  label.shadow.angle=45
+  label.shadow.distance=2
+)
+sketchybar --default "${__default[@]}"
 
 ##### Bar Appearance #####
 # Configuring the general appearance of the bar.
@@ -36,18 +53,10 @@ bar=(
 )
 sketchybar --bar "${bar[@]}"
 
-PADDING=5
-ICON_FONT="sketchybar-app-font:Regular:16.0"
+##################
+### LEFT ITEMS ###
+##################
 
-left_container=(
-  background.color=${SURFACE2/0xff/0x88}
-  background.border_color=$TEXT
-  background.border_width=$BORDER_WIDTH
-  background.corner_radius=$BORDER_RADIUS
-  background.height=$BACKGROUND_HEIGHT
-)
-
-# most left icon
 apple_icon=(
   icon=""
   icon.color=$TEXT
@@ -71,51 +80,216 @@ focused_workspace_id=$(aerospace list-workspaces --focused --format '%{workspace
 __logging focused_workspace_id: $focused_workspace_id
 AEROSPACE_FOCUSED_WORKSPACE=$focused_workspace_id SENDER=init $PLUGIN_DIR/space.sh
 
+left_container=(
+  background.color=${SURFACE2/0xff/0x88}
+  background.border_color=$TEXT
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$BACKGROUND_HEIGHT
+  background.padding_left="10"
+  background.padding_right="10"
+)
+sketchybar \
+  --add bracket left_container apple '/space\..*/' \
+  --set left_container "${left_container[@]}"
+
 spaces=(
-  margin=20
   background.corner_radius=$BORDER_RADIUS
   background.height=$BACKGROUND_HEIGHT
   script="$PLUGIN_DIR/space.sh"
 )
-
 sketchybar \
   --add bracket spaces '/space\..*/' \
-  --set spaces "${spaces[@]}"
+  --set spaces "${spaces[@]}" \
+  --subscribe spaces aerospace_workspace_change space_windows_change
+
+padding=(
+  padding_right="10"
+  padding_left="10"
+)
+sketchybar \
+  --add item padding left \
+  --set padding "${padding[@]}"
+
+front_app_name=(
+  label.font="SF Pro:Bold:14.0"
+  label.padding_left="5"
+  label.padding_right="10"
+  icon.padding_left="10"
+  icon.padding_right="10"
+  icon.background.padding_left="10"
+  icon.background.padding_right="10"
+  icon.background.image.scale="0.8"
+  icon.background.image.padding_left="10"
+  background.color=$BLUE
+  background.border_width=$BORDER_WIDTH
+  background.border_color=$TEXT
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$BACKGROUND_HEIGHT
+  display="active"
+)
+sketchybar \
+  --add item front_app_name left \
+  --set front_app_name "${front_app_name[@]}"
+
+front_app_title=(
+  label.font="SF Pro:Regular:12.0"
+  label.padding_left="10"
+  label.padding_right="10"
+  icon.drawing="off"
+  background.padding_left="10"
+  background.padding_right="10"
+  display="active"
+)
+sketchybar \
+  --add item front_app_title left \
+  --set front_app_title "${front_app_title[@]}"
+
+front_app=(
+  background.padding_left="10"
+  background.padding_right="10"
+  background.color=${SURFACE2/0xff/0x88}
+  background.corner_radius=$BORDER_RADIUS
+  background.border_width=$BORDER_WIDTH
+  background.border_color=$TEXT
+  background.height=$BACKGROUND_HEIGHT
+  updates="on"
+  update_freq="1"
+  script="$PLUGIN_DIR/front_app.sh"
+)
+sketchybar \
+  --add bracket front_app front_app_name front_app_title \
+  --set         front_app "${front_app[@]}" \
+  --subscribe   front_app front_app_switched
+
+###################
+### RIGHT ITEMS ###
+###################
+
+clock=(
+  icon=""
+  icon.padding_left="10"
+  icon.padding_right="10"
+  label="$(date +'%H:%M')"
+  label.padding_left="10"
+  label.padding_right="10"
+  background.color=$TRANSPARENT
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+  update_freq="10"
+  script="$PLUGIN_DIR/clock.sh"
+)
+sketchybar \
+  --add item clock_right right \
+  --set      clock_right "${clock[@]}"
+
+date=(
+  icon="󰃭"
+  icon.padding_left="10"
+  icon.padding_right="10"
+  label="$(date +'%a %d %b')"
+  label.padding_left="10"
+  label.padding_right="10"
+  background.color=$TRANSPARENT
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+  update_freq="120"
+  script="$PLUGIN_DIR/date.sh"
+)
+sketchybar \
+  --add item date_right right \
+  --set      date_right "${date[@]}"
+
+volume=(
+  icon="󰕾"
+  icon.padding_left="10"
+  icon.padding_right="10"
+  label="100%"
+  label.padding_left="10"
+  label.padding_right="10"
+  background.color=$TRANSPARENT
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+  script="$PLUGIN_DIR/volume.sh"
+)
+sketchybar \
+  --add item  volume_right right \
+  --set       volume_right "${volume[@]}" \
+  --subscribe volume_right volume_change
+
+battery=(
+  icon=""
+  icon.padding_left="10"
+  icon.padding_right="10"
+  label="100%"
+  label.padding_left="10"
+  label.padding_right="10"
+  background.color=$TRANSPARENT
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+  update_freq="120"
+  script="$PLUGIN_DIR/battery.sh"
+)
+sketchybar \
+  --add item  battery_right right \
+  --set       battery_right "${battery[@]}" \
+  --subscribe battery_right system_woke power_source_change
+
+bg_battery=(
+  background.color=$YELLOW
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+)
+sketchybar \
+  --add bracket bg_battery battery_right volume_right date_right clock_right \
+  --set         bg_battery "${bg_battery[@]}"
+
+bg_volume=(
+  background.color=$MAUVE
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+)
+sketchybar \
+  --add bracket bg_volume volume_right date_right clock_date \
+  --set         bg_volume "${bg_volume[@]}"
+
+bg_date=(
+  background.color=$BLUE
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+)
+sketchybar \
+  --add bracket bg_date date_right clock_right \
+  --set         bg_date "${bg_date[@]}"
+
+bg_clock=(
+  background.color=$GREEN
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+)
+sketchybar \
+  --add bracket bg_clock clock_right \
+  --set         bg_clock "${bg_clock[@]}"
+
+right_container=(
+  background.color=$TRANSPARENT
+  background.border_color=$TEXT
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$BACKGROUND_HEIGHT
+)
 
 sketchybar \
-  --add bracket left_container apple spaces \
-  --set left_container "${left_container[@]}"
-
-sketchybar \
-  --add bracket spaces2 '/space\..*/' \
-  --set spaces2 "${spaces[@]}" \
-  --subscribe spaces2 aerospace_workspace_change space_windows_change
-
-##### Adding Left Items #####
-# We add some regular items to the left side of the bar, where
-# only the properties deviating from the current defaults need to be set
-
-# . $ITEMS_DIR/front_app.sh
-
-##### Adding Right Items #####
-# In the same way as the left items we can add items to the right side.
-# Additional position (e.g. center) are available, see:
-# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
-
-# Some items refresh on a fixed cycle, e.g. the clock runs its script once
-# every 10s. Other items respond to events they subscribe to, e.g. the
-# volume.sh script is only executed once an actual change in system audio
-# volume is registered. More info about the event system can be found here:
-# https://felixkratz.github.io/SketchyBar/config/events
-
-# sketchybar --add item clock right \
-#            --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
-#            --add item volume right \
-#            --set volume script="$PLUGIN_DIR/volume.sh" \
-#            --subscribe volume volume_change \
-#            --add item battery right \
-#            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-#            --subscribe battery system_woke power_source_change
+  --add bracket right_container '/.*_right/' \
+  --set right_container "${right_container[@]}"
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --hotload on

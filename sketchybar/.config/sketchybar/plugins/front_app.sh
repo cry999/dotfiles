@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Some events send additional information specific to the event in the $INFO
 # variable. E.g. the front_app_switched event sends the name of the newly
@@ -7,22 +7,41 @@
 
 PLUGIN_DIR=$CONFIG_DIR/plugins
 
-if [ "$SENDER" = "front_app_switched" ]; then
-  app=(
-    label="$INFO"
-    icon.background.image="app.$INFO"
-    icon.background.image.scale=0.8
-  )
-  sketchybar --set "$NAME" "${app[@]}"
+LOG_FILE="/tmp/sketchybar.log"
 
-  # NOTE: Below code may be not required
-  AEROSPACE_FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
-  apps=$(aerospace list-windows --workspace $AEROSPACE_FOCUSED_WORKSPACE | awk -F'|' ' { gsub(/^ *| *$/, "", $2); print $2 } ')
-  if [ "$apps" != "" ]; then
-    icon_strip=" "
-    while read -r app; do
-      icon_strip+=" $($PLUGIN_DIR/icon_map.sh "$app")"
-    done <<<"$apps"
-    sketchybar --set space.$AEROSPACE_FOCUSED_WORKSPACE label="$icon_strip"
-  fi
-fi
+__logging() {
+  echo "plugins/front_app.sh: $@" >> $LOG_FILE
+}
+
+__logging "SENDER: $SENDER"
+
+case "$SENDER" in
+  front_app_switched|routine)
+    app_name=$(aerospace list-windows --focused --format '%{app-name}' 2>&1)
+    if [ "$app_name" = "No window is focused" ]; then
+      app_name="-"
+      window_title="-"
+      icon_background_image_drawing="off"
+    else
+      window_title=$(aerospace list-windows --focused --format '%{window-title}' 2>&1)
+      icon_background_image_drawing="on"
+    fi
+    name=(
+      label="$app_name"
+      icon.background.image="app.$app_name"
+      icon.background.image.drawing=$icon_background_image_drawing
+      icon.background.color=$TRANSPARENT
+    )
+    sketchybar --set front_app_name "${name[@]}"
+
+    title=(
+      label="$window_title"
+    )
+    sketchybar --set front_app_title "${title[@]}"
+
+    __logging "APP_NAME: $app_name"
+    __logging "WINDOW_TITLE: $window_title"
+    ;;
+  *)
+    ;;
+esac

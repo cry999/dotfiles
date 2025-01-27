@@ -10,75 +10,98 @@ __logging() {
   echo "plugins/space.sh: $@" >> $LOG_FILE
 }
 
+local __focused_space=(
+  icon.color=${MAUVE}
+  icon.highlight_color=${MAUVE}
+  background.color=${BLUE}
+  background.height=$((BACKGROUND_HEIGHT-2*BORDER_WIDTH))
+  background.corner_radius=$BORDER_RADIUS
+  background.padding_left=$BORDER_WIDTH
+  background.padding_right=$BORDER_WIDTH
+)
+
+local __not_focused_space=(
+  icon.color=$BLUE
+  icon.highlight_color=$BLUE
+  label.width=0
+  background.color=$TRANSPARENT
+)
+
+local __default_space=(
+  icon="●"
+  icon.font="JetBrainsMono Nerd Font:Regular:16.0"
+  icon.padding_left=10
+  icon.padding_right=10
+  label.font="sketchybar-app-font:Regular:16.0"
+  label.color=$TEXT
+  label.padding_left=10
+  label.padding_right=10
+)
+
+__sbar_set() {
+  local space=$1
+  shift
+  __logging "__sbar_set: sketchybar --set $space $@"
+  sketchybar \
+    --animate sin 10 \
+    --set $space "$@"
+}
+
+__get_label() {
+  local apps=$(aerospace list-windows --workspace $1 --format '%{app-name}')
+  __logging "__get_label: APPS($1): ${apps}"
+  local label=""
+  while read -r app; do [[ -z "$app" ]] || label+=" $(${PLUGIN_DIR}/icon_map.sh "$app")"; done <<<"$apps"
+  __logging "__get_label: LABEL($1): ${label}"
+  echo $label
+}
+
+__focus_space() {
+  local label="$(__get_label $1)"
+  local space=(${__focused_space[@]})
+  if [ "$label" != "" ]; then
+    space+=(label="$label" label.width="dynamic")
+  fi
+  __sbar_set space.$1 "${space[@]}"
+}
+
+__unfocus_space() {
+  local space=(${__not_focused_space[@]})
+  __sbar_set space.$1 "${space[@]}"
+}
+
 __logging "SENDER: $SENDER"
 
-if [ "$SENDER" = "init" ] || [ "$SENDER" = "space_change" ] || [ "$SENDER" = "aerospace_workspace_change" ]; then
-  # TODO: want to highlight the current space
-  __logging "AEROSPACE_FOCUSED_WORKSPACE: $AEROSPACE_FOCUSED_WORKSPACE"
-  __logging "AEROSPACE_PREV_WORKSPACE: $AEROSPACE_PREV_WORKSPACE"
+case "$SENDER" in
+  init)
+    local monitor_id workspace_id label
+    for monitor_id in $(aerospace list-monitors --format '%{monitor-id}'); do
+      for workspace_id in $(aerospace list-workspaces --monitor $monitor_id); do
+        if [ "$SENDER" = "init" ]; then sketchybar --add space space.$workspace_id left; fi
+        label="$(__get_label $workspace_id)"
+        local space=("${__default_space[@]}")
+        space+=(space="$workspace_id" label="$label" display="$monitor_id")
+        sketchybar --set space.$workspace_id "${space[@]}"
 
-  for monitor_id in $(aerospace list-monitors --format '%{monitor-id}'); do
-    __logging monitor_id: $monitor_id
-    for workspace_id in $(aerospace list-workspaces --monitor $monitor_id); do
-      __logging workspace_id: $workspace_id
-      label=$(aerospace list-windows --workspace $workspace_id --format '%{app-name}' | xargs -I {} $PLUGIN_DIR/icon_map.sh {})
-      space=(
-        space="$workspace_id"
-        icon.font="JetBrainsMono Nerd Font:Regular:16.0"
-        icon.padding_left=10
-        icon.padding_right=10
-        label="$label"
-        label.font="sketchybar-app-font:Regular:16.0"
-        label.color=$TEXT
-        label.padding_left=10
-        label.padding_right=10
-        display="$monitor_id"
-      )
-      if [ "$workspace_id" = "$AEROSPACE_FOCUSED_WORKSPACE" ]; then
-        space+=(
-          icon="●"
-          icon.color=$GREEN
-          icon.highlight_color=$GREEN
-          background.color=$BLUE
-          background.height=$((BACKGROUND_HEIGHT-2*BORDER_WIDTH))
-          background.corner_radius=$BORDER_RADIUS
-          background.padding_left=$BORDER_WIDTH
-          background.padding_right=$BORDER_WIDTH
-        )
-        if [ "$label" != "" ]; then
-          space+=( 
-            label.width="dynamic"
-          )
-        fi
-      else
-        space+=(
-          icon="◯"
-          icon.color=$TEXT
-          icon.highlight_color=$TEXT
-          label.width=0
-          background.color=$TRANSPARENT
-        )
-      fi
-      __logging space: "${space[@]}"
-      if [ "$SENDER" = "init" ]; then
-      sketchybar \
-        --add space space.$workspace_id left
-      fi
-      sketchybar \
-        --animate sin 20 \
-        --set space.$workspace_id "${space[@]}"
+        __unfocus_space $workspace_id
+      done
     done
-  done
-elif [ "$SENDER" = "space_windows_change" ]; then
-  __logging "SENDER: $SENDER"
-  for monitor_id in $(aerospace list-monitors --format '%{monitor-id}'); do
-    __logging monitor_id: $monitor_id
-    for workspace_id in $(aerospace list-workspaces --monitor $monitor_id); do
-      label=$(aerospace list-windows --workspace $workspace_id --format '%{app-name}' | xargs -I {} $PLUGIN_DIR/icon_map.sh {})
-      __logging "label: $label"
-      sketchybar \
-        --animate sin 20 \
-        --set space.$workspace_id label="$label"
+    __focus_space $AEROSPACE_FOCUSED_WORKSPACE
+    ;;
+
+  aerospace_workspace_change)
+    __unfocus_space $AEROSPACE_PREV_WORKSPACE
+    __focus_space $AEROSPACE_FOCUSED_WORKSPACE
+    ;;
+
+  space_windows_change)
+    local label monitor_id workspace_id
+    for monitor_id in $(aerospace list-monitors --format '%{monitor-id}'); do
+      for workspace_id in $(aerospace list-workspaces --monitor $monitor_id); do
+        label=$(__get_label $workspace_id)
+        __sbar_set space.$workspace_id label="$label"
+      done
     done
-  done
-fi
+    ;;
+esac
+# fi

@@ -32,12 +32,16 @@ case "$SENDER" in
       icon.background.image.drawing=$icon_background_image_drawing
       icon.background.color=$TRANSPARENT
     )
-    sketchybar --set front_app_name "${name[@]}"
+    sketchybar \
+      --animate sin 20 \
+      --set front_app_name "${name[@]}"
 
     title=(
       label="$window_title"
     )
-    sketchybar --set front_app_title "${title[@]}"
+    sketchybar \
+      --animate sin 20 \
+      --set front_app_title "${title[@]}"
 
     __logging "APP_NAME: $app_name"
     __logging "WINDOW_TITLE: $window_title"

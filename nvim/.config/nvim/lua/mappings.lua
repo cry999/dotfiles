@@ -44,6 +44,14 @@ local mappings = {
     ["g<C-a>"] = { function() require("dial.map").manipulate("increment", "gnormal") end, desc = "Increment number under cursor" },
     ["g<C-x>"] = { function() require("dial.map").manipulate("decrement", "gnormal") end, desc = "Decrement number under cursor" },
 
+    -- neoscroll
+    ["<C-u>"] = { function() require('neoscroll').ctrl_u({ duration = 250, easing = 'linear' }) end, desc = "Scroll half up" },
+    ["<C-d>"] = { function() require('neoscroll').ctrl_d({ duration = 250, easing = 'linear' }) end, desc = "Scroll half down" },
+    ["<C-b>"] = { function() require('neoscroll').ctrl_b({ duration = 450, easing = 'linear' }) end, desc = "Scroll up" },
+    ["<C-f>"] = { function() require('neoscroll').ctrl_f({ duration = 450, easing = 'linear' }) end, desc = "Scroll down" },
+    ["<C-y>"] = { function() require('neoscroll').scroll(-0.1, { duration = 100 }) end, desc = "Scroll 1 up" },
+    ["<C-e>"] = { function() require('neoscroll').scroll(0.1, { duration = 100 }) end, desc = "Scroll 1 down" },
+
     -- window management
     ["<leader>wp"] = {
       function()

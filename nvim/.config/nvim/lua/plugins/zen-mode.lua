@@ -5,7 +5,7 @@ return {
   },
   opts = {
     plugins = {
-      twilight = { enabled = true },
+      twilight = { enabled = false },
       tmux = { enabled = true },
       wezterm = { enabled = true, font = '+0' },
     },

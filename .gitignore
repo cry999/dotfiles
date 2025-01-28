@@ -4,3 +4,4 @@ Brewfile.lock.json
 .luarc.json
 tmux-client-*.log
 archive
+lazy-lock.json

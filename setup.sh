@@ -23,6 +23,7 @@ done
 stow -R -v -d ${HERE} -t $HOME \
   aerospace  \
   bat        \
+  borders    \
   btop       \
   git        \
   homebrew   \

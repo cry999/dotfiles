@@ -6,7 +6,14 @@ __fzf_history_search() {
   query=$LBUFFER
   LBUFFER=""
   zle reset-prompt
-  LBUFFER=$(history -a | fzf +s --tac +m --query="$query" --prompt="history> " | sed -r 's/ *[0-9]*\*? *//')
+  LBUFFER=$(
+    history -E 1 |
+      gsed -e 's/^\s*//g' |
+      gsed -e 's/\s\{2,\}/ /g' |
+      cut -d' ' -f4- |
+      fzf +s --tac +m --query="$query" --prompt="history> " |
+      sed -r 's/ *[0-9]*\*? *//'
+  )
 }
 zle -N fzf_history_search __fzf_history_search
 bindkey '^R' fzf_history_search

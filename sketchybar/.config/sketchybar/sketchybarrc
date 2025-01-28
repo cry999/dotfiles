@@ -239,6 +239,73 @@ sketchybar \
   --set       battery_right "${battery[@]}" \
   --subscribe battery_right system_woke power_source_change
 
+# see: https://github.com/FelixKratz/dotfiles/blob/master/.config/sketchybar/items/widgets/wifi.lua
+wifi_up=(
+  icon='⬆'
+  icon.font='JetBrainsMono Nerd Font:Bold:9.0'
+  icon.padding_left='10'
+  icon.padding_right='0'
+  icon.color=$RED
+  label='??? Bps'
+  label.font='JetBrainsMono Nerd Font:Bold:9.0'
+  label.padding_left='10'
+  label.padding_right='10'
+  label.color=$RED
+  width='0'
+  y_offset='5'
+)
+sketchybar \
+  --add item wifi_up right \
+  --set      wifi_up "${wifi_up[@]}"
+
+wifi_down=(
+  icon=''⬇
+  icon.font='JetBrainsMono Nerd Font:Bold:9.0'
+  icon.padding_left='10'
+  icon.padding_right='0'
+  icon.color=$BLUE
+  label='??? Bps'
+  label.font='JetBrainsMono Nerd Font:Bold:9.0'
+  label.padding_left='10'
+  label.padding_right='10'
+  label.color=$BLUE
+  y_offset='-3'
+)
+sketchybar \
+  --add item wifi_down right \
+  --set      wifi_down "${wifi_down[@]}"
+
+wifi=(
+  icon=''
+  icon.font='JetBrainsMono Nerd Font:Bold:16.0'
+  icon.padding_left='10'
+)
+sketchybar \
+  --add item wifi_icon right \
+  --set      wifi_icon "${wifi[@]}"
+
+wifi_right=(
+  script="$PLUGIN_DIR/wifi.sh"
+)
+sketchybar \
+  --add bracket wifi_right wifi_up wifi_down wifi_icon \
+  --set         wifi_right "${wifi_right[@]}" \
+  --subscribe   wifi_right wifi_change
+
+#######################
+### RIGHT CONTAINER ###
+#######################
+
+bg_wifi=(
+  background.color=$YELLOW
+  background.border_width=$BORDER_WIDTH
+  background.corner_radius=$BORDER_RADIUS
+  background.height=$((BACKGROUND_HEIGHT-BORDER_WIDTH))
+)
+sketchybar \
+  --add bracket bg_wifi wifi_right battery_right volume_right date_right clock_right \
+  --set         bg_wifi "${bg_wifi[@]}"
+
 bg_battery=(
   background.color=$YELLOW
   background.border_width=$BORDER_WIDTH

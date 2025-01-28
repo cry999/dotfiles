@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+OPACITY="c0"
+BG_OPACITY="30"
+ACTIVE_COLOR="#8AADF4"
+INACTIVE_COLOR="#24273A"
+BACKGROUND_COLOR="#24273A"
+
+options=(
+	style=round
+	width=10.0
+	hidpi=off
+	active_color=${ACTIVE_COLOR//\#/0x$OPACITY}
+	inactive_color=${INACTIVE_COLOR//\#/0x$OPACITY}
+	background_color=${BACKGROUND_COLOR//\#/0x$BG_OPACITY}
+)
+
+borders "${options[@]}"

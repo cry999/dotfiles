@@ -26,6 +26,15 @@ case "$SENDER" in
       window_title=$(aerospace list-windows --focused --format '%{window-title}' 2>&1)
       icon_background_image_drawing="on"
     fi
+    case "$app_name" in
+      Google\ Chrome)
+        # remove the " - Google Chrome" suffix
+        # from the window title
+        window_title="${window_title% - Google Chrome}"
+        ;;
+      *)
+        ;;
+    esac
     name=(
       label="$app_name"
       icon.background.image="app.$app_name"
@@ -37,7 +46,7 @@ case "$SENDER" in
       --set front_app_name "${name[@]}"
 
     title=(
-      label="$window_title"
+      label="${window_title::50}"
     )
     sketchybar \
       --animate sin 20 \

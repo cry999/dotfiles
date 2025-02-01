@@ -285,6 +285,7 @@ sketchybar \
   --set      wifi_icon "${wifi[@]}"
 
 wifi_right=(
+  update_freq="1"
   script="$PLUGIN_DIR/wifi.sh"
 )
 sketchybar \

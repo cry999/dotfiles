@@ -69,6 +69,16 @@ return {
           },
           -- condition = { function(args) return args.sclnu end },
         },
+        {
+          sign = {
+            namespace = { 'markdown' },
+            name      = { '.*' },
+            maxwidth  = 1,
+            colwidth  = 2,
+            auto      = false,
+          },
+          condition = { function(args) return vim.bo[args.buf].filetype == "markdown" end },
+        },
         -- select line number
         {
           text = {

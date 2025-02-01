@@ -100,8 +100,10 @@ return {
           FoldCol8 = { fg = c.text, bg = U.blend(c.base, c.text, 0.30) },
 
           -- for render-markdown
+          ['@markup.quote'] = { fg = c.overlay0, bold = true },
           RenderMarkdownFocused = { fg = c.red, underline = true },
           RenderMarkdownNotToDo = { fg = c.overlay0, strikethrough = true },
+          RenderMarkdownCaution = { fg = c.yellow },
         }
       end,
       color_overrides = {

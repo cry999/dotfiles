@@ -18,3 +18,5 @@ __fzf_history_search() {
 zle -N fzf_history_search __fzf_history_search
 bindkey '^R' fzf_history_search
 bindkey '^Y' autosuggest-accept
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward

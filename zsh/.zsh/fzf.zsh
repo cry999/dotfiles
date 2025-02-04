@@ -1,4 +1,4 @@
-zinit light Aloxaf/fzf-tab
+# zinit light Aloxaf/fzf-tab
 
 # TIPS:
 # 'wild | exact-match | Items that include `wild`

@@ -93,4 +93,5 @@ add-zsh-hook precmd reload-theme
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"
 
+. <(fzf --zsh)
  # ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=accept-line

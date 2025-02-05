@@ -8,7 +8,7 @@ return {
   ft = { 'rust' },
   config = function()
     if not vim.fn.executable('rustup') then
-      vim.notify('rustup is not installed', 'error')
+      vim.notify('rustup is not installed', vim.log.levels.ERROR)
       return
     end
     if not pcall(vim.fn.execute, 'rustup which rust-analyzer') then

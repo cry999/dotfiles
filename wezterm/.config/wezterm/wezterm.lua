@@ -8,127 +8,8 @@ local ok_theme, color_scheme_name = pcall(require, 'ui.theme')
 if not ok_theme then color_scheme_name = 'Catppuccin Macchiato' end
 
 -- See: https://github.com/catppuccin/wezterm/blob/main/plugin/init.lua
-local colors = {
-  ['Catppuccin Latte'] = {
-    rosewater = '#dc8a78',
-    flamingo = '#dd7878',
-    pink = '#ea76cb',
-    mauve = '#8839ef',
-    red = '#d20f39',
-    maroon = '#e64553',
-    peach = '#fe640b',
-    yellow = '#df8e1d',
-    green = '#40a02b',
-    teal = '#179299',
-    sky = '#04a5e5',
-    sapphire = '#209fb5',
-    blue = '#1e66f5',
-    lavender = '#7287fd',
-    text = '#4c4f69',
-    subtext1 = '#5c5f77',
-    subtext0 = '#6c6f85',
-    overlay2 = '#7c7f93',
-    overlay1 = '#8c8fa1',
-    overlay0 = '#9ca0b0',
-    surface2 = '#acb0be',
-    surface1 = '#bcc0cc',
-    surface0 = '#ccd0da',
-    crust = '#dce0e8',
-    mantle = '#e6e9ef',
-    base = '#eff1f5',
-  },
-  ['Catppuccin Frappe'] = {
-    rosewater = '#f2d5cf',
-    flamingo = '#eebebe',
-    pink = '#f4b8e4',
-    mauve = '#ca9ee6',
-    red = '#e78284',
-    maroon = '#ea999c',
-    peach = '#ef9f76',
-    yellow = '#e5c890',
-    green = '#a6d189',
-    teal = '#81c8be',
-    sky = '#99d1db',
-    sapphire = '#85c1dc',
-    blue = '#8caaee',
-    lavender = '#babbf1',
-    text = '#c6d0f5',
-    subtext1 = '#b5bfe2',
-    subtext0 = '#a5adce',
-    overlay2 = '#949cbb',
-    overlay1 = '#838ba7',
-    overlay0 = '#737994',
-    surface2 = '#626880',
-    surface1 = '#51576d',
-    surface0 = '#414559',
-    base = '#303446',
-    mantle = '#292c3c',
-    crust = '#232634',
-  },
-  ['Catppuccin Macchiato'] = {
-    rosewater = '#f4dbd6',
-    flamingo = '#f0c6c6',
-    pink = '#f5bde6',
-    mauve = '#c6a0f6',
-    red = '#ed8796',
-    maroon = '#ee99a0',
-    peach = '#f5a97f',
-    yellow = '#eed49f',
-    green = '#a6da95',
-    teal = '#8bd5ca',
-    sky = '#91d7e3',
-    sapphire = '#7dc4e4',
-    blue = '#8aadf4',
-    lavender = '#b7bdf8',
-    text = '#cad3f5',
-    subtext1 = '#b8c0e0',
-    subtext0 = '#a5adcb',
-    overlay2 = '#939ab7',
-    overlay1 = '#8087a2',
-    overlay0 = '#6e738d',
-    surface2 = '#5b6078',
-    surface1 = '#494d64',
-    surface0 = '#363a4f',
-    base = '#24273a',
-    mantle = '#1e2030',
-    crust = '#181926',
-  },
-  ['Catppuccin Mocha'] = {
-    rosewater = '#f5e0dc',
-    flamingo = '#f2cdcd',
-    pink = '#f5c2e7',
-    mauve = '#cba6f7',
-    red = '#f38ba8',
-    maroon = '#eba0ac',
-    peach = '#fab387',
-    yellow = '#f9e2af',
-    green = '#a6e3a1',
-    teal = '#94e2d5',
-    sky = '#89dceb',
-    sapphire = '#74c7ec',
-    blue = '#89b4fa',
-    lavender = '#b4befe',
-    text = '#cdd6f4',
-    subtext1 = '#bac2de',
-    subtext0 = '#a6adc8',
-    overlay2 = '#9399b2',
-    overlay1 = '#7f849c',
-    overlay0 = '#6c7086',
-    surface2 = '#585b70',
-    surface1 = '#45475a',
-    surface0 = '#313244',
-    base = '#1e1e2e',
-    mantle = '#181825',
-    crust = '#11111b',
-  },
-}
-local color_palette = colors[color_scheme_name]
-
-local function opacity_color(color, opa)
-  local c = wezterm.color.parse(color)
-  local h, s, l, _ = c:hsla()
-  return wezterm.color.from_hsla(h, s, l, opa)
-end
+local colors = require('mycolors')
+local color_palette = colors.palettes[color_scheme_name]
 
 ---@class TabInformation
 ---The TabInformation struct describes a tab.
@@ -203,32 +84,27 @@ wezterm.on('gui-startup', function(cmd)
   window:gui_window():maximize()
 end)
 
-wezterm.on('update-status', function(window, _)
-  -- TODO: centerieze tab title
-  --
-  local tabs = window:mux_window():tabs()
-  local mid_width = 0
-  local total_title = ''
-  for idx, tab in ipairs(tabs) do
-    local title = tab:get_title()
-    total_title = total_title .. title
-    mid_width = mid_width
-        + 1 + math.floor(math.log(idx, 10)) + 1 -- space + index + space
-        + 6 + #title + 2                        -- title
-        + 2                                     -- tail
-        + 2                                     -- space
-  end
-  local tab_width = window:active_tab():get_size().cols
-  local max_left = tab_width / 2 - mid_width / 2
+local DECORATE_MODE = {
+  NORMAL = {
+    { Background = { Color = color_palette.blue } },
+    { Foreground = { Color = colors.opacity_color(color_palette.base, opacity) } },
+    { Text = '   NORMAL ' },
+  },
+  resize_pane = {
+    { Background = { Color = colors.opacity_color(color_palette.red, opacity) } },
+    { Foreground = { Color = colors.opacity_color(color_palette.base, opacity) } },
+    { Text = '  RESIZE ' },
+  },
+}
 
-  window:set_left_status(wezterm.format({
-    { Background = { Color = opacity_color(color_palette.base, opacity) } },
-    { Text = wezterm.pad_left(' ', max_left) },
-  }))
+wezterm.on('update-status', function(window, _)
   window:set_right_status(wezterm.format({
-    { Background = { Color = opacity_color(color_palette.base, opacity) } },
-    { Text = wezterm.pad_right(' ', max_left) },
+    { Foreground = { Color = color_palette.text } },
+    { Background = { Color = colors.opacity_color(color_palette.surface0, opacity) } },
+    { Text = wezterm.pad_left('', window:active_tab():get_size().cols) },
   }))
+  local mode = window:active_key_table() or 'NORMAL'
+  window:set_left_status(wezterm.format(DECORATE_MODE[mode]))
 end)
 
 ---basename
@@ -270,43 +146,59 @@ end
 ---decorate_tab_title
 ---@param tab TabInformation
 ---@param fg string
----@param bg string
 ---@return table
-local function decorate_tab(tab, fg, bg)
+local function decorate_tab(tab, fg)
   -- TODO: get max_width from config
   local pane = tab.active_pane
   ---@diagnostic disable-next-line: undefined-field
   local proc = pane.foreground_process_name
   local icon, procname = proc_icon(basename(proc))
-  local title = procname .. '  ' .. tidy_pane_title(pane.title)
 
-  local index = {
-    { Foreground = { Color = fg } },
-    { Background = { Color = 'none' } },
-    { Text = wezterm.nerdfonts.ple_left_half_circle_thick },
-    { Foreground = { Color = bg } },
-    { Background = { Color = fg } },
-    { Text = icon .. ' ' .. (tab.tab_index + 1) .. '' },
+  -- local seps = { left = '', div = '▐▌', right = '▐▌' }
+  -- local seps = { left = '▌', div = '▐▌', right = ' ' }
+  local seps = { left = '▌', div = ' ', right = ' ' }
+  if tab.is_active then
+    -- seps.div = ''
+    -- seps.right = ''
+  end
+
+  local bg = colors.opacity_color(tab.is_active and color_palette.base or color_palette.surface0, opacity)
+
+  local color_attrs = {
     { Foreground = { Color = fg } },
     { Background = { Color = bg } },
-    { Text = wezterm.nerdfonts.ple_right_half_circle_thick },
+  }
+  if tab.is_active then
+    color_attrs = {
+      { Background = { Color = bg } },
+      { Foreground = { Color = fg } },
+      { Attribute = { Italic = true } },
+    }
+  end
+  local index_attrs = {
+    { Text = seps.left .. ' ' .. (tab.tab_index + 1) .. ' ' },
   }
   local title_attrs = {
-    { Text = ' ' .. title .. ' ' },
-    { Foreground = { Color = bg } },
+    { Background = { Color = bg } },
+    { Foreground = { Color = fg } },
+    { Text = ' ' .. icon .. procname .. '  ' .. tidy_pane_title(pane.title) .. ' ' },
   }
 
-  local attributes = {}
-  for _, attr in ipairs(index) do
+  local attributes = {
+    'ResetAttributes',
+  }
+  for _, attr in ipairs(color_attrs) do
     table.insert(attributes, attr)
   end
+  for _, attr in ipairs(index_attrs) do
+    table.insert(attributes, attr)
+  end
+  table.insert(attributes, { Text = seps.div })
   for _, attr in ipairs(title_attrs) do
     table.insert(attributes, attr)
   end
-  table.insert(attributes, { Background = { Color = 'none' } })
-  table.insert(attributes, { Foreground = { Color = bg } })
-  table.insert(attributes, { Text = wezterm.nerdfonts.ple_right_half_circle_thick .. ' ' })
-  -- table.insert(attributes, { Text = ' ' })
+  table.insert(attributes, { Text = seps.right })
+
   return attributes
 end
 
@@ -320,12 +212,11 @@ wezterm.on('format-tab-title',
   ---@return table
   ---@diagnostic disable-next-line: unused-local
   function(tab, _tabs, _panes, _config, _hover, _max_width)
-    local bg = opacity_color(color_palette.surface0, opacity)
     if tab.is_active then
-      return decorate_tab(tab, color_palette.blue, bg)
+      return decorate_tab(tab, color_palette.blue)
     end
 
-    return decorate_tab(tab, color_palette.surface2, bg)
+    return decorate_tab(tab, color_palette.surface2)
   end)
 
 ---activate_tab
@@ -368,10 +259,15 @@ end
 
 ---resize_pane
 ---@param key string
+---@param step? integer
 ---@return table
-local function resize_pane(key)
+local function resize_pane(key, step)
   return wezterm.action_callback(function(window, pane)
-    window:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+    if is_vim(pane) then
+      window:perform_action({ SendKey = { key = key, mods = 'CTRL|SHIFT' } }, pane)
+    else
+      window:perform_action({ AdjustPaneSize = { direction_keys[key], step or 5 } }, pane)
+    end
   end)
 end
 
@@ -433,14 +329,27 @@ local keys = {
   enter_mode('K', 'resize_pane'),
   enter_mode('L', 'resize_pane'),
   { key = ' ', mods = 'LEADER', action = wezterm.action.QuickSelect },
+
+  { key = '[', mods = 'LEADER', action = wezterm.action.ActivateCopyMode },
 }
 
 local key_tables = {
   resize_pane = {
-    { key = 'H', action = resize_pane('h') },
-    { key = 'J', action = resize_pane('j') },
-    { key = 'K', action = resize_pane('k') },
-    { key = 'L', action = resize_pane('l') },
+    -- small step
+    { key = 'h', action = resize_pane('h') },
+    { key = 'j', action = resize_pane('j') },
+    { key = 'k', action = resize_pane('k') },
+    { key = 'l', action = resize_pane('l') },
+    -- large step
+    { key = 'H', action = resize_pane('h', 15) },
+    { key = 'J', action = resize_pane('j', 15) },
+    { key = 'K', action = resize_pane('k', 15) },
+    { key = 'L', action = resize_pane('l', 15) },
+    -- navigate
+    navigate_or_send_key('h'),
+    navigate_or_send_key('j'),
+    navigate_or_send_key('k'),
+    navigate_or_send_key('l'),
   },
 }
 
@@ -449,16 +358,6 @@ return {
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
-  -- background = {
-  --   {
-  --     -- source = { File = os.getenv('HOME') .. '/.config/wezterm/color.jpg' },
-  --     -- source = { File = os.getenv('HOME') .. '/.config/wezterm/leaf.jpg' },
-  --     source = { File = os.getenv('HOME') .. '/.config/wezterm/fish.gif' },
-  --     hsb = { brightness = 0.1 },
-  --     horizontal_align = 'Center',
-  --     vertical_align = 'Middle',
-  --   },
-  -- },
   line_height = 1.2,
   -- font
   font = wezterm.font_with_fallback(
@@ -514,6 +413,7 @@ return {
   command_palette_fg_color = color_palette.text,
   command_palette_bg_color = color_palette.surface0,
   -- keys
+  disable_default_key_bindings = true,
   leader = leader,
   keys = keys,
   key_tables = key_tables,

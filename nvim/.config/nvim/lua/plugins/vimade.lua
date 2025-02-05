@@ -1,7 +1,7 @@
 return {
   "TaDaa/vimade",
   opts = {
-    fadelevel = 0.3,
+    fadelevel = 0.8,
     enablefocusfading = true,
   },
 }

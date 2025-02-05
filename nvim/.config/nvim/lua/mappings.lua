@@ -35,6 +35,11 @@ local mappings = {
     ["<C-k>"] = { function() require("smart-splits").move_cursor_up() end, desc = "Move to up split" },
     ["<C-j>"] = { function() require("smart-splits").move_cursor_down() end, desc = "Move to down split" },
 
+    ["<C-S-H>"] = { function() require("smart-splits").resize_left() end, desc = "Move to left split" },
+    ["<C-S-L>"] = { function() require("smart-splits").resize_right() end, desc = "Move to right split" },
+    ["<C-S-K>"] = { function() require("smart-splits").resize_up() end, desc = "Move to up split" },
+    ["<C-S-J>"] = { function() require("smart-splits").resize_down() end, desc = "Move to down split" },
+
     ["<tab>"] = { "<cmd>tabnext<cr>", desc = "Next tab" },
     ["<S-tab>"] = { "<cmd>tabprev<cr>", desc = "Prev tab" },
 

@@ -106,7 +106,8 @@ local mappings = {
     ["<leader>flr"] = { "<cmd>Telescope lsp_references jump_type=vsplit<cr>", desc = "Find references" },
     ["<leader>fy"] = { "<cmd> Telescope neoclip<cr>", desc = "Find yank history" },
 
-    ["<leader>e"] = { "<cmd>Neotree<cr>", desc = "Toggle NeoTree" },
+    -- ["<leader>e"] = { "<cmd>Neotree<cr>", desc = "Toggle NeoTree" },
+    ["<leader>e"] = { function() require('snacks').explorer() end, desc = "Toggle NeoTree" },
 
     -- LSP
     ["<leader>lm"] = { "<cmd>Mason<cr>", desc = "Open LSP package manager" },
@@ -223,6 +224,9 @@ local mappings = {
 
     -- treesj
     ["<C-m>"] = { function() require('treesj').toggle() end, desc = "Toggle treesj" },
+
+    -- snakcs.dim
+    ["<leader>sd"] = { function() require('snacks').dim() end, desc = "Toggle snacks.dim" },
 
     -- Notes
     --

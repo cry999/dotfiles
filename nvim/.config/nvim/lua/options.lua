@@ -64,6 +64,7 @@ local options = {
     semantic_tokens_enabled = true,
     ui_notifications_enabled = true,
     git_worktrees = nil,
+    snacks_animate = true,
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() },
 }

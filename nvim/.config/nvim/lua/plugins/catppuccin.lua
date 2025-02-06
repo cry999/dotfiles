@@ -27,10 +27,10 @@ return {
         native_lsp = {
           enabled = true,
           underlines = {
-            errors = { "underline" },
-            hints = { "underline" },
-            warnings = { "underline" },
-            information = { "underline" },
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
           },
         },
         navic = { enabled = true },
@@ -42,6 +42,7 @@ return {
         octo = true,
         rainbow_delimiters = true,
         semantic_tokens = true,
+        snacks = true,
         telekasten = true,
         telescope = {
           enable = true,
@@ -104,6 +105,11 @@ return {
           RenderMarkdownFocused = { fg = c.red, underline = true },
           RenderMarkdownNotToDo = { fg = c.overlay0, strikethrough = true },
           RenderMarkdownCaution = { fg = c.yellow },
+
+          -- for snacks
+          SnacksIndent = { fg = c.overlay0 },
+          SnacksIndentScope = { fg = c.yellow },
+          SnacksIndentChunk = { fg = c.green },
         }
       end,
       color_overrides = {

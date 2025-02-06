@@ -155,8 +155,7 @@ local function decorate_tab(tab, fg)
   local icon, procname = proc_icon(basename(proc))
 
   -- local seps = { left = '', div = '▐▌', right = '▐▌' }
-  -- local seps = { left = '▌', div = '▐▌', right = ' ' }
-  local seps = { left = '▌', div = ' ', right = ' ' }
+  local seps = { left = '▌', div = '▐', right = ' ' }
   if tab.is_active then
     -- seps.div = ''
     -- seps.right = ''
@@ -353,17 +352,44 @@ local key_tables = {
   },
 }
 
+local gradient_bg = {
+  source = {
+    Gradient = {
+      colors = { color_palette.mantle, color_palette.text },
+      orientation = {
+        Linear = { angle = -30.0 },
+      },
+    },
+  },
+  opacity = opacity,
+  width = '100%',
+  height = '100%',
+}
+local image_bg = {
+  source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
+  opacity = opacity,
+  vertical_align = 'Middle',
+  hsb = { brightness = 0.1, saturation = 1.0 },
+}
+
 return {
   color_scheme = color_scheme_name,
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
   line_height = 1.2,
+  background = {
+    -- image_bg,
+    -- gradient_bg,
+  },
   -- font
-  font = wezterm.font_with_fallback(
-    { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
-    { weight = 'Regular', style = 'Normal', stretch = 'Normal' }),
   font_size = 12.0,
+  font = wezterm.font_with_fallback {
+    { family = 'JetBrainsMono Nerd Font Propo', weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+    { family = 'UDEV Gothic 35NFLG',            weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+    { family = 'Symbols Nerd Font Mono',        weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+    { family = 'SF Pro',                        weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+  },
   font_rules = {
     -- only bold
     {

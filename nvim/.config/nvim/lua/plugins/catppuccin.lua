@@ -106,6 +106,14 @@ return {
           RenderMarkdownNotToDo = { fg = c.overlay0, strikethrough = true },
           RenderMarkdownCaution = { fg = c.yellow },
 
+          -- for orgmode
+          ['@org.headline.level1'] = { link = '@markup.heading.1.markdown' },
+          ['@org.headline.level2'] = { link = '@markup.heading.2.markdown' },
+          ['@org.headline.level3'] = { link = '@markup.heading.3.markdown' },
+          ['@org.headline.level4'] = { link = '@markup.heading.4.markdown' },
+          ['@org.headline.level5'] = { link = '@markup.heading.5.markdown' },
+          ['@org.headline.level6'] = { link = '@markup.heading.6.markdown' },
+
           -- for snacks
           SnacksIndent = { fg = c.overlay0 },
           SnacksIndentScope = { fg = c.yellow },

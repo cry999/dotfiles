@@ -132,6 +132,8 @@ return {
         },
       }
     },
+    -- profiler
+    profiler = {},
     -- util
     bigfile = {
       enabled = true,

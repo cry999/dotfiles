@@ -5,3 +5,4 @@ Brewfile.lock.json
 tmux-client-*.log
 archive
 lazy-lock.json
+/wezterm/.config/wezterm/wallpapers/

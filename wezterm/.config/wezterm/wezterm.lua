@@ -125,6 +125,8 @@ local function proc_icon(proc)
     return wezterm.nerdfonts.oct_terminal, ''
   elseif proc == 'yazi' then
     return wezterm.nerdfonts.md_duck, ''
+  elseif proc:lower():match('python') then
+    return wezterm.nerdfonts.fae_python, ''
   end
   return '', proc
 end
@@ -330,6 +332,7 @@ local keys = {
   { key = ' ', mods = 'LEADER', action = wezterm.action.QuickSelect },
 
   { key = '[', mods = 'LEADER', action = wezterm.action.ActivateCopyMode },
+  { key = ']', mods = 'LEADER', action = wezterm.action.PasteFrom("Clipboard") },
 }
 
 local key_tables = {
@@ -355,19 +358,19 @@ local key_tables = {
 local gradient_bg = {
   source = {
     Gradient = {
-      colors = { color_palette.mantle, color_palette.text },
+      colors = { color_palette.green, color_palette.blue },
       orientation = {
         Linear = { angle = -30.0 },
       },
     },
   },
-  opacity = opacity,
+  opacity = opacity * 0.0,
   width = '100%',
   height = '100%',
 }
 local image_bg = {
   source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
-  opacity = opacity,
+  opacity = opacity * 0.8,
   vertical_align = 'Middle',
   hsb = { brightness = 0.1, saturation = 1.0 },
 }
@@ -377,7 +380,8 @@ return {
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
-  line_height = 1.2,
+  line_height = 1.5,
+  cell_width = 1.2,
   background = {
     -- image_bg,
     -- gradient_bg,
@@ -444,7 +448,7 @@ return {
   keys = keys,
   key_tables = key_tables,
 
-  quick_select_patterns = { [[\w\S*]] },
+  quick_select_patterns = { [[\S+]] },
   inactive_pane_hsb = {
     brightness = 0.65,
     saturation = 0.9,

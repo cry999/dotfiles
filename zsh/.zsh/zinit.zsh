@@ -21,4 +21,5 @@ zinit light-mode for \
   \
   zsh-users/zsh-autosuggestions \
   zsh-users/zsh-completions \
-  Aloxaf/fzf-tab
+  Aloxaf/fzf-tab \
+  jeffreytse/zsh-vi-mode

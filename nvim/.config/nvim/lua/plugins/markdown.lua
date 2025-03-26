@@ -12,11 +12,11 @@ return {
     heading = {
       enabled = true,
       sign = true,
-      icons = { '▋ ' },
+      icons = { '▋ ', '▋▋ ', '▋▋▋ ', '▋▋▋▋ ', '▋▋▋▋▋ ', '▋▋▋▋▋▋ ' },
       signs = { '󰫎 ' },
       width = 'full',
-      border = true,
-      border_virtual = false,
+      border = false,
+      border_virtual = true,
     },
     paragraph = {
       enabled = true,

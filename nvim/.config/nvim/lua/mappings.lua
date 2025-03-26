@@ -139,6 +139,11 @@ local mappings = {
     ["<leader>pm"] = { "<cmd>Lazy<cr>", desc = "Open Lazy" },
     ["<leader>pc"] = { "<cmd>LazyClose<cr>", desc = "Close Lazy" },
 
+    -- Profile
+    ["<leader>Pp"] = { function() require('snacks').profiler.toggle() end, desc = "Toggle the profiler" },
+    ["<leader>Ph"] = { function() require('snacks').profiler.highlight() end, desc = "Toggle the profiler highlights" },
+    ["<leader>Ps"] = { function() require('snacks').profiler.scratch() end, desc = "Profiler scratch buffer" },
+
     -- Term
     ["<leader>tf"] = { "<cmd>ToggleTerm direction=float<cr>", desc = "Open floating terminal" },
     ["<leader>th"] = { "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Open horizontal terminal" },
@@ -217,7 +222,7 @@ local mappings = {
     ["cn"] = { function() require('notify').dismiss() end, desc = "Close notifications" },
 
     -- Navbuddy
-    ["<leader>o"] = { "<cmd>Navbuddy<cr>", desc = "Open outline navigation" },
+    ["<leader>O"] = { "<cmd>Navbuddy<cr>", desc = "Open outline navigation" },
 
     -- Zen mode
     ["Z"] = { "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },

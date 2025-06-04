@@ -30,7 +30,7 @@ local options = {
     pumblend = not ui_options.transparent and 10 or 0,
     pumheight = 10,
     scrolloff = 1000,
-    sidescrolloff = 1000,
+    sidescrolloff = 20,
     shiftwidth = 2,
     showtabline = 2,
     signcolumn = "yes",
@@ -65,6 +65,7 @@ local options = {
     ui_notifications_enabled = true,
     git_worktrees = nil,
     snacks_animate = true,
+    base46_cache = vim.fn.stdpath("data") .. "/base46_cache/",
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() },
 }

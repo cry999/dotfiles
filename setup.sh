@@ -26,6 +26,7 @@ stow -R -v -d ${HERE} -t $HOME \
   borders    \
   btop       \
   git        \
+  ghostty    \
   homebrew   \
   lazygit    \
   nvim       \

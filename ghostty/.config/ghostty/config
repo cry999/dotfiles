@@ -1,0 +1,56 @@
+theme = catppuccin-mocha
+adjust-cell-height = 25%
+adjust-cursor-height = 25%
+
+# cursor-color = #cba6f7
+cursor-text = #a6e3a1
+background-opacity = 0.5
+background-blur = true
+
+window-padding-x = 20
+window-padding-y = 20
+window-padding-balance = true
+window-padding-color = background
+window-theme = ghostty
+window-decoration = none
+macos-titlebar-style = hidden
+macos-window-shadow = false
+
+unfocused-split-opacity = 0.7
+split-divider-color = #a6e3a1
+
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = true
+copy-on-select = true
+
+quick-terminal-position = top
+quick-terminal-screen = mouse
+quick-terminal-autohide = true
+quick-terminal-animation-duration = 0.15
+quick-terminal-size = 200%
+
+# split pane
+keybind = ctrl+t>s=new_split:down
+keybind = ctrl+t>v=new_split:right
+# move pane
+keybind = ctrl+t>h=goto_split:left
+keybind = ctrl+t>j=goto_split:down
+keybind = ctrl+t>k=goto_split:up
+keybind = ctrl+t>l=goto_split:right
+# NOTE: the following keybinds does not work expected
+keybind = unconsumed:ctrl+h=goto_split:left
+keybind = unconsumed:ctrl+j=goto_split:down
+keybind = unconsumed:ctrl+k=goto_split:up
+keybind = unconsumed:ctrl+l=goto_split:right
+# zoom pane
+keybind = ctrl+t>z=toggle_split_zoom
+
+# window
+keybind = ctrl+t>t=new_window
+
+# global
+keybind = global:cmd+g=toggle_quick_terminal
+keybind = global:opt+g=toggle_quick_terminal
+
+keybind = super+shift+comma=reload_config

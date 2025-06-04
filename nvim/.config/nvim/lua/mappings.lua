@@ -228,7 +228,7 @@ local mappings = {
     ["Z"] = { "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },
 
     -- treesj
-    ["<C-m>"] = { function() require('treesj').toggle() end, desc = "Toggle treesj" },
+    ["<leader>m"] = { function() require('treesj').toggle() end, desc = "Toggle treesj" },
 
     -- snakcs.dim
     ["<leader>sd"] = { function() require('snacks').dim() end, desc = "Toggle snacks.dim" },

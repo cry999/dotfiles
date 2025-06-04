@@ -75,62 +75,60 @@ return {
     -- editor
     -- TODO: setup debug
     explorer = {
-      explorer = {
-        replace_netrw = true,
-      },
-      ---@class snacks.picker.explorer.Config: snacks.picker.files.Config|{}
-      ---@field follow_file? boolean follow the file from the current buffer
-      ---@field tree? boolean show the file tree (default: true)
-      ---@field git_status? boolean show git status (default: true)
-      ---@field git_status_open? boolean show recursive git status for open directories
-      ---@field watch? boolean watch for file changes
-      picker = {
-        finder = "explorer",
-        sort = { fields = { "sort" } },
-        supports_live = true,
-        tree = true,
-        watch = true,
-        git_status = true,
-        git_status_open = false,
-        follow_file = true,
-        focus = "list",
-        auto_close = false,
-        jump = { close = false },
-        layout = { preset = "sidebar", preview = false },
-        -- to show the explorer to the right, add the below to
-        -- your config under `opts.picker.sources.explorer`
-        -- layout = { layout = { position = "right" } },
-        formatters = { file = { filename_only = true } },
-        matcher = { sort_empty = false, fuzzy = false },
-        config = function(opts)
-          return require("snacks.picker.source.explorer").setup(opts)
-        end,
-        win = {
-          list = {
-            keys = {
-              ["<BS>"] = "explorer_up",
-              ["l"] = "confirm",
-              ["h"] = "explorer_close", -- close directory
-              ["a"] = "explorer_add",
-              ["d"] = "explorer_del",
-              ["r"] = "explorer_rename",
-              ["c"] = "explorer_copy",
-              ["m"] = "explorer_move",
-              ["o"] = "explorer_open", -- open with system application
-              ["P"] = "toggle_preview",
-              ["y"] = "explorer_yank",
-              ["u"] = "explorer_update",
-              ["<c-c>"] = "tcd",
-              ["."] = "explorer_focus",
-              ["I"] = "toggle_ignored",
-              ["H"] = "toggle_hidden",
-              ["Z"] = "explorer_close_all",
-              ["]g"] = "explorer_git_next",
-              ["[g"] = "explorer_git_prev",
+      replace_netrw = true,
+    },
+    picker = {
+      ui_select = true,
+      sources = {
+        explorer = {
+          finder = "explorer",
+          sort = { fields = { "sort" } },
+          supports_live = true,
+          tree = true,
+          watch = true,
+          git_status = true,
+          git_status_open = false,
+          follow_file = true,
+          focus = "list",
+          auto_close = true,
+          jump = { close = true },
+          hidden = true,
+          layout = { preset = "ivy", layout = { width = 0.99, height = 0.5 }, preview = true },
+          -- to show the explorer to the right, add the below to
+          -- your config under `opts.picker.sources.explorer`
+          -- layout = { layout = { position = "right" } },
+          formatters = { file = { filename_only = true } },
+          matcher = { sort_empty = false, fuzzy = false },
+          config = function(opts)
+            return require("snacks.picker.source.explorer").setup(opts)
+          end,
+          win = {
+            list = {
+              keys = {
+                ["<BS>"] = "explorer_up",
+                ["l"] = "confirm",
+                ["h"] = "explorer_close", -- close directory
+                ["a"] = "explorer_add",
+                ["d"] = "explorer_del",
+                ["r"] = "explorer_rename",
+                ["c"] = "explorer_copy",
+                ["m"] = "explorer_move",
+                ["o"] = "explorer_open", -- open with system application
+                ["P"] = "toggle_preview",
+                ["y"] = "explorer_yank",
+                ["u"] = "explorer_update",
+                ["<c-c>"] = "tcd",
+                ["."] = "explorer_focus",
+                ["I"] = "toggle_ignored",
+                ["H"] = "toggle_hidden",
+                ["Z"] = "explorer_close_all",
+                ["]g"] = "explorer_git_next",
+                ["[g"] = "explorer_git_prev",
+              },
             },
           },
         },
-      }
+      },
     },
     -- profiler
     profiler = {},

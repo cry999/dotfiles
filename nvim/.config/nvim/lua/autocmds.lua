@@ -23,6 +23,14 @@ local autocmds = {
       vim.bo[0].filetype = "gitconfig"
     end,
   },
+  TrimTrailingWhitespace = {
+    event = "BufWritePre",
+    callback = function()
+      local save_cursor = vim.fn.getpos(".")
+      vim.cmd([[%s/\s\+$//e]])
+      vim.fn.setpos(".", save_cursor)
+    end,
+  },
 }
 
 for group, def in pairs(autocmds) do

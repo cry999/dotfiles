@@ -30,12 +30,6 @@ return {
       [[ ██████   ██  ███████████████   ██ █████████████████]],
     }
 
-    local handle = io.popen('fortune')
-    if handle then
-      local fortune = handle:read("*a")
-      handle:close()
-      dashboard.footer = { type = 'text', val = fortune }
-    end
     return dashboard.config
   end,
   dependencies = {

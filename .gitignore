@@ -1,7 +1,6 @@
 .zshrc.local
 Brewfile.lock.json
 .DS_Store
-.luarc.json
 tmux-client-*.log
 archive
 lazy-lock.json

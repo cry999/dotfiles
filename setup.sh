@@ -27,7 +27,6 @@ stow -R -v -d ${HERE} -t $HOME \
   btop       \
   git        \
   ghostty    \
-  homebrew   \
   lazygit    \
   nvim       \
   starship   \

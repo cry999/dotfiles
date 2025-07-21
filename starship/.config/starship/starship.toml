@@ -7,16 +7,21 @@ $status\
 $directory\
 $git_branch\
 $git_status\
+$fill\
 $cmd_duration\
 $time\
 $line_break\
 $character\
 """
 
+[fill]
+symbol = "─"
+style = "fg:mauve"
+
 [character]
-success_symbol = "[❮ INS ❯](fg:green)"
-error_symbol = "[❮ INS ❯](fg:red)"
-vimcmd_symbol = "[❮ NOR ❯](fg:blue)"
+success_symbol = "[  ](fg:green)"
+error_symbol = "[  ](fg:red)"
+vimcmd_symbol = "[  ](fg:blue)"
 
 [status]
 format = "[─](fg:mauve)[](fg:red)[](fg:mantle bg:red)[](fg:red bg:surface0)[ $status](bg:surface0)[](fg:surface0)"
@@ -61,32 +66,35 @@ style = "fg:text bg:surface1"
 format = "[ $output ]($style)"
 
 [palettes.catppuccin_latte]
-rosewater = "#dc8a78"
-flamingo = "#dd7878"
-pink = "#ea76cb"
-mauve = "#8839ef"
-red = "#d20f39"
-maroon = "#e64553"
-peach = "#fe640b"
-yellow = "#df8e1d"
-green = "#40a02b"
-teal = "#179299"
-sky = "#04a5e5"
-sapphire = "#209fb5"
-blue = "#1e66f5"
-lavender = "#7287fd"
-text = "#4c4f69"
-subtext1 = "#5c5f77"
-subtext0 = "#6c6f85"
-overlay2 = "#7c7f93"
-overlay1 = "#8c8fa1"
-overlay0 = "#9ca0b0"
-surface2 = "#acb0be"
-surface1 = "#bcc0cc"
-surface0 = "#ccd0da"
-base = "#eff1f5"
-mantle = "#e6e9ef"
-crust = "#dce0e8"
+# 抹茶ラテ風の調整（nvim設定ベース - 最新版）
+text = "#1f2b1f"
+subtext1 = "#2d3a2d"
+subtext0 = "#3c4b3c"
+overlay2 = "#556655"
+overlay1 = "#748974"
+overlay0 = "#8fa58f"
+surface2 = "#a9bea9"
+surface1 = "#c3d7c3"
+surface0 = "#d6e6d6"
+crust = "#e1eee1"     # 少し緑が強くなるよう補正
+mantle = "#eaf6ea"    # ミルク寄りの明るいグリーン
+base = "#edf9ed"      # やや緑がかった優しい背景
+
+# アクセントカラー（濃く、しっかり主張）
+rosewater = "#e64553" # しっかり赤みがある苺ピンク
+flamingo = "#d83a5e"  # ベリー系レッド
+pink = "#d33893"      # ビビッドフューシャピンク
+mauve = "#894ec0"     # 濃いスミレ紫
+red = "#c72039"       # 漆赤（うるしあか）風
+maroon = "#a32442"    # 黒蜜寄りの深紅
+peach = "#dd5e00"     # 焼きピーチ系オレンジ
+yellow = "#c39b00"    # 金茶・からし色
+green = "#4ca748"     # 抹茶をより濃く！ほうじ茶寄りも感じる
+teal = "#268e87"      # 深い抹茶ミント
+blue = "#2a7fff"      # 抹茶に映える鮮やかブルー
+sky = "#1ea8c8"       # 透き通る深めの青空
+sapphire = "#0079a6"  # くっきりした藍色
+lavender = "#6b6cd9"  # 濃ラベンダーで安定感ある紫
 
 [palettes.catppuccin_frappe]
 rosewater = "#f2d5cf"
@@ -171,3 +179,31 @@ surface0 = "#313244"
 base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
+
+[palettes.catppuccin_matcha]
+rosewater = "#e8d5c4"
+flamingo = "#d4c5a9"
+pink = "#c9b897"
+mauve = "#a8b894"
+red = "#b85450"
+maroon = "#a67c6a"
+peach = "#c49963"
+yellow = "#d4c985"
+green = "#7ba05b"
+teal = "#6b9080"
+sky = "#5a8f7b"
+sapphire = "#6a8caf"
+blue = "#708090"
+lavender = "#8a9ba8"
+text = "#d4e6d4"
+subtext1 = "#bdd2bd"
+subtext0 = "#a6bea6"
+overlay2 = "#8fa68f"
+overlay1 = "#788e78"
+overlay0 = "#617661"
+surface2 = "#4a5e4a"
+surface1 = "#384638"
+surface0 = "#2a342a"
+base = "#1e2b1e"
+mantle = "#182118"
+crust = "#0f150f"

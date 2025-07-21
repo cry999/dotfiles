@@ -58,6 +58,18 @@ return {
           [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
         },
       },
+      float = {
+        style = "minimal",
+        -- border values:
+        -- - "none": No border.
+        -- - "single": A single line box.
+        -- - "double": A double line box.
+        -- - "rounded": Like "single", but with rounded corners ("╭" etc.).
+        -- - "solid": Adds padding by a single whitespace cell.
+        -- - "shadow": A drop shadow effect by blending with the background.
+        border = "double",
+        -- source = "if_many", -- Or "if_many"
+      },
     })
 
     -- Enable rounded borders in :LspInfo window.

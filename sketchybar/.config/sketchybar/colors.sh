@@ -6,33 +6,36 @@ DEBUG_FILE=~/.colors.log
 THEME="${THEME:-macchiato}"
 case "${THEME,,}" in
   latte)
+    # 抹茶ラテ風の調整（nvim設定ベース - 最新版）
     declare -A colors=(
-      ["ROSEWATER"]="#DC8A78"
-      ["FLAMINGO"]="#DD7878"
-      ["PINK"]="#EA76CB"
-      ["MAUVE"]="#8839EF"
-      ["RED"]="#D20F39"
-      ["MAROON"]="#E64553"
-      ["PEACH"]="#FE640B"
-      ["YELLOW"]="#DF8E1D"
-      ["GREEN"]="#40A02B"
-      ["TEAL"]="#179299"
-      ["SKY"]="#04A5E5"
-      ["SAPPHIRE"]="#209FB5"
-      ["BLUE"]="#1E66F5"
-      ["LAVENDER"]="#7287FD"
-      ["TEXT"]="#4C4F69"
-      ["SUBTEXT1"]="#5C5F77"
-      ["SUBTEXT0"]="#6C6F85"
-      ["OVERLAY2"]="#7C7F93"
-      ["OVERLAY1"]="#8C8FA1"
-      ["OVERLAY0"]="#9CA0B0"
-      ["SURFACE2"]="#ACB0BE"
-      ["SURFACE1"]="#BCC0CC"
-      ["SURFACE0"]="#CCD0DA"
-      ["BASE"]="#EFF1F5"
-      ["MANTLE"]="#E6E9EF"
-      ["CRUST"]="#DCE0E8"
+      ["TEXT"]="#1F2B1F"
+      ["SUBTEXT1"]="#2D3A2D"
+      ["SUBTEXT0"]="#3C4B3C"
+      ["OVERLAY2"]="#556655"
+      ["OVERLAY1"]="#748974"
+      ["OVERLAY0"]="#8FA58F"
+      ["SURFACE2"]="#A9BEA9"
+      ["SURFACE1"]="#C3D7C3"
+      ["SURFACE0"]="#D6E6D6"
+      ["CRUST"]="#E1EEE1"     # 少し緑が強くなるよう補正
+      ["MANTLE"]="#EAF6EA"    # ミルク寄りの明るいグリーン
+      ["BASE"]="#EDF9ED"      # やや緑がかった優しい背景
+      
+      # アクセントカラー（濃く、しっかり主張）
+      ["ROSEWATER"]="#E64553" # しっかり赤みがある苺ピンク
+      ["FLAMINGO"]="#D83A5E"  # ベリー系レッド
+      ["PINK"]="#D33893"      # ビビッドフューシャピンク
+      ["MAUVE"]="#894EC0"     # 濃いスミレ紫
+      ["RED"]="#C72039"       # 漆赤（うるしあか）風
+      ["MAROON"]="#A32442"    # 黒蜜寄りの深紅
+      ["PEACH"]="#DD5E00"     # 焼きピーチ系オレンジ
+      ["YELLOW"]="#C39B00"    # 金茶・からし色
+      ["GREEN"]="#4CA748"     # 抹茶をより濃く！ほうじ茶寄りも感じる
+      ["TEAL"]="#268E87"      # 深い抹茶ミント
+      ["BLUE"]="#2A7FFF"      # 抹茶に映える鮮やかブルー
+      ["SKY"]="#1EA8C8"       # 透き通る深めの青空
+      ["SAPPHIRE"]="#0079A6"  # くっきりした藍色
+      ["LAVENDER"]="#6B6CD9"  # 濃ラベンダーで安定感ある紫
     )
     ;;
   frappe)
@@ -123,6 +126,36 @@ case "${THEME,,}" in
       ["BASE"]="#1E1E2E"
       ["MANTLE"]="#181825"
       ["CRUST"]="#11111B"
+    )
+    ;;
+  matcha)
+    declare -A colors=(
+      ["ROSEWATER"]="#E8D5C4"
+      ["FLAMINGO"]="#D4C5A9"
+      ["PINK"]="#C9B897"
+      ["MAUVE"]="#A8B894"
+      ["RED"]="#B85450"
+      ["MAROON"]="#A67C6A"
+      ["PEACH"]="#C49963"
+      ["YELLOW"]="#D4C985"
+      ["GREEN"]="#7BA05B"
+      ["TEAL"]="#6B9080"
+      ["SKY"]="#5A8F7B"
+      ["SAPPHIRE"]="#6A8CAF"
+      ["BLUE"]="#708090"
+      ["LAVENDER"]="#8A9BA8"
+      ["TEXT"]="#D4E6D4"
+      ["SUBTEXT1"]="#BDD2BD"
+      ["SUBTEXT0"]="#A6BEA6"
+      ["OVERLAY2"]="#8FA68F"
+      ["OVERLAY1"]="#788E78"
+      ["OVERLAY0"]="#617661"
+      ["SURFACE2"]="#4A5E4A"
+      ["SURFACE1"]="#384638"
+      ["SURFACE0"]="#2A342A"
+      ["BASE"]="#1E2B1E"
+      ["MANTLE"]="#182118"
+      ["CRUST"]="#0F150F"
     )
     ;;
 esac

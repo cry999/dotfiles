@@ -2,7 +2,7 @@ local icons = require('icons')
 
 local function get_palette() return require('catppuccin.palettes').get_palette() end
 
-local function bg() return get_palette().surface1 end
+local function bg() return get_palette().crust end
 
 local function tbl_join(base, ...)
   for _, tbl in ipairs({ ... }) do
@@ -35,12 +35,13 @@ local modes = {
     separator = separator.rounded,
     fmt = function(str) return str:sub(1, 1) end,
     padding = 2,
+    color = function() return { fg = bg() } end
   },
   {
     'vim',
     separator = separator.rounded,
     fmt = function() return '  ' end,
-    color = { fg = get_palette().green, bg = bg() },
+    color = function() return { fg = get_palette().green, bg = bg() } end,
   },
   space(),
 }
@@ -49,7 +50,7 @@ local git = {
   {
     'branch',
     separator = separator.rounded,
-    color = { fg = get_palette().surface1, bg = get_palette().peach },
+    color = function() return { fg = bg(), bg = get_palette().peach } end,
   },
   {
     "diff",
@@ -69,11 +70,12 @@ local git = {
     },
     padding = 2,
     diff_color = {
-      added = { fg = get_palette().green },
-      modified = { fg = get_palette().yellow },
-      removed = { fg = get_palette().red },
+      -- added = { fg = get_palette().green },
+      -- modified = { fg = get_palette().yellow },
+      -- removed = { fg = get_palette().red },
     },
     cond = nil,
+    color = function() return { bg = bg() } end,
   },
   space(),
 }
@@ -85,13 +87,13 @@ local recording = {
     fmt = function() return icons.MacroRecording end,
     padding = { right = 1 },
     cond = function() return vim.fn.reg_recording() ~= '' end,
-    color = { fg = bg(), bg = get_palette().yellow },
+    color = function() return { fg = bg(), bg = get_palette().yellow } end,
   },
   {
     'macro-recording',
     separator = separator.rounded,
     fmt = function() return vim.fn.reg_recording() end,
-    color = { fg = get_palette().yellow },
+    color = function() return { fg = get_palette().yellow, bg = bg() } end,
   },
   space(function() return vim.fn.reg_recording() ~= '' end),
 }
@@ -151,7 +153,7 @@ local search = {
     separator = separator.rounded,
     fmt = function() return icons.Search end,
     cond = function() return require("noice").api.status.search.has() end,
-    color = { fg = bg(), bg = get_palette().yellow },
+    color = function() return { fg = bg(), bg = get_palette().yellow } end,
   },
   {
     'search',
@@ -162,7 +164,7 @@ local search = {
       return search == '' and '' or search .. ' ' .. search_count.current .. '/' .. search_count.total
     end,
     cond = function() return require("noice").api.status.search.has() end,
-    color = { fg = get_palette().yellow },
+    color = function() return { fg = get_palette().yellow } end,
   },
   space(),
 }
@@ -203,7 +205,7 @@ local lsp = {
       end
       return table.concat(msg, ' | ')
     end,
-    color = { fg = get_palette().surface0, bg = get_palette().red },
+    color = function() return { fg = get_palette().surface0, bg = get_palette().red } end,
   },
 }
 
@@ -260,9 +262,16 @@ return {
           },
         },
         lualine_b = {
-          { 'filename', separator = separator.rounded, symbols = { modified = icons.FileModified, readonly = icons.FileReadOnly }, color = { bg = get_palette().surface1 } },
+          {
+            'filename',
+            separator = separator.rounded,
+            symbols = { modified = icons.FileModified, readonly = icons.FileReadOnly },
+            color = function() return { bg = bg() } end,
+          },
         },
-        lualine_c = { { 'empty', fmt = function() return ' ' end, color = { bg = get_palette().base } }, },
+        lualine_c = {
+          { 'empty', fmt = function() return ' ' end, color = function() return { bg = get_palette().base } end },
+        },
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},
@@ -280,11 +289,17 @@ return {
               return icon or icons.DefaultFile
             end,
             separator = separator.rounded,
-            color = { fg = get_palette().surface0, bg = get_palette().surface2 },
+            color = function() return { fg = get_palette().surface0, bg = get_palette().surface2 } end,
           },
         },
-        lualine_b = { { 'filename', separator = separator.rounded, color = { fg = get_palette().surface2, bg = get_palette().surface0 } } },
-        lualine_c = { { 'empty', fmt = function() return ' ' end, color = { bg = get_palette().base } }, },
+        lualine_b = {
+          {
+            'filename',
+            separator = separator.rounded,
+            color = function() return { fg = get_palette().surface2, bg = get_palette().surface0 } end,
+          },
+        },
+        lualine_c = { { 'empty', fmt = function() return ' ' end, color = function() return { bg = get_palette().base } end }, },
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},

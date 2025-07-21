@@ -8,7 +8,7 @@ local ok_theme, color_scheme_name = pcall(require, 'setting.theme')
 if not ok_theme then color_scheme_name = 'Catppuccin Macchiato' end
 
 -- See: https://github.com/catppuccin/wezterm/blob/main/plugin/init.lua
-local colors = require('mycolors')
+local colors = require('colors')
 local color_palette = colors.palettes[color_scheme_name]
 
 ---@class TabInformation
@@ -87,6 +87,7 @@ end)
 local DECORATE_MODE = {
   NORMAL = {
     { Background = { Color = color_palette.blue } },
+    -- { Foreground = { Color = colors.opacity_color(color_palette.base, opacity) } },
     { Foreground = { Color = colors.opacity_color(color_palette.base, opacity) } },
     { Text = '   NORMAL ' },
   },
@@ -158,10 +159,10 @@ local function decorate_tab(tab, fg)
 
   -- local seps = { left = '', div = '▐▌', right = '▐▌' }
   local seps = { left = '▌', div = '▐', right = ' ' }
-  if tab.is_active then
-    -- seps.div = ''
-    -- seps.right = ''
-  end
+  -- if tab.is_active then
+  --   seps.div = ''
+  --   seps.right = ''
+  -- end
 
   local bg = colors.opacity_color(tab.is_active and color_palette.base or color_palette.surface0, opacity)
 
@@ -355,19 +356,6 @@ local key_tables = {
   },
 }
 
-local gradient_bg = {
-  source = {
-    Gradient = {
-      colors = { color_palette.green, color_palette.blue },
-      orientation = {
-        Linear = { angle = -30.0 },
-      },
-    },
-  },
-  opacity = opacity * 0.0,
-  width = '100%',
-  height = '100%',
-}
 local image_bg = {
   source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
   opacity = opacity * 0.8,
@@ -377,6 +365,7 @@ local image_bg = {
 
 return {
   color_scheme = color_scheme_name,
+  color_schemes = colors.schemes,
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
@@ -384,7 +373,6 @@ return {
   cell_width = 1.2,
   background = {
     -- image_bg,
-    -- gradient_bg,
   },
   -- font
   font_size = 12.0,

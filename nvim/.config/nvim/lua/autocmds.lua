@@ -1,3 +1,104 @@
+-- TODO: Create NS
+local colorify_ns = 1
+
+local function needs_hl(buf, linenr, col, end_col, hl_group)
+  local extmarks = vim.api.nvim_buf_get_extmarks(
+    buf,
+    colorify_ns,
+    { linenr, col },
+    { linenr, end_col },
+    { details = true }
+  )
+  if #extmarks == 0 then
+    return true, nil
+  end
+  for _, extmark in ipairs(extmarks) do
+    if hl_group ~= (extmark[4].hl_group or extmark[4].virt_text[1][2]) then
+      return true, extmark[1]
+    end
+  end
+  return false, nil
+end
+
+---hex
+---@param buf integer
+---@param linenr integer
+---@param str string
+local function hex(buf, linenr, str)
+  local hex_pattern = "()(#%x%x%x%x%x%x)"
+  local matches = str:gmatch(hex_pattern)
+  for col, match in matches do
+    local hl_name = "hex_" .. match:sub(2)
+    if not vim.api.nvim_get_hl(0, { name = hl_name }).fg then
+      vim.api.nvim_set_hl(
+        0, hl_name, { fg = match, bg = 'none', default = true }
+      )
+    end
+
+    local needs, extmark_id = needs_hl(
+      buf, linenr, col - 1, col + #match - 1, hl_name
+    )
+    if needs then
+      vim.api.nvim_buf_set_extmark(buf, colorify_ns, linenr, col - 1, {
+        virt_text = { { "󱓻 ", hl_name } },
+        virt_text_pos = "inline",
+        end_col = col + #match - 1,
+        id = extmark_id,
+      })
+    end
+  end
+end
+
+local function attach_colorify(buf, event)
+  local winid = vim.fn.bufwinid(buf)
+
+  if event == "TextChangedI" then
+    local cur_linenr = vim.fn.line(".", winid) - 1
+
+    hex(buf, cur_linenr, vim.api.nvim_get_current_line())
+    -- lsp_var(buf, cur_linenr)
+    return
+  end
+
+  local min, max = vim.fn.line("w0", winid) - 1, vim.fn.line("w$", winid) + 1
+  local lines = vim.api.nvim_buf_get_lines(buf, min, max, false)
+
+  -- hex
+  for i, str in ipairs(lines) do
+    hex(buf, min + i - 1, str)
+  end
+  -- lsp_var
+  -- lsp_var(buf, nil, min, max)
+
+  if not vim.b[buf].colorify_attached then
+    vim.b[buf].colorify_attached = true
+
+    vim.api.nvim_buf_attach(buf, false, {
+      on_bytes = function(_, bufnr, _, start_row, start_col, _, old_end_row, old_end_col, _, _, new_end_col, _)
+        if old_end_row == 0 and old_end_col == 0 and new_end_col == 0 then
+          return
+        end
+        local row1, col1, row2, col2 = start_row, start_col, start_row, start_col + old_end_col
+        if old_end_row > 0 then
+          col1, row2, col2 = 0, start_row + old_end_row, 0
+        end
+        if vim.api.nvim_get_mode().mode:sub(1, 1) ~= "i" then
+          col1, col2 = 0, -1
+        end
+        local extmarks = vim.api.nvim_buf_get_extmarks(
+          bufnr, colorify_ns, { row1, col1 }, { row2, col2 }, { overlap = true }
+        )
+        for _, extmark in ipairs(extmarks) do
+          vim.api.nvim_buf_del_extmark(bufnr, colorify_ns, extmark[1])
+        end
+      end,
+      on_detach = function(_, bufnr)
+        vim.b[bufnr].colorify_attached = false
+      end,
+    })
+  end
+end
+
 local autocmds = {
   scrollbar = {
     event = "CmdlineLeave",
@@ -29,6 +130,22 @@ local autocmds = {
       local save_cursor = vim.fn.getpos(".")
       vim.cmd([[%s/\s\+$//e]])
       vim.fn.setpos(".", save_cursor)
+    end,
+  },
+  Colorify = {
+    event = {
+      "TextChanged",
+      "TextChangedI",
+      "TextChangedP",
+      "VimResized",
+      "LspAttach",
+      "WinScrolled",
+      "BufEnter",
+    },
+    callback = function(args)
+      if vim.bo[args.buf].bl then
+        attach_colorify(args.buf, args.event)
+      end
     end,
   },
 }

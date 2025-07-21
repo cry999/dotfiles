@@ -59,7 +59,6 @@ return {
           NeoTreeNormalNC = { fg = c.text, bg = ui_options.transparent and c.none or c.base },
           -- for LSP
           LspInlayHint = { fg = U.blend(c.overlay0, c.surface0, 0.5), bg = c.none },
-          NormalFloat = { fg = c.text, bg = c.none },
 
           CmpItemKind = { fg = c.base, bg = c.blue, blend = ui_options.transparent and 50 or nil },
           CmpItemKindSnippet = { fg = c.base, bg = c.mauve },
@@ -121,21 +120,6 @@ return {
         }
       end,
       color_overrides = {
-        mocha = {
-          text = "#F4CDE9",
-          subtext1 = "#DEBAD4",
-          subtext0 = "#C8A6BE",
-          overlay2 = "#B293A8",
-          overlay1 = "#9C7F92",
-          overlay0 = "#866C7D",
-          surface2 = "#705867",
-          surface1 = "#5A4551",
-          surface0 = "#44313B",
-
-          base = "#352939",
-          mantle = "#211924",
-          crust = "#1a1016",
-        },
         frappe = {
           text = "#F4CDE9",
           subtext1 = "#DEBAD4",
@@ -146,6 +130,36 @@ return {
           surface2 = "#705867",
           surface1 = "#5A4551",
           surface0 = "#44313B",
+        },
+        latte = {
+          text      = "#1f2b1f",
+          subtext1  = "#2d3a2d",
+          subtext0  = "#3c4b3c",
+          overlay2  = "#556655",
+          overlay1  = "#748974",
+          overlay0  = "#8fa58f",
+          surface2  = "#a9bea9",
+          surface1  = "#c3d7c3",
+          surface0  = "#d6e6d6",
+          crust     = "#e1eee1", -- 少し緑が強くなるよう補正
+          mantle    = "#eaf6ea", -- ミルク寄りの明るいグリーン
+          base      = "#edf9ed", -- ☘️ やや緑がかった優しい背景
+
+          -- 🍡 アクセントカラー（濃く、しっかり主張）
+          rosewater = "#e64553", -- しっかり赤みがある苺ピンク
+          flamingo  = "#d83a5e", -- ベリー系レッド
+          pink      = "#d33893", -- ビビッドフューシャピンク
+          mauve     = "#894ec0", -- 濃いスミレ紫
+          red       = "#c72039", -- 漆赤（うるしあか）風
+          maroon    = "#a32442", -- 黒蜜寄りの深紅
+          peach     = "#dd5e00", -- 焼きピーチ系オレンジ
+          yellow    = "#c39b00", -- 金茶・からし色
+          green     = "#4ca748", -- 抹茶をより濃く！ほうじ茶寄りも感じる
+          teal      = "#268e87", -- 深い抹茶ミント
+          blue      = "#2a7fff", -- 抹茶に映える鮮やかブルー
+          sky       = "#1ea8c8", -- 透き通る深めの青空
+          sapphire  = "#0079a6", -- くっきりした藍色
+          lavender  = "#6b6cd9"  -- 濃ラベンダーで安定感ある紫
         },
       },
     })

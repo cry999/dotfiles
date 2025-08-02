@@ -1,5 +1,4 @@
 local wezterm = require('wezterm');
-local mux = wezterm.mux
 
 -- load dynamic configuraitons
 local ok_opacity, opacity = pcall(require, 'setting.opacity')
@@ -67,21 +66,6 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     end
   end
   window:set_config_overrides(overrides)
-end)
-
-wezterm.on('gui-attached', function()
-  -- maximize all displayed windows on startup
-  local workspace = mux.get_active_workspace()
-  for _, window in ipairs(mux.all_windows()) do
-    if window:get_workspace() == workspace then
-      window:gui_window():maximize()
-    end
-  end
-end)
-
-wezterm.on('gui-startup', function(cmd)
-  local _, _, window = mux.spawn_window(cmd or {})
-  window:gui_window():maximize()
 end)
 
 local DECORATE_MODE = {
@@ -322,6 +306,27 @@ local keys = {
   navigate_or_send_key('j'),
   navigate_or_send_key('k'),
   navigate_or_send_key('l'),
+  -- new window
+  {
+    key = 'n',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function()
+      -- tab, pane, window
+      local _, _, _ = wezterm.mux.spawn_window {}
+      -- TODO: vertical split
+    end),
+  },
+  -- close tab
+  {
+    key = 'q',
+    mods = 'LEADER',
+    action = wezterm.action.CloseCurrentTab { confirm = true },
+  },
+  {
+    key = 'w',
+    mods = 'CMD',
+    action = wezterm.action.CloseCurrentTab { confirm = true },
+  },
   -- resize
   --
   -- enter resize mode
@@ -356,12 +361,27 @@ local key_tables = {
   },
 }
 
-local image_bg = {
-  source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
-  opacity = opacity * 0.8,
-  vertical_align = 'Middle',
-  hsb = { brightness = 0.1, saturation = 1.0 },
+-- local image_bg = {
+--   source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
+--   vertical_align = 'Middle',
+--   hsb = { brightness = 0.15, saturation = 0.75 },
+-- }
+
+-- Neon Argon Xenon Radon Krypton
+local moralerspaceFamily = 'Moralerspace Radon JPDOC'
+
+local fonts = {
+  { family = moralerspaceFamily,              weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+  { family = 'JetBrainsMono Nerd Font Propo', weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+  { family = 'UDEV Gothic 35NFLG',            weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+  { family = 'Symbols Nerd Font Mono',        weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+  { family = 'SF Pro',                        weight = 'Regular', style = 'Normal', stretch = 'Normal' },
 }
+
+local font_families = {}
+for _, font in ipairs(fonts) do
+  table.insert(font_families, font.family)
+end
 
 return {
   color_scheme = color_scheme_name,
@@ -376,19 +396,14 @@ return {
   },
   -- font
   font_size = 12.0,
-  font = wezterm.font_with_fallback {
-    { family = 'JetBrainsMono Nerd Font Propo', weight = 'Regular', style = 'Normal', stretch = 'Normal' },
-    { family = 'UDEV Gothic 35NFLG',            weight = 'Regular', style = 'Normal', stretch = 'Normal' },
-    { family = 'Symbols Nerd Font Mono',        weight = 'Regular', style = 'Normal', stretch = 'Normal' },
-    { family = 'SF Pro',                        weight = 'Regular', style = 'Normal', stretch = 'Normal' },
-  },
+  font = wezterm.font_with_fallback(fonts),
   font_rules = {
     -- only bold
     {
       intensity = 'Bold',
       italic = false,
       font = wezterm.font_with_fallback(
-        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
+        font_families,
         { weight = 'Bold', style = 'Normal', stretch = 'Normal' }
       ),
     },
@@ -397,7 +412,7 @@ return {
       intensity = 'Normal',
       italic = true,
       font = wezterm.font_with_fallback(
-        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
+        font_families,
         { weight = 'Regular', style = 'Italic', stretch = 'Normal' }),
     },
     -- bold and italic
@@ -405,7 +420,7 @@ return {
       intensity = 'Bold',
       italic = true,
       font = wezterm.font_with_fallback(
-        { 'JetBrainsMono Nerd Font Propo', 'UDEV Gothic 35NFLG', 'Symbols Nerd Font Mono', 'SF Pro' },
+        font_families,
         { weight = 'Bold', style = 'Italic', stretch = 'Normal' }),
     },
   },

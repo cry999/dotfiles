@@ -58,3 +58,8 @@ else
   git pull --all -p
   popd
 fi
+
+# TODO: likec4 tree-sitter のインストール
+#
+# mkdir -p ~/.local/share/nvim/lazy/nvim-treesitter/queries
+# ln -sf /Users/takeharakenta/github.com/cry999/tree-sitter-likec4/queries ~/.local/share/nvim/lazy/nvim-treesitter/queries/likec4

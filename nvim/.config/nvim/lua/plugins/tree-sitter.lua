@@ -101,6 +101,16 @@ return {
         config = {},
       })
 
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.likec4 = {
+        install_info = {
+          url = "/Users/takeharakenta/github.com/cry999/tree-sitter-likec4/",
+          files = { "src/parser.c" },
+          generate_requires_npm = false,
+        },
+        filetype = "likec4",
+      }
+
       -- associate copilot-chat with markdown
       vim.treesitter.language.register('markdown', { 'copilot-chat' })
     end,

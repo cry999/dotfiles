@@ -13,7 +13,7 @@ return {
           prompt_prefix = "❯ ",
           selection_caret = "❯ ",
           multi_icon = "❯ ",
-          layout_strategy = "horizontal",
+          layout_strategy = "vertical",
           sorting_strategy = "ascending",
           layout_config = {
             horizontal = {
@@ -21,11 +21,12 @@ return {
               preview_width = 0.65,
             },
             vertical = {
-              mirror = false,
+              prompt_position = "top",
+              preview_height = 0.5,
+              mirror = true,
             },
             width = 0.87,
             height = 0.80,
-            preview_cutoff = 120,
           },
           vimgrep_arguments = {
             "rg",

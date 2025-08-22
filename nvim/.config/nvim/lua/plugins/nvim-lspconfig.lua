@@ -9,8 +9,6 @@ return {
       cmd = { "LspInstall", "LspUninstall" },
       opts = function()
         local cmp_nvim_lsp = require('cmp_nvim_lsp')
-        local gopls = require("lsp.gopls")
-        local lua_ls = require("lsp.lua_ls")
 
         return {
           handlers = {
@@ -30,17 +28,15 @@ return {
                 capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
               }
 
-              if server == "lua_ls" then
-                local config = vim.tbl_deep_extend("force", default_config, lua_ls)
-                require("lspconfig")[server].setup(config)
-              elseif server == "gopls" then
-                local config = vim.tbl_deep_extend("force", default_config, gopls)
-                require("lspconfig")[server].setup(config)
-              elseif server == "markdown_oxide" then
-                require("lspconfig")[server].setup(default_config)
+              local ok, config = pcall(require, "lsp." .. server)
+              if ok then
+                vim.notify("Using custom config for " .. server, vim.log.levels.INFO)
+                config = vim.tbl_deep_extend("force", default_config, config)
               else
-                require("lspconfig")[server].setup(default_config)
+                vim.notify("Using default config for " .. server, vim.log.levels.INFO)
+                config = default_config
               end
+              require("lspconfig")[server].setup(config)
             end,
           },
         }

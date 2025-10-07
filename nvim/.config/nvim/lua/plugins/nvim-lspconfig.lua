@@ -45,6 +45,36 @@ return {
     { "SmiteshP/nvim-navic" },
   },
   config = function()
+    -- Manual LSP configuration for servers not available in mason
+    local cmp_nvim_lsp = require('cmp_nvim_lsp')
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
+    capabilities.workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    }
+    capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+
+    -- Load likec4 LSP configuration
+    local ok, likec4_config = pcall(require, "lsp.likec4")
+    if ok then
+      local lspconfig = require("lspconfig")
+      local configs = require("lspconfig.configs")
+      
+      -- Register likec4 LSP server if not already registered
+      if not configs.likec4_lsp then
+        configs.likec4_lsp = {
+          default_config = vim.tbl_deep_extend("force", { capabilities = capabilities }, likec4_config),
+        }
+      end
+      
+      lspconfig.likec4_lsp.setup(vim.tbl_deep_extend("force", { capabilities = capabilities }, likec4_config))
+    end
+
     vim.diagnostic.config({
       signs = {
         text = {

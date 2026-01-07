@@ -68,28 +68,14 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
   window:set_config_overrides(overrides)
 end)
 
-local DECORATE_MODE = {
-  NORMAL = {
-    { Background = { Color = color_palette.blue } },
-    -- { Foreground = { Color = colors.opacity_color(color_palette.base, opacity) } },
-    { Foreground = { Color = colors.opacity_color(color_palette.base, opacity) } },
-    { Text = '   NORMAL ' },
-  },
-  resize_pane = {
-    { Background = { Color = colors.opacity_color(color_palette.red, opacity) } },
-    { Foreground = { Color = colors.opacity_color(color_palette.base, opacity) } },
-    { Text = '  RESIZE ' },
-  },
-}
-
 wezterm.on('update-status', function(window, _)
-  window:set_right_status(wezterm.format({
-    { Foreground = { Color = color_palette.text } },
-    { Background = { Color = colors.opacity_color(color_palette.surface0, opacity) } },
-    { Text = wezterm.pad_left('', window:active_tab():get_size().cols) },
-  }))
-  local mode = window:active_key_table() or 'NORMAL'
-  window:set_left_status(wezterm.format(DECORATE_MODE[mode]))
+  -- window:set_right_status(wezterm.format({
+  --   { Foreground = { Color = color_palette.text } },
+  --   { Background = { Color = colors.opacity_color(color_palette.base, opacity) } },
+  --   { Text = wezterm.pad_left('', window:active_tab():get_size().cols) },
+  -- }))
+  -- local mode = window:active_key_table() or 'NORMAL'
+  -- window:set_left_status(wezterm.format(DECORATE_MODE[mode]))
 end)
 
 ---basename
@@ -141,33 +127,28 @@ local function decorate_tab(tab, fg)
   local proc = pane.foreground_process_name
   local icon, procname = proc_icon(basename(proc))
 
-  -- local seps = { left = '', div = '▐▌', right = '▐▌' }
-  local seps = { left = '▌', div = '▐', right = ' ' }
-  -- if tab.is_active then
-  --   seps.div = ''
-  --   seps.right = ''
-  -- end
-
-  local bg = colors.opacity_color(tab.is_active and color_palette.base or color_palette.surface0, opacity)
-
   local color_attrs = {
-    { Foreground = { Color = fg } },
-    { Background = { Color = bg } },
+    { Foreground = { Color = color_palette.blue } },
+    { Background = { Color = 'none' } },
+    { Text = ' 󱓻 ' },
   }
   if tab.is_active then
     color_attrs = {
-      { Background = { Color = bg } },
-      { Foreground = { Color = fg } },
+      -- { Foreground = { Color = color_palette.maroon } },
+      -- { Background = { Color = bg } },
+      { Background = { Color = color_palette.maroon } },
+      { Foreground = { Color = 'none' } },
       { Attribute = { Italic = true } },
+      { Text = ' 󱓻 ' },
     }
   end
   local index_attrs = {
-    { Text = seps.left .. ' ' .. (tab.tab_index + 1) .. ' ' },
+    -- { Text = seps.left .. ' ' .. (tab.tab_index + 1) },
   }
   local title_attrs = {
-    { Background = { Color = bg } },
-    { Foreground = { Color = fg } },
-    { Text = ' ' .. icon .. procname .. '  ' .. tidy_pane_title(pane.title) .. ' ' },
+    -- { Foreground = { Color = fg } },
+    -- { Background = { Color = bg } },
+    { Text = icon .. procname .. '  ' .. tidy_pane_title(pane.title) .. ' ' },
   }
 
   local attributes = {
@@ -179,11 +160,11 @@ local function decorate_tab(tab, fg)
   for _, attr in ipairs(index_attrs) do
     table.insert(attributes, attr)
   end
-  table.insert(attributes, { Text = seps.div })
+  -- table.insert(attributes, { Text = seps.div })
   for _, attr in ipairs(title_attrs) do
     table.insert(attributes, attr)
   end
-  table.insert(attributes, { Text = seps.right })
+  -- table.insert(attributes, { Text = seps.right })
 
   return attributes
 end
@@ -202,7 +183,8 @@ wezterm.on('format-tab-title',
       return decorate_tab(tab, color_palette.blue)
     end
 
-    return decorate_tab(tab, color_palette.surface2)
+    -- return decorate_tab(tab, color_palette.surface2)
+    return decorate_tab(tab, color_palette.blue)
   end)
 
 ---activate_tab
@@ -277,8 +259,13 @@ end
 local leader = { key = 't', mods = 'CTRL', timeout_milliseconds = 1000 }
 local keys = {
   { key = ':', mods = 'LEADER', action = wezterm.action.ActivateCommandPalette },
+  { key = 'r', mods = 'LEADER', action = wezterm.action.ReloadConfiguration },
   { key = '[', mods = 'LEADER', action = wezterm.action.ScrollToPrompt(-1) },
   { key = ']', mods = 'LEADER', action = wezterm.action.ScrollToPrompt(1) },
+
+  { key = '=', mods = 'CMD',    action = wezterm.action.IncreaseFontSize },
+  { key = '-', mods = 'CMD',    action = wezterm.action.DecreaseFontSize },
+  { key = '0', mods = 'CMD',    action = wezterm.action.ResetFontSize },
   --
   -- tab operation
   --
@@ -297,9 +284,7 @@ local keys = {
   --
   -- splits
   { key = 'v', mods = 'LEADER', action = wezterm.action.SplitHorizontal },
-  { key = '|', mods = 'LEADER', action = wezterm.action.SplitHorizontal },
   { key = 's', mods = 'LEADER', action = wezterm.action.SplitVertical },
-  { key = '-', mods = 'LEADER', action = wezterm.action.SplitVertical },
   { key = 'z', mods = 'LEADER', action = wezterm.action.TogglePaneZoomState },
   -- move
   navigate_or_send_key('h'),
@@ -389,14 +374,19 @@ return {
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
-  line_height = 1.5,
-  cell_width = 1.2,
   background = {
     -- image_bg,
   },
+  window_padding = {
+    left = '2cell',
+    right = '2cell',
+    top = '1cell',
+    bottom = '1cell',
+  },
   -- font
-  font_size = 12.0,
+  font_size = 14.0,
   font = wezterm.font_with_fallback(fonts),
+  adjust_window_size_when_changing_font_size = false,
   font_rules = {
     -- only bold
     {
@@ -425,14 +415,31 @@ return {
     },
   },
   -- tab bar
-  use_fancy_tab_bar = false,
+  use_fancy_tab_bar = true,
   enable_tab_bar = true,
-  hide_tab_bar_if_only_one_tab = false,
+  hide_tab_bar_if_only_one_tab = true,
   show_tab_index_in_tab_bar = false,
   show_new_tab_button_in_tab_bar = false,
   show_tabs_in_tab_bar = true,
+  show_close_tab_button_in_tabs = false,
   tab_max_width = 30,
   tab_bar_at_bottom = false,
+  window_frame = {
+    inactive_titlebar_bg = 'none',
+    active_titlebar_bg = 'none',
+    -- inactive_titlebar_bg = colors.opacity_color(color_palette.base, opacity),
+    -- active_titlebar_bg = colors.opacity_color(color_palette.maroon, opacity),
+    -- -- button_bg = colors.opacity_color(color_palette.base, opacity),
+    -- button_bg = color_palette.maroon,
+    -- button_hover_bg = colors.opacity_color(color_palette.maroon, opacity),
+    font = wezterm.font('JetBrainsMono Nerd Font Propo', { weight = 'Regular', style = 'Normal' }),
+    font_size = 12.0,
+  },
+  window_controll_alignment = {
+    horizontal = 'Center',
+    vertical = 'Center',
+  },
+
   -- cursor
   animation_fps = 120,
   cursor_blink_ease_in = 'EaseOut',
@@ -456,6 +463,9 @@ return {
     brightness = 0.65,
     saturation = 0.9,
   },
+
+  automatically_reload_config = true,
+  use_ime = true,
 }
 --[[
 ↓ Font test text ↓

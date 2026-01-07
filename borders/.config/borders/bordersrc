@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# REF: https://github.com/FelixKratz/JankyBorders/wiki/Man-Page
+
 OPACITY="c0"
 BG_OPACITY="30"
 ACTIVE_COLOR="#8AADF4"

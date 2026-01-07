@@ -28,7 +28,7 @@ return {
       -- go
       "gopls",
       -- python
-      "pylsp",
+      "pyrefly",
       "black",
       -- typescript
       "ts_ls",

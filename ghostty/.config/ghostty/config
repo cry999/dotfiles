@@ -1,6 +1,6 @@
-theme = catppuccin-mocha
-adjust-cell-height = 25%
-adjust-cursor-height = 25%
+theme = Catppuccin Mocha
+# adjust-cell-height = 25%
+# adjust-cursor-height = 25%
 
 # cursor-color = #cba6f7
 cursor-text = #a6e3a1

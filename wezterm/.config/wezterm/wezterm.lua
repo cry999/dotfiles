@@ -113,42 +113,36 @@ local function tidy_pane_title(pane_title)
     local fullpath = string.gsub(pane_title, 'Yazi:%s*(.)', '%1')
     return basename(fullpath)
   end
+  if #pane_title > max_width then
+    return pane_title:sub(1, max_width - 1) .. '…'
+  end
   return pane_title:sub(1, max_width)
 end
 
 ---decorate_tab_title
 ---@param tab TabInformation
----@param fg string
 ---@return table
-local function decorate_tab(tab, fg)
+local function decorate_tab(tab)
   -- TODO: get max_width from config
   local pane = tab.active_pane
   ---@diagnostic disable-next-line: undefined-field
   local proc = pane.foreground_process_name
-  local icon, procname = proc_icon(basename(proc))
+  local icon, _ = proc_icon(basename(proc))
 
   local color_attrs = {
-    { Foreground = { Color = color_palette.blue } },
+    { Foreground = { Color = color_palette.surface2 } },
     { Background = { Color = 'none' } },
-    { Text = ' 󱓻 ' },
+    { Text = ' ' .. wezterm.nerdfonts.md_square_rounded_outline .. ' ' },
   }
   if tab.is_active then
     color_attrs = {
-      -- { Foreground = { Color = color_palette.maroon } },
-      -- { Background = { Color = bg } },
-      { Background = { Color = color_palette.maroon } },
-      { Foreground = { Color = 'none' } },
-      { Attribute = { Italic = true } },
-      { Text = ' 󱓻 ' },
+      { Foreground = { Color = color_palette.green } },
+      { Background = { Color = 'none' } },
+      { Text = ' ' .. wezterm.nerdfonts.md_square_rounded .. ' ' },
     }
   end
-  local index_attrs = {
-    -- { Text = seps.left .. ' ' .. (tab.tab_index + 1) },
-  }
   local title_attrs = {
-    -- { Foreground = { Color = fg } },
-    -- { Background = { Color = bg } },
-    { Text = icon .. procname .. '  ' .. tidy_pane_title(pane.title) .. ' ' },
+    { Text = icon .. ' ' .. tidy_pane_title(pane.title) .. ' ' },
   }
 
   local attributes = {
@@ -157,14 +151,9 @@ local function decorate_tab(tab, fg)
   for _, attr in ipairs(color_attrs) do
     table.insert(attributes, attr)
   end
-  for _, attr in ipairs(index_attrs) do
-    table.insert(attributes, attr)
-  end
-  -- table.insert(attributes, { Text = seps.div })
   for _, attr in ipairs(title_attrs) do
     table.insert(attributes, attr)
   end
-  -- table.insert(attributes, { Text = seps.right })
 
   return attributes
 end
@@ -179,12 +168,7 @@ wezterm.on('format-tab-title',
   ---@return table
   ---@diagnostic disable-next-line: unused-local
   function(tab, _tabs, _panes, _config, _hover, _max_width)
-    if tab.is_active then
-      return decorate_tab(tab, color_palette.blue)
-    end
-
-    -- return decorate_tab(tab, color_palette.surface2)
-    return decorate_tab(tab, color_palette.blue)
+    return decorate_tab(tab)
   end)
 
 ---activate_tab
@@ -417,7 +401,7 @@ return {
   -- tab bar
   use_fancy_tab_bar = true,
   enable_tab_bar = true,
-  hide_tab_bar_if_only_one_tab = true,
+  hide_tab_bar_if_only_one_tab = false,
   show_tab_index_in_tab_bar = false,
   show_new_tab_button_in_tab_bar = false,
   show_tabs_in_tab_bar = true,

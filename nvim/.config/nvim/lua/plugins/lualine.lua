@@ -258,20 +258,22 @@ return {
               local icon, _ = webicons.get_icon_color(vim.fn.expand('%:t'), vim.fn.expand('%:e'))
               return icon or icons.DefaultFile
             end,
-            separator = separator.rounded
+            -- separator = separator.rounded,
+            color = function()
+              local webicons = require("nvim-web-devicons")
+              local _, color = webicons.get_icon_color(vim.fn.expand('%:t'), vim.fn.expand('%:e'))
+              return { fg = color, bg = 'None' }
+            end,
           },
         },
         lualine_b = {
           {
             'filename',
-            separator = separator.rounded,
             symbols = { modified = icons.FileModified, readonly = icons.FileReadOnly },
-            color = function() return { bg = bg() } end,
+            color = { bg = 'None', gui = 'bold,italic' },
           },
         },
-        lualine_c = {
-          { 'empty', fmt = function() return ' ' end, color = function() return { bg = get_palette().base } end },
-        },
+        lualine_c = {},
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},
@@ -288,18 +290,16 @@ return {
               local icon, _ = webicons.get_icon_color(vim.fn.expand('%:t'), vim.fn.expand('%:e'))
               return icon or icons.DefaultFile
             end,
-            separator = separator.rounded,
-            color = function() return { fg = get_palette().surface0, bg = get_palette().surface2 } end,
+            color = function() return { fg = get_palette().surface0, bg = 'None' } end,
           },
         },
         lualine_b = {
           {
             'filename',
-            separator = separator.rounded,
-            color = function() return { fg = get_palette().surface2, bg = get_palette().surface0 } end,
+            color = function() return { fg = get_palette().surface2, bg = 'None' } end,
           },
         },
-        lualine_c = { { 'empty', fmt = function() return ' ' end, color = function() return { bg = get_palette().base } end }, },
+        lualine_c = {},
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},

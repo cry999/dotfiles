@@ -69,13 +69,11 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
 end)
 
 wezterm.on('update-status', function(window, _)
-  -- window:set_right_status(wezterm.format({
-  --   { Foreground = { Color = color_palette.text } },
-  --   { Background = { Color = colors.opacity_color(color_palette.base, opacity) } },
-  --   { Text = wezterm.pad_left('', window:active_tab():get_size().cols) },
-  -- }))
-  -- local mode = window:active_key_table() or 'NORMAL'
-  -- window:set_left_status(wezterm.format(DECORATE_MODE[mode]))
+  window:set_right_status(wezterm.format({
+    { Foreground = { Color = color_palette.peach } },
+    { Background = { Color = 'None' } },
+    { Text = wezterm.nerdfonts.md_clock .. ' ' .. wezterm.strftime('%Y-%m-%d %H:%M ') },
+  }))
 end)
 
 ---basename
@@ -330,11 +328,11 @@ local key_tables = {
   },
 }
 
--- local image_bg = {
---   source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
---   vertical_align = 'Middle',
---   hsb = { brightness = 0.15, saturation = 0.75 },
--- }
+local image_bg = {
+  source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
+  vertical_align = 'Middle',
+  hsb = { brightness = 0.01, saturation = 0.35 },
+}
 
 -- Neon Argon Xenon Radon Krypton
 local moralerspaceFamily = 'Moralerspace Radon JPDOC'
@@ -359,7 +357,7 @@ return {
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
   background = {
-    -- image_bg,
+    image_bg,
   },
   window_padding = {
     left = '2cell',
@@ -411,11 +409,8 @@ return {
   window_frame = {
     inactive_titlebar_bg = 'none',
     active_titlebar_bg = 'none',
-    -- inactive_titlebar_bg = colors.opacity_color(color_palette.base, opacity),
-    -- active_titlebar_bg = colors.opacity_color(color_palette.maroon, opacity),
-    -- -- button_bg = colors.opacity_color(color_palette.base, opacity),
-    -- button_bg = color_palette.maroon,
-    -- button_hover_bg = colors.opacity_color(color_palette.maroon, opacity),
+    inactive_titlebar_bordr_bottom = '#ffffff',
+    active_titlebar_border_bottom = '#ffffff',
     font = wezterm.font('JetBrainsMono Nerd Font Propo', { weight = 'Regular', style = 'Normal' }),
     font_size = 12.0,
   },

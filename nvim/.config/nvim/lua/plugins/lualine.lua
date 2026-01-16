@@ -273,7 +273,26 @@ return {
             color = { bg = 'None', gui = 'bold,italic' },
           },
         },
-        lualine_c = {},
+        lualine_c = {
+          {
+            "diff",
+            source = function()
+              local gitsigns = vim.b.gitsigns_status_dict
+              return gitsigns and {
+                added = gitsigns.added,
+                modified = gitsigns.changed,
+                removed = gitsigns.removed,
+              } or {}
+            end,
+            symbols = {
+              added = icons.GitAdd .. " ",
+              modified = icons.GitChange .. " ",
+              removed = icons.GitDelete .. " ",
+            },
+            padding = 2,
+            color = function() return { bg = 'None' } end,
+          },
+        },
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},
@@ -296,10 +315,35 @@ return {
         lualine_b = {
           {
             'filename',
+            symbols = { modified = icons.FileModified, readonly = icons.FileReadOnly },
             color = function() return { fg = get_palette().surface2, bg = 'None' } end,
           },
         },
-        lualine_c = {},
+        lualine_c = {
+          {
+            "diff",
+            source = function()
+              local gitsigns = vim.b.gitsigns_status_dict
+              return gitsigns and {
+                added = gitsigns.added,
+                modified = gitsigns.changed,
+                removed = gitsigns.removed,
+              } or {}
+            end,
+            symbols = {
+              added = icons.GitAdd .. " ",
+              modified = icons.GitChange .. " ",
+              removed = icons.GitDelete .. " ",
+            },
+            padding = 2,
+            color = function() return { fg = get_palette().surface2, bg = 'None' } end,
+            diff_color = {
+              added = { fg = get_palette().surface2 },
+              modified = { fg = get_palette().surface2 },
+              removed = { fg = get_palette().surface2 },
+            },
+          },
+        },
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},

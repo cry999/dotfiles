@@ -43,7 +43,6 @@ return {
         rainbow_delimiters = true,
         semantic_tokens = true,
         snacks = true,
-        telekasten = true,
         telescope = {
           enable = true,
         },

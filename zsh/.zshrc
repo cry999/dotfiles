@@ -87,9 +87,8 @@ function reload-theme() {
   flavour-switch "${CATPPUCCIN_FLAVOUR:-macchiato}"
 }
 
+# テーマを初回のみ適用（テーマ変更は flavour-switch を手動で呼び出す）
 reload-theme
-# reload theme when prompt is shown
-add-zsh-hook precmd reload-theme
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local || echo "no .zshrc.local"
 

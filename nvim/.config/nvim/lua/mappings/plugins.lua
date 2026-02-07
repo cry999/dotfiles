@@ -33,8 +33,6 @@ M.mappings = {
     ["Z"] = { function() require("zen-mode").toggle() end, desc = "Toggle Zen Mode" },
     ["<leader>sd"] = { function() require("snacks").dim() end, desc = "Toggle snacks.dim" },
 
-    -- Notes
-    ["<localleader><localleader>"] = { function() require("telekasten").toggle_todo() end, desc = "Open/toggle task notes" },
   },
 }
 

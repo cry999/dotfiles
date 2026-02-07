@@ -91,9 +91,6 @@ return {
         { name = "buffer",  priority = 500 },
         { name = "emoji",   priority = 300 },
         { name = "path",    priority = 250 },
-        -- { name = "obsidian",      priority = 200 },
-        -- { name = "obsidian_new",  priority = 200 },
-        -- { name = "obsidian_tags", priority = 200 },
       }),
       window = {
         completion = cmp.config.window.bordered({

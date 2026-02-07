@@ -38,7 +38,6 @@ M.mappings = {
     ["<leader>fW"] = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Find in current buffer" },
 
     -- Special searches
-    ["<leader>fz"] = { "<cmd>ObsidianSearch<cr>", desc = "Find Zettelkasten notes" },
     ["<leader>f/"] = { "<cmd>Telescope search_history<cr>", desc = "Find search history" },
     ["<leader>fy"] = { function() require("telescope").extensions.neoclip.default() end, desc = "Find yank history" },
   },

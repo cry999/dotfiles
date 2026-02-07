@@ -8,7 +8,7 @@ compinit
 # zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #
 # # not completion current directory after ../
-# # zstyle ':completion:*' igonore-parents parent pwd ..
+# # zstyle ':completion:*' ignore-parents parent pwd ..
 #
 # # completion after sudo
 # zstyle ':completion:*:sudo:*' command-path /usr/loca/sbin /usr/loca/bin \
@@ -25,7 +25,7 @@ compinit
 # zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # zstyle ':completion:*' menu no
 # # preview directory's content with eza when completing cd
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 $reqlpath'
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 $realpath'
 # # switch group using `,` and `.`
 # zstyle ':fzf-tab:*' switch-group ',' '.'
 # zstyle ':fzf-tab:*' continuous-trigger '/'

@@ -12,12 +12,12 @@ return {
       return
     end
     if not pcall(vim.fn.execute, 'rustup which rust-analyzer') then
-      -- TODO: exeucte below in background job
+      -- TODO: execute below in background job
       vim.fn.execute('!rustup component add rust-analyzer')
       return
     end
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    vim.g.rustacianvim = {
+    vim.g.rustaceanvim = {
       server = {
         default_settings = {
           ['rust-analyzer'] = {

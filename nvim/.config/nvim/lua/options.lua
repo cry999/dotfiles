@@ -51,7 +51,7 @@ local options = {
   },
   g = {
     mapleader = " ",
-    maplocallaeder = "\\",
+    maplocalleader = "\\",
     autoformat_enabled = true,
     autopairs_enabled = true,
     cmp_enabled = true,

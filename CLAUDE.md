@@ -7,7 +7,7 @@ Please communicate in Japanese (日本語) when interacting with this repository
 
 ## Overview
 
-This is a personal dotfiles repository containing configuration files for a macOS development environment. The repository uses GNU Stow for symlink management and includes configurations for terminal tools, editors, window managers, and development utilities.
+This is a personal dotfiles repository for a macOS development environment. GNU Stow manages symlinks from each top-level package directory to `$HOME`.
 
 ## Setup Commands
 
@@ -18,74 +18,99 @@ curl -L https://raw.githubusercontent.com/cry999/dotfiles/master/install.sh | ba
 # Setup dotfiles (from local repo)
 ./setup.sh
 
-# Prerequisites check (done automatically by setup.sh)
-command -v stow  # GNU Stow is required
-command -v git   # Git is required
+# Prerequisites: stow, git
 ```
 
 ## Architecture
 
-### Stow-based Organization
-Each top-level directory represents a "package" that gets stowed to `$HOME`:
-- `aerospace/` - AeroSpace window manager config
-- `bat/` - Bat (cat replacement) config
-- `borders/` - Window borders utility
-- `btop/` - System monitor config
-- `ghostty/` - Ghostty terminal config
-- `git/` - Git configuration and aliases
-- `homebrew/` - Homebrew configuration
-- `lazygit/` - LazyGit TUI config
-- `nvim/` - Neovim configuration (Lazy.nvim-based)
-- `sketchybar/` - SketchyBar status bar config
-- `starship/` - Starship prompt config (with Catppuccin themes)
-- `tmux/` - Tmux configuration
-- `wezterm/` - WezTerm terminal config
-- `yazi/` - Yazi file manager config
-- `zsh/` - Zsh shell configuration
+### Stow Packages
+Each top-level directory is a stow package deployed to `$HOME`. The `stow` command in `setup.sh` deploys these packages:
+`aerospace`, `bat`, `borders`, `btop`, `git`, `ghostty`, `lazygit`, `nvim`, `starship`, `sketchybar`, `tmux`, `wezterm`, `yazi`, `zsh`
 
-### Key Configuration Details
+Note: `homebrew/` exists as a directory but is **not** included in the `stow` command.
 
-**Neovim Setup:**
-- Uses Lazy.nvim package manager
-- Modular plugin structure in `nvim/.config/nvim/lua/plugins/`
-- LSP configurations in `nvim/.config/nvim/lua/lsp/`
-- Custom options, mappings, and autocmds in separate files
-- Includes AI tools (Copilot, CopilotChat, Avante)
+When adding a new stow package, you must add it to the `stow` command in `setup.sh`.
 
-**Git Configuration:**
-- Modular git config using include.path
-- Separate files for delta (diff viewer) and aliases
-- Automatic inclusion of git config extensions via setup script
+### Setup Process Flow (setup.sh)
+1. `envsubst` on `btop/.config/btop/_btop.conf` → `~/.config/btop/btop.conf` (template with `$XDG_CONFIG_HOME`)
+2. Generate Catppuccin-themed Starship configs (prepend `palette = 'catppuccin_<theme>'` to base config)
+3. `stow -R` all packages to `$HOME`
+4. `git config --global --add include.path` for `delta.gitconfig` and `alias.gitconfig`
+5. Clone/update Catppuccin delta themes to `~/.config/delta/themes`
 
-**Shell Configuration:**
-- Zsh with modular configuration files
-- Includes integrations for: Go, Python, Rust, Kubernetes, Homebrew, FZF
-- Uses Starship prompt with theme variants
-- Custom aliases, key bindings, and completion setup
+### Neovim Configuration (`nvim/.config/nvim/`)
 
-**Theme System:**
-- Catppuccin theme variants (latte, frappe, macchiato, mocha)
-- Starship configs generated per theme
-- Delta themes cloned from catppuccin/delta repository
+**Initialization order** (`init.lua`):
+`options` → Lazy.nvim bootstrap → `plugins/` auto-scan → `autocmds` → `mappings` → `filetype`
 
-### Directory Structure Patterns
-- Configuration files follow XDG Base Directory standard (`.config/`)
-- Stow packages mirror the target directory structure from `$HOME`
-- Theme-specific files are generated during setup (e.g., starship themes)
-- Binary utilities in `zsh/bin/` for custom scripts
+**LSP setup pattern** — critical to understand:
+- All LSP servers are configured through mason-lspconfig.nvim **handlers** in `lua/plugins/nvim-lspconfig.lua`
+- The handler function auto-discovers `lua/lsp/<server>.lua` via `pcall(require, "lsp." .. server)` and merges with defaults
+- To add a new LSP: add to `ensure_installed` in `lua/plugins/mason.lua`, optionally create `lua/lsp/<server>.lua` for custom settings
+- **Never** call `lspconfig[server].setup()` outside the handler — this prevents duplicate server instances
+- Mason-external servers (e.g., `likec4`) are manually registered in `lspconfig.configs` within `nvim-lspconfig.lua`
 
-### Setup Process Flow
-1. Template substitution for btop config using `envsubst`
-2. Generation of Catppuccin theme variants for Starship
-3. GNU Stow deployment of all packages
-4. Git configuration extension setup via `git config --global --add include.path`
-5. Catppuccin delta themes clone/update
+**Plugin structure**: Each file in `lua/plugins/` is auto-detected by Lazy.nvim. Create a new file to add a plugin.
 
-This dotfiles setup prioritizes modularity, theming consistency, and modern terminal-based development tools.
+**Key mappings**: Organized by category in `lua/mappings/` (`window`, `lsp`, `telescope`, `git`, `copilot`, `editor`, `plugins`). Uses a unified `apply_mappings` helper with which-key integration.
+
+**Custom filetype**: `lua/filetype.lua` maps `.c4` → `likec4`
+
+### Cross-Tool Theme System (Catppuccin)
+
+The Catppuccin theme (latte/frappe/macchiato/mocha) is coordinated across multiple tools. Default variant is **Macchiato**.
+
+- **Zsh** (`flavour-switch` function in `.zshrc`): orchestrates theme switching across Starship, Bat, eza, WezTerm, and zsh-highlight. State is persisted in `.zsh/_theme.zsh`.
+- **Starship**: 4 variant configs pre-generated by `setup.sh`; switched via `$STARSHIP_CONFIG`
+- **WezTerm**: `setting/theme.lua` is **written by the zsh `flavour-switch` function** at runtime. Also has custom "matcha latte" palette in `colors.lua`.
+- **Bat/eza**: Controlled via `$BAT_THEME` and `$EZA_COLORS` environment variables
+- **Sketchybar**: `colors.sh` supports 5 variants (latte/frappe/macchiato/mocha/matcha) via `$THEME` env var
+- **Borders**: Colors are hardcoded (Macchiato) in `bordersrc` — not connected to theme system
+- **Neovim**: Independent Catppuccin plugin configuration with custom "matcha milk" latte palette
+
+Note: Some tools use different variants (see `IMPROVEMENTS.md` for details).
+
+### Neovim ↔ WezTerm Integration
+
+Bidirectional communication via WezTerm user variables:
+- **`IS_NVIM`**: WezTerm detects Neovim and conditionally forwards pane navigation keys
+- **`ZEN_MODE`**: Neovim's zen-mode sets this to control WezTerm UI (hide tab bar, enlarge font)
+
+### Zsh Configuration (`zsh/`)
+
+Modular `.zsh` files loaded from `.zshrc` in specific order (env → wezterm → zinit → language tools → aliases/bindings → starship → highlighting).
+
+Plugin manager: **Zinit** (zdharma-continuum). Key plugins: zsh-autosuggestions, zsh-completions, fzf-tab, zsh-vi-mode.
+
+Custom scripts in `zsh/bin/`: `gclone` (git clone helper), `imgcat` (terminal image display), `note` (date-based notes), `pretty_pwd` (shortened path for Starship).
+
+`y()` function in `.zshrc` integrates Yazi file manager with directory changing.
+
+### Git Configuration
+
+Split into `delta.gitconfig` (diff viewer) and `alias.gitconfig`, included via `git config --global --add include.path` during setup. This separates dotfiles-managed config from personal git settings.
+
+## Working Rules
+
+### CLAUDE.md・ドキュメントの継続的な整備
+- **CLAUDE.md は常に最新の状態を保つこと**: 設定の追加・変更・削除を行った際は、CLAUDE.md の該当箇所も必ず更新する
+- **作業中に発見したパターンや注意点は CLAUDE.md に反映する**: 新たな規約、落とし穴、ツール間の依存関係などを見つけたら記録する
+- **設定ファイルのコメントも整備する**: 設定変更時に、設定ファイル内のコメントが実態と乖離していないか確認し、必要に応じて更新する
+- **修正済みの項目はドキュメントから削除する**: 「修正済み」ステータスで残さず、完了した項目は削除して未対応リストとして機能させる
+
+### セルフ振り返り
+- **作業完了時に必ずセルフ振り返りを実施する**: 得られた知見・反省点・プロセス改善のアイデアをまとめ、ユーザーに報告する
+- **振り返りで得た知見はメモリ（MEMORY.md）に記録する**: 次のセッションで同じ失敗を繰り返さないようにする
 
 ## Coding Conventions
 
-### Code Style
-- **No trailing whitespace**: Files should not contain trailing spaces at line endings
-- **Auto-formatting**: Neovim is configured to automatically remove trailing whitespace on save via `TrimTrailingWhitespace` autocmd in `nvim/.config/nvim/lua/autocmds.lua`
-- **LSP Configuration**: All LSP servers are configured through mason-lspconfig.nvim handlers to prevent duplicate server instances
+- **No trailing whitespace**: Auto-removed on save by `TrimTrailingWhitespace` autocmd in `nvim/.config/nvim/lua/autocmds.lua`
+- **LSP configuration**: Always go through mason-lspconfig handlers; never set up LSP servers directly
+- **XDG Base Directory**: All configs use `.config/` structure within stow packages
+- **Neovim key mappings**: Add to the appropriate category file in `lua/mappings/` and register which-key groups in `mappings/init.lua`
+- **Neovim plugins**: One file per plugin in `lua/plugins/`. Lazy.nvim auto-detects all files in the directory
+- **Shell scripts**: Use `set -euo pipefail` in bash scripts (see `zsh/bin/note`, `zsh/bin/gclone` as examples)
+
+## Known Issues
+
+See `IMPROVEMENTS.md` for a comprehensive list of bugs, typos, performance issues, and improvement ideas.

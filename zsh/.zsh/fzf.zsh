@@ -159,7 +159,7 @@
 # export FZF_DEFAULT_COMMAND='fd --type f'
 # # TODO: fzf-preview.sh does not support previewing directories.
 # # TODO: ctrl-r is example of how to bind a key to a command. bind more useful actions.
-# # TODO: fzf-preview.sh does not support hisotory expansion.
+# # TODO: fzf-preview.sh does not support history expansion.
 # export FZF_DEFAULT_OPTS="$(cat <<'EOF'
 # --style full
 # --border --padding 1,2

@@ -9,7 +9,7 @@ sep=" 󰐊"
 function _pretty_pwd(){
   temp_pwd=$PWD
 
-  if [[ _in_git_repo ]]; then
+  if _in_git_repo; then
     # get the root of the git repo
     git_root=$(git rev-parse --show-toplevel)
     git_root_rel=(${(s:/:)git_root})

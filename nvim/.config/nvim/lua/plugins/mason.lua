@@ -2,9 +2,9 @@ return {
   "williamboman/mason.nvim",
   cmd = {
     "Mason",
-    "MasonIsntall",
-    "MasonUnisntall",
-    "MasonUnisntallAll",
+    "MasonInstall",
+    "MasonUninstall",
+    "MasonUninstallAll",
     "MasonLog",
     "MasonUpdate",
     "MasonUpdateAll",

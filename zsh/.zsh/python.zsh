@@ -9,6 +9,6 @@ export PATH=$PATH:~/.pyenv/shims
 
 if which pyenv >/dev/null 2>&1; then
 	eval "$(pyenv init -)"
-	export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
+	export PATH="$HOMEBREW_PREFIX/opt/tcl-tk/bin:$PATH"
 fi
 

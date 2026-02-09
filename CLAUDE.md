@@ -78,7 +78,7 @@ Bidirectional communication via WezTerm user variables:
 
 ### Zsh Configuration (`zsh/`)
 
-Modular `.zsh` files loaded from `.zshrc` in specific order (env → wezterm → zinit → language tools → aliases/bindings → starship → highlighting).
+Modular `.zsh` files loaded from `.zshrc` in specific order (env → wezterm → zinit → go/rust/k8s → homebrew → python → fzf → aliases/bindings → starship → highlighting). Note: `python.zsh` must load after `homebrew.zsh` because it uses `$HOMEBREW_PREFIX`.
 
 Plugin manager: **Zinit** (zdharma-continuum). Key plugins: zsh-autosuggestions, zsh-completions, fzf-tab, zsh-vi-mode.
 

@@ -104,7 +104,7 @@ return {
       local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
       parser_config.likec4 = {
         install_info = {
-          url = "/Users/takeharakenta/github.com/cry999/tree-sitter-likec4/",
+          url = vim.fn.expand("~/github.com/cry999/tree-sitter-likec4/"),
           files = { "src/parser.c" },
           generate_requires_npm = false,
         },

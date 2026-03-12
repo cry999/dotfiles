@@ -180,29 +180,29 @@ local function select(flavor, accent)
     compose_cursor = c.flamingo,
 
     tab_bar = {
-      background = c.crust,
+      background = M.opacity_color(c.crust, 0.75),
       active_tab = {
-        bg_color = c[accent],
+        bg_color = M.opacity_color(c[accent], 0.7),
         fg_color = c.crust,
       },
       inactive_tab = {
-        bg_color = c.mantle,
+        bg_color = M.opacity_color(c.mantle, 0.75),
         fg_color = c.text,
       },
       inactive_tab_hover = {
-        bg_color = c.base,
+        bg_color = M.opacity_color(c.base, 0.6),
         fg_color = c.text,
       },
       new_tab = {
-        bg_color = c.surface0,
+        bg_color = M.opacity_color(c.surface0, 0.5),
         fg_color = c.text,
       },
       new_tab_hover = {
-        bg_color = c.surface1,
+        bg_color = M.opacity_color(c.surface1, 0.6),
         fg_color = c.text,
       },
       -- fancy tab bar
-      inactive_tab_edge = c.surface0,
+      inactive_tab_edge = M.opacity_color(c.surface0, 0.5),
     },
 
     visual_bell = c.surface0,

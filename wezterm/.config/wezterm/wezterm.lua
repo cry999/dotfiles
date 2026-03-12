@@ -42,36 +42,10 @@ local PaneInformation = {}
 ---@return string
 function PaneInformation.get_foreground_process_name() return '' end
 
-wezterm.on('user-var-changed', function(window, pane, name, value)
-  local overrides = window:get_config_overrides() or {}
-  if name == "ZEN_MODE" then
-    local incremental = value:find("+")
-    local number_value = tonumber(value)
-    if incremental ~= nil then
-      window:perform_action(wezterm.action.SetPaneZoomState(true), pane)
-      while (number_value > 0) do
-        window:perform_action(wezterm.action.IncreaseFontSize, pane)
-        number_value = number_value - 1
-      end
-      overrides.enable_tab_bar = false
-    elseif number_value < 0 then
-      window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
-      window:perform_action(wezterm.action.ResetFontSize, pane)
-      overrides.font_size = nil
-      overrides.enable_tab_bar = true
-    else
-      window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
-      overrides.font_size = number_value
-      overrides.enable_tab_bar = false
-    end
-  end
-  window:set_config_overrides(overrides)
-end)
-
 wezterm.on('update-status', function(window, _)
   window:set_right_status(wezterm.format({
     { Foreground = { Color = color_palette.peach } },
-    { Background = { Color = 'None' } },
+    { Background = { Color = 'none' } },
     { Text = wezterm.nerdfonts.md_clock .. ' ' .. wezterm.strftime('%Y-%m-%d %H:%M ') },
   }))
 end)
@@ -330,8 +304,11 @@ local key_tables = {
 
 local image_bg = {
   source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
+  -- source = { File = os.getenv('HOME') .. '/.config/wezterm/archive/wallhaven-vqr1lp.png' },
   vertical_align = 'Middle',
-  hsb = { brightness = 0.01, saturation = 0.35 },
+  horizontal_align = 'Center',
+  hsb = { brightness = 0.35, saturation = 1 },
+  opacity = 0.3,
 }
 
 -- Neon Argon Xenon Radon Krypton
@@ -356,8 +333,13 @@ return {
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
-  background = {
-    image_bg,
+  -- background = {
+  --   image_bg,
+  -- },
+  window_background_gradient = {
+    colors = {
+      color_palette.surface0,
+    },
   },
   window_padding = {
     left = '2cell',
@@ -409,14 +391,8 @@ return {
   window_frame = {
     inactive_titlebar_bg = 'none',
     active_titlebar_bg = 'none',
-    inactive_titlebar_bordr_bottom = '#ffffff',
-    active_titlebar_border_bottom = '#ffffff',
     font = wezterm.font('JetBrainsMono Nerd Font Propo', { weight = 'Regular', style = 'Normal' }),
     font_size = 12.0,
-  },
-  window_controll_alignment = {
-    horizontal = 'Center',
-    vertical = 'Center',
   },
 
   -- cursor

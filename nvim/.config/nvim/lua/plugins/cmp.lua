@@ -107,7 +107,7 @@ return {
         }),
       },
       formatting = {
-        fields = { "kind", "abbr" },
+        fields = { "icon", "abbr" },
         format = function(entry, vim_item)
           local kind = require("lspkind").cmp_format({
             mode = "symbol_text",
@@ -149,6 +149,7 @@ return {
             kind.abbr = kind.abbr:sub(1, 50) .. "..."
           end
           kind.menu = ""
+          kind.icon = " " .. (kind.icon or "?")
           return kind
         end,
       },

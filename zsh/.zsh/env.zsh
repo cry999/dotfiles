@@ -18,7 +18,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export GIT_EDITR=nvim
 export EDITOR=nvim
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"

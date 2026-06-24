@@ -10,6 +10,10 @@ return {
       -- flavour = vim.env.CATPPUCCIN_FLAVOUR or 'macchiato',
       flavour = ui_options.flavour,
       transparent_background = ui_options.transparent,
+      -- UI 透過時はフロートウィンドウ（Telescope, which-key, snacks 等）も透過する
+      float = {
+        transparent = ui_options.transparent,
+      },
       integrations = {
         alpha = true,
         cmp = true,

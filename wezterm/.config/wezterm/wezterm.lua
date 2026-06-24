@@ -303,8 +303,9 @@ local key_tables = {
 }
 
 local image_bg = {
-  source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
+  -- source = { File = os.getenv('HOME') .. '/.config/wezterm/wallpapers/fish.gif' },
   -- source = { File = os.getenv('HOME') .. '/.config/wezterm/archive/wallhaven-vqr1lp.png' },
+  source = { File = os.getenv('HOME') .. '/.config/wezterm/archive/howl.gif' },
   vertical_align = 'Middle',
   horizontal_align = 'Center',
   hsb = { brightness = 0.35, saturation = 1 },
@@ -313,9 +314,10 @@ local image_bg = {
 
 -- Neon Argon Xenon Radon Krypton
 local moralerspaceFamily = 'Moralerspace Radon JPDOC'
+_ = moralerspaceFamily
 
 local fonts = {
-  { family = moralerspaceFamily,              weight = 'Regular', style = 'Normal', stretch = 'Normal' },
+  -- { family = moralerspaceFamily,              weight = 'Regular', style = 'Normal', stretch = 'Normal' },
   { family = 'JetBrainsMono Nerd Font Propo', weight = 'Regular', style = 'Normal', stretch = 'Normal' },
   { family = 'UDEV Gothic 35NFLG',            weight = 'Regular', style = 'Normal', stretch = 'Normal' },
   { family = 'Symbols Nerd Font Mono',        weight = 'Regular', style = 'Normal', stretch = 'Normal' },
@@ -333,9 +335,9 @@ return {
   window_decorations = 'RESIZE',
   window_background_opacity = opacity,
   macos_window_background_blur = 20,
-  -- background = {
-  --   image_bg,
-  -- },
+  background = {
+    image_bg,
+  },
   window_background_gradient = {
     colors = {
       color_palette.surface0,

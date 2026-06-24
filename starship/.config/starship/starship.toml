@@ -7,6 +7,7 @@ $status\
 $directory\
 $git_branch\
 $git_status\
+${custom.atcoder_layout}\
 $fill\
 $cmd_duration\
 $time\
@@ -64,6 +65,14 @@ shell = "zsh"
 # style = "fg:base bg:red"
 style = "fg:text bg:surface1"
 format = "[ $output ]($style)"
+
+[custom.atcoder_layout]
+command = 'echo "${ATCODER_LAYOUT:-$(atcoder config get layout)}"'
+shell = ["bash", "--noprofile", "--norc"]
+when = "command -v atcoder >/dev/null"
+symbol = "🗂 "
+format = "[─](fg:mauve)[](fg:pink)[ ](fg:mantle bg:pink)[](fg:pink bg:surface0)[ $output](bg:surface0)[](fg:surface0)"
+style = "bold yellow"
 
 [palettes.catppuccin_latte]
 # 抹茶ラテ風の調整（nvim設定ベース - 最新版）

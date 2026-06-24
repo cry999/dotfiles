@@ -1,0 +1,85 @@
+{
+  "atcoder main": {
+    "prefix": [
+      "atcoder",
+      "main",
+      "am"
+    ],
+    "body": [
+      "package main",
+      "",
+      "import (",
+      "\t\"bufio\"",
+      "\t\"fmt\"",
+      "\t\"math\"",
+      "\t\"os\"",
+      "\t\"strconv\"",
+      ")",
+      "",
+      "var sc = bufio.NewScanner(os.Stdin)",
+      "var wr = bufio.NewWriter(os.Stdout)",
+      "",
+      "func must[T any](v T, err error) T {",
+      "\tif err != nil {",
+      "\t\tpanic(err)",
+      "\t}",
+      "\treturn v",
+      "}",
+      "",
+      "func out(x ...any) {",
+      "\tfmt.Fprintln(wr, x...)",
+      "}",
+      "",
+      "func inInt() int {",
+      "\treturn must(strconv.Atoi(in()))",
+      "}",
+      "",
+      "func in() string {",
+      "\tsc.Scan()",
+      "\treturn sc.Text()",
+      "}",
+      "",
+      "func yesno(b bool) {",
+      "\tif b {",
+      "\t\tout(\"Yes\")",
+      "\t} else {",
+      "\t\tout(\"No\")",
+      "\t}",
+      "}",
+      "",
+      "func main() {",
+      "\tdefer wr.Flush()",
+      "\tsc.Split(bufio.ScanWords)",
+      "\tsc.Buffer([]byte{}, math.MaxInt32)",
+      "}",
+      ""
+    ]
+  },
+  "atcoder ints": {
+    "prefix": [
+      "ints"
+    ],
+    "body": [
+      "${1:a} := make([]int, ${2:n})",
+      "for i := range $2 {",
+      "\t$1[i] = inInt()",
+      "}"
+    ]
+  },
+  "atcoder query": {
+    "prefix": [
+      "query"
+    ],
+    "body": [
+      "q := inInt()",
+      "for range q {",
+      "\tquery := inInt()",
+      "\tswitch query {",
+      "\tcase 1:",
+      "\t$0",
+      "\tcase 2:",
+      "\t}",
+      "}"
+    ]
+  }
+}

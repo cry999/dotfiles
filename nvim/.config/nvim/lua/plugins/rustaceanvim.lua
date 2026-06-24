@@ -1,30 +1,32 @@
 return {
   'mrcjkb/rustaceanvim',
-  dependencies = {
-    "neovim/nvim-lspconfig",
-    "hrsh7th/cmp-nvim-lsp",
-  },
-  version = '^4',
-  ft = { 'rust' },
-  config = function()
-    if not vim.fn.executable('rustup') then
-      vim.notify('rustup is not installed', vim.log.levels.ERROR)
-      return
-    end
-    if not pcall(vim.fn.execute, 'rustup which rust-analyzer') then
-      -- TODO: execute below in background job
-      vim.fn.execute('!rustup component add rust-analyzer')
-      return
-    end
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    vim.g.rustaceanvim = {
-      server = {
-        default_settings = {
-          ['rust-analyzer'] = {
-            capabilities = capabilities,
+  version = '^8',
+  lazy = false,
+  init = function()
+    vim.g.rustaceanvim = function()
+      local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
+      capabilities.workspace = {
+        didChangeWatchedFiles = {
+          dynamicRegistration = true,
+        },
+      }
+      if ok then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
+
+      return {
+        server = {
+          capabilities = capabilities,
+          default_settings = {
+            ['rust-analyzer'] = {},
           },
         },
-      },
-    }
+      }
+    end
   end,
 }

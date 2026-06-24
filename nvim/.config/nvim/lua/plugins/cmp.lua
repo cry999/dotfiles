@@ -34,7 +34,11 @@ return {
       "L3MON4D3/LuaSnip",
       build = "make install_jsregexp",
       version = "v2.*",
-      config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
+      config = function()
+        require("luasnip.loaders.from_vscode").lazy_load({
+          paths = { vim.fn.expand("~/.config/snippets") },
+        })
+      end,
     },
     {
       "zbirenbaum/copilot-cmp",

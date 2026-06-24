@@ -29,8 +29,9 @@ stow -R -v -d ${HERE} -t $HOME \
   ghostty    \
   lazygit    \
   nvim       \
-  starship   \
   sketchybar \
+  snippets   \
+  starship   \
   tmux       \
   wezterm    \
   yazi       \
